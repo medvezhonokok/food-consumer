@@ -1,6 +1,5 @@
 package ru.backend;
 
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -25,11 +24,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GoogleSheetParser {
+public final class GoogleSheetParser {
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
+
+    private GoogleSheetParser() {
+    }
 
     private static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
         InputStream in = GoogleSheetParser.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
@@ -51,7 +53,13 @@ public class GoogleSheetParser {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public List<List<String>> getSpreadsheetData(String spreadsheetId, String range) throws IOException, GeneralSecurityException {
+    private static List<String> getNotEscapedRussianSymbolsData(List<Object> list) {
+        return list.stream()
+                .map(o -> new String(o.toString().getBytes(StandardCharsets.UTF_8)))
+                .collect(Collectors.toList());
+    }
+
+    public static List<List<String>> getSpreadsheetData(String spreadsheetId, String range) throws IOException, GeneralSecurityException {
         NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
@@ -64,12 +72,6 @@ public class GoogleSheetParser {
 
         return response.getValues().stream()
                 .map(GoogleSheetParser::getNotEscapedRussianSymbolsData)
-                .collect(Collectors.toList());
-    }
-
-    private static List<String> getNotEscapedRussianSymbolsData(List<Object> list) {
-        return list.stream()
-                .map(o -> new String(o.toString().getBytes(StandardCharsets.UTF_8)))
                 .collect(Collectors.toList());
     }
 }
