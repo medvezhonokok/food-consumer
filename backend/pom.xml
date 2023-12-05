@@ -14,6 +14,8 @@
     <name>backend</name>
     <description>backend</description>
     <properties>
+        <food-consumer.log-file>\log.txt</food-consumer.log-file>
+        <log4j.rootCategory>INFO,log_file,warn_log_file,err_log_file,stdout</log4j.rootCategory>
         <java.version>17</java.version>
     </properties>
     <dependencies>
@@ -72,6 +74,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>6.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
 
