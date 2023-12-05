@@ -2,8 +2,8 @@ package ru.backend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.backend.model.Task;
-import ru.backend.service.TaskService;
+import ru.backend.model.Dish;
+import ru.backend.service.DishService;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -11,23 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class TasksPage {
-    private final TaskService taskService;
+public class DishesPage {
+    private final DishService dishService;
 
-    public TasksPage(TaskService taskService) {
-        this.taskService = taskService;
+    public DishesPage(DishService dishService) {
+        this.dishService = dishService;
     }
 
-    @GetMapping(value = "tasks")
-    public List<Task> getTasks() {
-        List<Task> tasks = new ArrayList<>();
+    @GetMapping(value = "dishes")
+    public List<Dish> getDishes() {
+        List<Dish> dishes = new ArrayList<>();
 
         try {
-            tasks = taskService.findAll();
+            dishes = dishService.getStopList();
         } catch (GeneralSecurityException | IOException ignored) {
             // No operations.
         }
 
-        return tasks;
+        return dishes;
     }
 }
