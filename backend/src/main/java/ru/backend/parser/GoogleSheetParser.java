@@ -53,9 +53,9 @@ public final class GoogleSheetParser {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    private static List<String> getNotEscapedRussianSymbolsData(List<Object> list) {
+    private static List<String> toUTF8StringList(List<Object> list) {
         return list.stream()
-                .map(o -> new String(o.toString().getBytes(StandardCharsets.UTF_8)))
+                .map(object -> new String(object.toString().getBytes(StandardCharsets.UTF_8)))
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +71,7 @@ public final class GoogleSheetParser {
                 .execute();
 
         return response.getValues().stream()
-                .map(GoogleSheetParser::getNotEscapedRussianSymbolsData)
+                .map(GoogleSheetParser::toUTF8StringList)
                 .collect(Collectors.toList());
     }
 }
