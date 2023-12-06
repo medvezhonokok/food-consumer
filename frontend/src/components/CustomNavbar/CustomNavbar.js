@@ -13,7 +13,7 @@ const CustomNavbar = () => {
                 <Col xs={7}>
                     <Stack direction={"horizontal"} gap={3}>
                         <Button variant={"outline-primary"} onClick={() => setShowMenu(!showMenu)}><List/></Button>
-                        <Button variant={"outline-secondary"}>Заказ</Button>
+                        <Button variant={"outline-secondary"} href={"orders"}>Заказ</Button>
                     </Stack>
                 </Col>
                 <Col>
