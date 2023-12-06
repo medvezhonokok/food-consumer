@@ -1,0 +1,47 @@
+version: '3.1'
+services:
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-chat
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+#
+#  harperdb:
+#    image: harperdb/harperdb
+#    container_name: harperdb
+#    ports:
+#      - '9925:9925'
+#      - '9926:9926'
+#    volumes:
+#      - harper-data:/home/harperdb/hdb
+#    environment:
+#      HDB_ADMIN_USERNAME: admin
+#      HDB_ADMIN_PASSWORD: admin
+
+#  ezfox-server:
+#    image: youngmonkeys/ezyfox-server:v1.2.8.1
+#    container_name: ezyfox-server
+#    ports:
+#      - '3005:3005'
+#      - '2208:2208'
+#      - '2611:2611'
+  tinode-server:
+    image: tinode/tinode-mysql:latest
+    container_name: tinode-srv
+    ports:
+      - '6060:6060'
+volumes:
+  mongodb-data:
+  mysql-data:
+  harper-data:

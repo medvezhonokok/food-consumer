@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './Task.module.css';
-import {Card, Col, Container, Placeholder, Row} from "react-bootstrap";
-import {Data} from "dataclass";
+import {Card, Placeholder} from "react-bootstrap";
 
 
 const Task = (props: { task: { time: Date, text: string, loading?: boolean } }) => {
