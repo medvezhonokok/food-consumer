@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styles from './CustomNavbar.module.css';
 import {Button, Col, Container, Form, FormLabel, Navbar, Stack} from "react-bootstrap";
-import {Icon, IconButton} from "@mui/material";
 import {List} from "react-bootstrap-icons"
 import SideMenu from "../SideMenu/SideMenu";
 

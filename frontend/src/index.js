@@ -12,6 +12,7 @@ import {
 
 import StopListElements from "./components/StopListElements/StopListElements";
 import Orders from "./components/Orders/Orders";
+import Tasks from "./components/Tasks/Tasks";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
                 <StopListElements/>
                 <Orders/>
             </div>,
+    },
+    {
+        path: "tasks",
+        element: <div><Tasks/></div>,
     }
 ]);
 
