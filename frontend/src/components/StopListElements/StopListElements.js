@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styles from './StopListElements.module.css';
 import {Stack} from "react-bootstrap";
 import StopListElement from "../StopListElement/StopListElement";
-import {post} from "axios";
 
 const StopListElements = () => {
     const [stopListElements, setStopListElements] = useState([]);
