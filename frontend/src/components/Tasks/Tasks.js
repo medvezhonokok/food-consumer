@@ -6,7 +6,6 @@ import client from "../../utils/client";
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import CustomCalendar from "../CustomCalendar/CustomCalendar";
-import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
 
 async function getTasks() {
@@ -44,7 +43,6 @@ const Tasks = () => {
 
     return (
         <Stack gap={3} className={`${styles.Tasks} mt-3`} data-testid="Tasks">
-            <CustomNavbar/>
             <CustomCalendar value={dateState} onChange={changeDate}/>
 
             <div className={`${styles.CenteredContent}`}>
