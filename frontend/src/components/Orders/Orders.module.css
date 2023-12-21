@@ -1,1 +1,21 @@
-.Orders {}
+.Orders {
+    position: relative;
+    top: 3em;
+    padding-bottom: 1em;
+}
+
+.Create {
+    position: fixed;
+    bottom: 3%;
+    right: 5%;
+}
+
+.Btn {
+    color: #B5B285;
+}
+
+.Menu {
+    position: fixed;
+    bottom: 3%;
+    left: 5%;
+}

@@ -5,10 +5,11 @@ import {Button, Offcanvas, Stack} from "react-bootstrap";
 const SideMenu = (props: { show: boolean, onClose: Function }) => {
     const buttons = [
         <Button href={'tasks'}>Tasks</Button>,
+        <Button href={'orders'}>Orders</Button>,
     ]
 
     return (
-        <Offcanvas className={styles.SideMenu} show={props.show} onHide={props.onClose} data-testid="SideMenu">
+        <Offcanvas className={"w-75"} show={props.show} onHide={props.onClose} data-testid="SideMenu">
             <Offcanvas.Header>
                 Меню
             </Offcanvas.Header>

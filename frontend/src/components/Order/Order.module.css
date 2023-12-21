@@ -1,0 +1,9 @@
+.Order {}
+.Removed {
+    animation: swipe 0.5s forwards;
+}
+@keyframes swipe {
+    0% {transform: translateX(0%)}
+    100% {transform: translateX(-100%)}
+}
+

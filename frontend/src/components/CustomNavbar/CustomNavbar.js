@@ -3,15 +3,15 @@ import styles from './CustomNavbar.module.css';
 import {Button, Col, Container, Form, FormLabel, Navbar, Stack} from "react-bootstrap";
 import {List} from "react-bootstrap-icons"
 import SideMenu from "../SideMenu/SideMenu";
+import MenuButton from "../MenuButton/MenuButton";
 
 const CustomNavbar = () => {
-    const [showMenu, setShowMenu] = useState(false);
     return (
         <Navbar className={`${styles.CustomNavbar} `} sticky={"top"} data-testid="CustomNavbar">
             <Container fluid>
                 <Col xs={7}>
                     <Stack direction={"horizontal"} gap={3}>
-                        <Button variant={"outline-primary"} onClick={() => setShowMenu(!showMenu)}><List/></Button>
+                        <MenuButton/>
                         <Button variant={"outline-secondary"} href={"orders"}>Заказ</Button>
                     </Stack>
                 </Col>
@@ -22,7 +22,7 @@ const CustomNavbar = () => {
                     </Form>
                 </Col>
             </Container>
-            <SideMenu show={showMenu} onClose={() => setShowMenu(false)}/>
+
         </Navbar>
     );
 }
