@@ -14,7 +14,7 @@ public class BackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000")
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000", "http://localhost:50902")
                         .allowedMethods("*")
                         .allowCredentials(true);
             }

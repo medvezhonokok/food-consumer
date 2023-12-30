@@ -1,18 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss'
 import App from './components/App/App';
 import * as serviceWorkerRegistration from './worker/serviceWorkerRegistration';
 import reportWebVitals from './utils/reportWebVitals';
-
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
-
-import StopListElements from "./components/StopListElements/StopListElements";
-import Orders from "./components/Orders/Orders";
+import {Provider} from "react-redux";
+import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import Tasks from "./components/Tasks/Tasks";
+import Notes from "./components/Notes/Notes";
+import store from "./store";
 import Schedule from "./components/Schedule/Schedule";
 
 const router = createBrowserRouter([
@@ -28,8 +26,7 @@ const router = createBrowserRouter([
         path: "orders",
         element:
             <div>
-                <StopListElements/>
-                <Orders/>
+                <Notes/>
             </div>,
     },
     {
@@ -39,13 +36,15 @@ const router = createBrowserRouter([
     {
         path: "schedule",
         element: <div><Schedule/></div>
-    }
+    },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <Provider store={store}>
+            <RouterProvider router={router}/>
+        </Provider>
     </React.StrictMode>
 );
 
