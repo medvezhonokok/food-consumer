@@ -11,7 +11,7 @@ const Task = (props: { task: { time: Date, text: string, loading?: boolean } }) 
         <Card className={"border-1 rounded-2 m-auto w-75"}>
             <Card.Header>
                 <span
-                    className={`${styles.Time} text-secondary`}
+                    className={`${styles.Header} text-secondary`}
                 ><b>
                     {task.loading?
                         <Placeholder animation={"glow"}><Placeholder xs={6}/></Placeholder>
