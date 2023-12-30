@@ -11,6 +11,7 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import Tasks from "./components/Tasks/Tasks";
 import Notes from "./components/Notes/Notes";
 import store from "./store";
+import Schedule from "./components/Schedule/Schedule";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: "tasks",
         element: <div><Tasks/></div>,
+    },
+    {
+        path: "schedule",
+        element: <div><Schedule/></div>
     },
 ]);
 
