@@ -28,7 +28,7 @@ public class ScheduleService {
                 .stream().filter(workerName -> workerName != null && workerName.size() == 1)
                 .map(workerName -> workerName.get(0)).toList();
 
-        logger.info("Successfully get spreadsheet `workers data from spreadsheet.");
+        logger.info("Successfully get spreadsheet `workers` data from spreadsheet.");
 
         List<List<String>> scheduleHeader = GoogleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE);
@@ -39,7 +39,13 @@ public class ScheduleService {
         logger.info("Successfully get spreadsheet `schedule` data from spreadsheet.");
 
         java.time.Month predMonth = getEnglishUpperCaseMonthOrNull(scheduleHeader.get(0).get(0).trim().toUpperCase());
-        logger.info("Stated parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
+
+        if (predMonth == null) {
+            logger.error("Cannot parse initial month.");
+            throw new RuntimeException("Bad `initial month` parse result");
+        } else {
+            logger.info("Stated parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
+        }
 
         for (int i = 0; i < workers.size(); i++) {
             int scheduleDateIndex = 0;
