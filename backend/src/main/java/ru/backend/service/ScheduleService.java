@@ -2,13 +2,15 @@ package ru.backend.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import ru.backend.model.ScheduleItem;
 import ru.backend.model.Month;
+import ru.backend.model.ScheduleItem;
 import ru.backend.parser.GoogleSheetParser;
 
-
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ScheduleService {
