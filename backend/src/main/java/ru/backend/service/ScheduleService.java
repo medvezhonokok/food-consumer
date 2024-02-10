@@ -17,8 +17,8 @@ public class ScheduleService {
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY/edit#gid=592135575
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
     private static final String SPREADSHEET_WORKER_RANGE = "B30:B40";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "KT5:NC7";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_RANGE = "KT30:MP40";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "KT5:NK7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_RANGE = "KT30:NK40";
 
     public Set<ScheduleItem> getSchedule() {
         long before = System.currentTimeMillis();
