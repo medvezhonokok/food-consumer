@@ -21,8 +21,8 @@ const StopListElements = () => {
     return (<>
             <div className={`${styles.Modal} ${show ? styles.ShowModal : styles.HideModal}`}/>
             <Container
-                className={`rounded-bottom-5 ps-5 pe-5 bg-light` +
-                    ` ${styles.Container} ${show ? '' : ''}`}
+                className={`rounded-bottom-5 ps-5 pe-5 bg-light`  +
+                    ` ${styles.Container}`}
                 {...handlers}
             >
                 <Collapse in={show}>
