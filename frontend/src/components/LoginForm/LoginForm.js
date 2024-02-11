@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import styles from './LoginForm.module.css';
+import {Button} from "react-bootstrap";
 
 const LoginForm = () => {
     const [login, setLogin] = useState('');
@@ -6,7 +8,7 @@ const LoginForm = () => {
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         if (name === 'login') {
             setLogin(value);
         } else if (name === 'password') {
@@ -26,8 +28,8 @@ const LoginForm = () => {
             });
 
             if (!userResponse.ok) {
-                alert("Пиздец, ошибка!")
-                return
+                alert("Oops, an error occurred!");
+                return;
             }
 
             const user = await userResponse.json();
@@ -37,7 +39,6 @@ const LoginForm = () => {
             console.error('Failed to fetch user information:', error.message);
         }
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,36 +65,38 @@ const LoginForm = () => {
             await handleLoginSuccess(jwtToken);
         } catch (error) {
             console.error('Authentication failed:', error);
-            setErrors({authentication: 'Authentication failed'});
+            setErrors({ authentication: 'Authentication failed' });
         }
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Login:</label>
+        <div className={styles.container}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Login:</label>
                     <input
                         type="text"
                         name="login"
                         value={login}
                         onChange={handleChange}
+                        className={styles.input}
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Password:</label>
                     <input
                         type="password"
                         name="password"
                         value={password}
                         onChange={handleChange}
+                        className={styles.input}
                     />
                 </div>
                 {errors.authentication && (
-                    <div style={{color: 'red'}}>{errors.authentication}</div>
+                    <div className={styles.error}>{errors.authentication}</div>
                 )}
-                <button type="submit">Login</button>
+
+                <Button type="submit" className="btn btn-primary">Log in</Button>
             </form>
         </div>
     );

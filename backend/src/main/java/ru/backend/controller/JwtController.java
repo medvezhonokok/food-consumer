@@ -33,7 +33,7 @@ public class JwtController {
         binder.addValidators(userCredentialsEnterValidator);
     }
 
-    @PostMapping("jwt")
+    @PostMapping("/jwt")
     public String enter(@RequestBody @Valid UserCredentials userCredentials, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult);

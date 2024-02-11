@@ -39,4 +39,10 @@ public class UserService {
 
         logger.info("Successfully registered user{login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
     }
+
+    public void updateUserSettingsById(long userId, String phoneNumber) {
+        logger.info("Stated updating user settings with id=" + userId + ", updated phoneNumber=" + phoneNumber);
+
+        userRepository.updatePhoneNumber(userId, phoneNumber);
+    }
 }

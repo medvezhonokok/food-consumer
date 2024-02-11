@@ -38,10 +38,16 @@ public class UserController {
     }
 
     @PostMapping
-    public void register(@RequestBody @Valid UserCredentials credentials, BindingResult bindingResult) {
+    public UserCredentials register(@RequestBody @Valid UserCredentials credentials, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getAllErrors().toString());
         }
         userService.register(credentials);
+        return credentials;
+    }
+
+    @PostMapping("/update/{id}")
+    public void updateUserSettings(@PathVariable(name = "id") Long userId, @RequestBody UserCredentials userCredentials) {
+        userService.updateUserSettingsById(userId, userCredentials.getPhoneNumber());
     }
 }

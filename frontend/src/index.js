@@ -12,6 +12,7 @@ import Tasks from "./components/Tasks/Tasks";
 import Notes from "./components/Notes/Notes";
 import store from "./store";
 import Schedule from "./components/Schedule/Schedule";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 const router = createBrowserRouter([
     {
@@ -28,13 +29,27 @@ const router = createBrowserRouter([
     },
     {
         path: "tasks",
-        element: <div><Tasks/></div>,
+        element: <div><Tasks user={getUserFromLocalStorage()}/></div>,
     },
     {
         path: "schedule",
-        element: <div><Schedule/></div>
+        element: <div><Schedule user={getUserFromLocalStorage()}/></div>
     },
+    {
+        path: "profile",
+        element: <div><UserProfile user={getUserFromLocalStorage()}/></div>
+    }
 ]);
+
+function getUserFromLocalStorage() {
+    const userString = localStorage.getItem('user');
+
+    try {
+        return JSON.parse(userString);
+    } catch (ignored) {
+        return null;
+    }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

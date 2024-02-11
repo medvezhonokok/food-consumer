@@ -1,13 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import LoginForm from '../LoginForm/LoginForm';
 import RegisterForm from '../RegisterForm/RegisterForm';
+import MenuButtons from '../MenuButtons/MenuButtons';
 
 function App() {
     const getUserFromLocalStorage = () => {
         const userString = localStorage.getItem('user');
-        return userString ? JSON.parse(userString) : null;
+
+        try {
+            return JSON.parse(userString);
+        } catch (ignored) {
+            return null;
+        }
     };
 
     const user = getUserFromLocalStorage();
@@ -34,24 +40,27 @@ function App() {
             <div>
                 {isLoggedIn ? (
                     <div>
-                        <CustomNavbar user={user} handleLogout={handleLogout}/>
+                        <CustomNavbar user={user} />
+                        <MenuButtons handleLogout={handleLogout} />
                     </div>
                 ) : (
                     <div>
                         {showLoginForm ? (
                             <>
-                                <LoginForm/>
-                                <p>
-                                    Don't have an account?{' '}
-                                    <button onClick={handleSwitchForm}>Register</button>
+                                <LoginForm />
+                                <p style={styles.switchFormText}>
+                                <span onClick={handleSwitchForm} style={styles.switchFormTextButton}>
+                                    Don't have an account?
+                                </span>
                                 </p>
                             </>
                         ) : (
                             <>
-                                <RegisterForm/>
-                                <p>
-                                    Already have an account?{' '}
-                                    <button onClick={handleSwitchForm}>Login</button>
+                                <RegisterForm />
+                                <p style={styles.switchFormText}>
+                                <span onClick={handleSwitchForm} style={styles.switchFormTextButton}>
+                                    Already have an account?
+                                </span>
                                 </p>
                             </>
                         )}
@@ -61,5 +70,22 @@ function App() {
         </div>
     );
 }
+
+const styles = {
+    switchFormText: {
+        textAlign: 'center',
+        marginTop: '10px',
+    },
+    switchFormTextButton: {
+        textDecoration: 'underline',
+        cursor: 'pointer',
+        marginLeft: '5px',
+        transition: 'color 0.3s ease',
+    },
+    switchFormTextButtonHover: {
+        color: '#9c9a7d',
+    },
+};
+
 
 export default App;

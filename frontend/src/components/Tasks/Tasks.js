@@ -16,14 +16,7 @@ async function getTasks() {
     }))];
 }
 
-const Tasks = () => {
-    const getUserFromLocalStorage = () => {
-        const userString = localStorage.getItem('user');
-        return userString ? JSON.parse(userString) : null;
-    };
-
-    const user = getUserFromLocalStorage();
-
+const Tasks = ({user}) => {
     const [tasks, setTasks] = useState(new Array(3).fill({loading: true}));
     useEffect(() => {
         getTasks().then((res) => {
@@ -44,24 +37,21 @@ const Tasks = () => {
         filteredTasksByDay = <div className={`${styles.CenteredContent} `}>No one task today</div>;
     }
 
-    const handleLogout = () => {
-        localStorage.removeItem('jwtToken');
-        localStorage.removeItem('user');
-        window.location.pathname = '/';
-    };
-
     return (
         (user ?
-                <Stack gap={3} className={`${styles.Tasks} mt-3`} data-testid="Tasks">
-                    <CustomNavbar user={user} handleLogout={handleLogout}/>
-                    <CustomCalendar value={dateState} onChange={changeDate}/>
+                <>
+                    <CustomNavbar user={user}/>
+                    <Stack gap={3} className={`${styles.Tasks} mt-3`} data-testid="Tasks">
 
-                    <div className={`${styles.CenteredContent}`}>
-                        <p>Selected date: {moment(dateState).format('MMMM Do YYYY')}</p>
-                    </div>
+                        <CustomCalendar value={dateState} onChange={changeDate}/>
 
-                    {filteredTasksByDay}
-                </Stack>
+                        <div className={`${styles.CenteredContent}`}>
+                            <p>Selected date: {moment(dateState).format('MMMM Do YYYY')}</p>
+                        </div>
+
+                        {filteredTasksByDay}
+                    </Stack>
+                </>
                 :
                 <>nothing there</>
         )

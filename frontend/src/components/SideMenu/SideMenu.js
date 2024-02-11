@@ -3,6 +3,7 @@ import {Button, Offcanvas, Stack} from "react-bootstrap";
 
 const SideMenu = (props: { show: boolean, onClose: Function }) => {
     const buttons = [
+        <Button href={'profile'}>Profile</Button>,
         <Button href={'tasks'}>Tasks</Button>,
         <Button href={'orders'}>Orders</Button>,
         <Button href={'schedule'}>Schedule</Button>,

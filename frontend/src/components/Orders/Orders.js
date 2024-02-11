@@ -9,7 +9,7 @@ import {Stack} from "react-bootstrap";
 import MenuButton from "../MenuButton/MenuButton";
 
 
-const Orders = () => {
+const Orders = ({user}) => {
     const orders = useSelector(state => state.orders.value)
     const dispatch = useDispatch()
     useEffect(() => {

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Notes.module.css';
 import StopListElements from "../StopListElements/StopListElements";
 import Orders from "../Orders/Orders";
+import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
 const Notes = () => {
     const getUserFromLocalStorage = () => {
@@ -14,8 +15,9 @@ const Notes = () => {
     return (
         (user ?
                 <div className={styles.Notes} data-testid="Notes">
+                    <CustomNavbar user={user}/>
                     <StopListElements/>
-                    <Orders/>
+                    <Orders user={user}/>
                 </div> :
                 <>nothing there</>
         )

@@ -8,14 +8,7 @@ import client from '../../utils/client';
 import moment from "moment/moment";
 import ScheduleBox from "../ScheduleBox/ScheduleBox";
 
-const Schedule = () => {
-    const getUserFromLocalStorage = () => {
-        const userString = localStorage.getItem('user');
-        return userString ? JSON.parse(userString) : null;
-    };
-
-    const user = getUserFromLocalStorage();
-
+const Schedule = ({user, handleLogout}) => {
     const [schedule, setSchedule] = useState(new Array(3).fill({loading: true}));
     const [dateState, setDateState] = useState(new Date());
 
@@ -53,14 +46,16 @@ const Schedule = () => {
 
     return (
         (user ?
-                <Stack gap={3} className={`${styles.Schedule} mt-3`} data-testid="Schedule">
-                    <CustomNavbar/>
-                    <CustomCalendar value={dateState} onChange={changeDate}/>
+                <>
+                    <CustomNavbar user={user}/>
+                    <Stack gap={3} className={`${styles.Schedule} mt-3`} data-testid="Schedule">
+                        <CustomCalendar value={dateState} onChange={changeDate}/>
 
-                    <div style={{marginTop: '2rem'}}>
-                        {filteredScheduleByDate}
-                    </div>
-                </Stack>
+                        <div style={{marginTop: '2rem'}}>
+                            {filteredScheduleByDate}
+                        </div>
+                    </Stack>
+                </>
                 :
                 <>
                     nothing there
