@@ -24,10 +24,7 @@ const router = createBrowserRouter([
     },
     {
         path: "orders",
-        element:
-            <div>
-                <Notes/>
-            </div>,
+        element: <div><Notes/></div>,
     },
     {
         path: "tasks",

@@ -13,7 +13,7 @@ const Task = (props: { task: { time: Date, text: string, loading?: boolean } }) 
                 <span
                     className={`${styles.Header} text-secondary`}
                 ><b>
-                    {task.loading?
+                    {task.loading ?
                         <Placeholder animation={"glow"}><Placeholder xs={6}/></Placeholder>
                         : ftime()
                     }

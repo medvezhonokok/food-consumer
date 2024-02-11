@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
 export const ordersSlice = createSlice({
     name: 'orders',
@@ -28,5 +28,5 @@ export const ordersSlice = createSlice({
     },
 });
 
-export const { update, remove, init } = ordersSlice.actions;
+export const {update, remove, init} = ordersSlice.actions;
 export default ordersSlice.reducer;

@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styles from './StopListElements.module.css';
 import {Collapse, Container, Stack} from "react-bootstrap";
 import StopListElement from "../StopListElement/StopListElement";
-import client from "../../utils/client";
 import {useSwipeable} from "react-swipeable";
-import {GripHorizontal, PcHorizontal} from "react-bootstrap-icons";
+import {GripHorizontal} from "react-bootstrap-icons";
 
 const StopListElements = () => {
     const [stopListElements, setStopListElements] = useState([]);
@@ -21,7 +20,7 @@ const StopListElements = () => {
     return (<>
             <div className={`${styles.Modal} ${show ? styles.ShowModal : styles.HideModal}`}/>
             <Container
-                className={`rounded-bottom-5 ps-5 pe-5 bg-light`  +
+                className={`rounded-bottom-5 ps-5 pe-5 bg-light` +
                     ` ${styles.Container}`}
                 {...handlers}
             >

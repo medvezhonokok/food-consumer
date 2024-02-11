@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './CustomNavbar.module.css';
-import {Button, Col, Container, Form, FormLabel, Navbar, Stack} from "react-bootstrap";
-import {List} from "react-bootstrap-icons"
-import SideMenu from "../SideMenu/SideMenu";
+import {Button, Col, Container, Navbar, Stack} from "react-bootstrap";
 import MenuButton from "../MenuButton/MenuButton";
 
-const CustomNavbar = () => {
+const CustomNavbar = ({user, handleLogout}) => {
     return (
         <Navbar className={`${styles.CustomNavbar} `} sticky={"top"} data-testid="CustomNavbar">
             <Container fluid>
@@ -16,14 +14,16 @@ const CustomNavbar = () => {
                     </Stack>
                 </Col>
                 <Col>
-                    <Form inline>
-                        <FormLabel className={"text-secondary me-3 align-text-top h-auto"}>username</FormLabel>
-                        <Button variant={"outline-primary"} className={"h-auto"}>Выйти</Button>
-                    </Form>
+                    {user ? (
+                        <>
+                            <p>Welcome, {user.login}!</p>
+                            <Button variant={"outline-primary"} onClick={handleLogout}>Logout</Button>
+                        </>
+                    ) : null}
                 </Col>
             </Container>
-
         </Navbar>
     );
 }
+
 export default CustomNavbar;

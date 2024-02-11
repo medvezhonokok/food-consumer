@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {List} from "react-bootstrap-icons";
 import {Button} from "react-bootstrap";
-import {useState} from "react";
 import SideMenu from "../SideMenu/SideMenu";
 
 const MenuButton = () => {

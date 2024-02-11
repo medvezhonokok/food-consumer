@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './SideMenu.module.css';
 import {Button, Offcanvas, Stack} from "react-bootstrap";
 
 const SideMenu = (props: { show: boolean, onClose: Function }) => {
