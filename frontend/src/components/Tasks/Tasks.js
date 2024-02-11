@@ -47,7 +47,7 @@ const Tasks = () => {
     const handleLogout = () => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('user');
-        window.location.reload();
+        window.location.pathname = '/';
     };
 
     return (

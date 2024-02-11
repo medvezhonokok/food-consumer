@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public void register(UserCredentials credentials) {
-        logger.info("Started to register new user {" + credentials.getLogin() + ", " + credentials.getPhoneNumber() + "}");
+        logger.info("Started to register new user {login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
 
         User user = new User();
         user.setLogin(credentials.getLogin());
@@ -37,6 +37,6 @@ public class UserService {
         userRepository.save(user);
         userRepository.updatePasswordSha(user.getId(), user.getLogin(), credentials.getPassword());
 
-        logger.info("Successfully registered user{" + credentials.getLogin() + ", " + credentials.getPhoneNumber() + "}");
+        logger.info("Successfully registered user{login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
     }
 }

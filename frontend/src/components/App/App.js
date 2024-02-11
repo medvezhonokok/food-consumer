@@ -22,7 +22,7 @@ function App() {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('user');
         setIsLoggedIn(false);
-        window.location.reload();
+        window.location.pathname = '/';
     };
 
     const handleSwitchForm = () => {
