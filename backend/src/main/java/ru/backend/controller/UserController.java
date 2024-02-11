@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/auth")
     public User findUserByJwt(@RequestParam String jwt) {
-        return jwtService.find(jwt);
+        return jwtService.findUserByJWT(jwt);
     }
 
     @PostMapping

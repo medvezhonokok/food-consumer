@@ -1,5 +1,6 @@
 package ru.backend.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.backend.form.UserCredentials;
 import ru.backend.model.User;
@@ -7,6 +8,7 @@ import ru.backend.repository.UserRepository;
 
 @Service
 public class UserService {
+    private static final Logger logger = Logger.getLogger(UserService.class);
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -26,10 +28,15 @@ public class UserService {
     }
 
     public void register(UserCredentials credentials) {
+        logger.info("Started to register new user {" + credentials.getLogin() + ", " + credentials.getPhoneNumber() + "}");
+
         User user = new User();
         user.setLogin(credentials.getLogin());
         user.setPhoneNumber(credentials.getPhoneNumber());
+
         userRepository.save(user);
         userRepository.updatePasswordSha(user.getId(), user.getLogin(), credentials.getPassword());
+
+        logger.info("Successfully registered user{" + credentials.getLogin() + ", " + credentials.getPhoneNumber() + "}");
     }
 }
