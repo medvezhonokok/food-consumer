@@ -19,3 +19,9 @@
     bottom: 3%;
     left: 5%;
 }
+
+.CenteredContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

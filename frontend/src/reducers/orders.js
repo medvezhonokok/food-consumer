@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const ordersSlice = createSlice({
     name: 'orders',
@@ -7,22 +7,26 @@ export const ordersSlice = createSlice({
     },
     reducers: {
         update(state, action) {
-            state.value[action.payload.id] = action.payload
-            localStorage.setItem("orders", JSON.stringify(state.value))
+            if (typeof state.value !== 'object' || state.value === null) {
+                state.value = {};
+            }
+
+            state.value[action.payload.id] = action.payload;
+
+            localStorage.setItem("orders", JSON.stringify(state.value));
         },
 
         remove(state, action) {
-            delete state.value[action.payload.id]
-            localStorage.setItem("orders", JSON.stringify(state.value))
+            delete state.value[action.payload.id];
+            localStorage.setItem("orders", JSON.stringify(state.value));
         },
 
         init(state) {
-            state.value = JSON.parse(localStorage.getItem("orders"))
-            console.log("init")
-        }
+            state.value = JSON.parse(localStorage.getItem("orders")) || {}; // Используем пустой объект, если данные в localStorage отсутствуют
+            console.log("init");
+        },
+    },
+});
 
-    }
-})
-
-export const {update, remove, init} = ordersSlice.actions
-export default ordersSlice.reducer
+export const { update, remove, init } = ordersSlice.actions;
+export default ordersSlice.reducer;

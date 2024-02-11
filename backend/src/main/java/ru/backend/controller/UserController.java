@@ -12,7 +12,6 @@ import ru.backend.service.UserService;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
-
 @RestController
 @RequestMapping("/api/1/users")
 public class UserController {

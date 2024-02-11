@@ -19,12 +19,16 @@ const Orders = () => {
         // dispatch(update({id: 0, text: "I'll have two number 9's, a number 9 large,\na number 6 with extra dip, a number 7, two number 45s, one with cheese, and a large soda"}))
     }, []);
 
+
+    let filteredOrders = !orders || orders.length === 0 ?
+        <div className={`${styles.CenteredContent} `}>No one task today</div> : <Stack gap={3}>
+            {Object.values(orders).map(o => <Order key={o.id} orderId={o.id}/>)}
+        </Stack>;
+
     return (
         <>
             <div className={styles.Orders} data-testid="Orders">
-                <Stack gap={3}>
-                    {Object.values(orders).map(o => <Order key={o.id} orderId={o.id}/>)}
-                </Stack>
+                {filteredOrders}
             </div>
             <div className={styles.Create}>
                 <Button className={styles.Btn} onClick={() => dispatch(update({id: v4(), text: ""}))}>Добавить</Button>
