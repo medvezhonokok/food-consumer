@@ -15,7 +15,7 @@ public class DishesPage {
         this.dishService = dishService;
     }
 
-    @GetMapping(value = "dishes")
+    @GetMapping(value = "/api/dishes")
     public List<Dish> getDishes() {
         return dishService.getStopList();
     }

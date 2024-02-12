@@ -14,7 +14,7 @@ const Schedule = ({user, handleLogout}) => {
 
     const getSchedule = async () => {
         try {
-            const res = await client.get('/schedule');
+            const res = await client.get('/api/schedule');
             return res.map(el => ({
                 workerName: el.workerName,
                 creationTime: new Date(el.creationTime),

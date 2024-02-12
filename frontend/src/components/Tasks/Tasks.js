@@ -9,7 +9,7 @@ import CustomCalendar from "../CustomCalendar/CustomCalendar";
 import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
 async function getTasks() {
-    const res = await client.get("/tasks")
+    const res = await client.get("/api/tasks")
     return [...res.map(el => ({
         text: el.content,
         time: new Date(Date.parse(el.creationTime))
