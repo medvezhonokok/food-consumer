@@ -1,5 +1,3 @@
-// UserProfile.js
-
 import React, { useState } from 'react';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
@@ -47,11 +45,10 @@ const UserProfile = ({ user }) => {
             const errorText = await response.text();
             throw new Error(errorText);
         } else {
-            // Update user information in localStorage
             const updatedUser = { ...user, phoneNumber: newPhoneNumber };
             localStorage.setItem('user', JSON.stringify(updatedUser));
-
             window.location.reload();
+            alert("Номер телефона был успешно обновлен!")
         }
     };
 
