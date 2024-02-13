@@ -46,6 +46,17 @@ public class UserController {
         return credentials;
     }
 
+    @PostMapping("/getId")
+    public Long getUserIdByLogin(@RequestBody UserCredentials credentials, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult.getAllErrors().toString());
+        }
+
+        String login = credentials.getLogin();
+
+        return userService.findUserByLogin(login).getId();
+    }
+
     @PostMapping("/update/{id}")
     public void updateUserSettings(@PathVariable(name = "id") Long userId, @RequestBody UserCredentials userCredentials) {
         userService.updateUserSettingsById(userId, userCredentials.getPhoneNumber());

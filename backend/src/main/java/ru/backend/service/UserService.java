@@ -45,4 +45,8 @@ public class UserService {
 
         userRepository.updatePhoneNumber(userId, phoneNumber);
     }
+
+    public User findUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 }

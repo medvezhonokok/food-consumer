@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     int countByLogin(String login);
 
+    User findByLogin(String login);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE user SET phone_number=?2 WHERE id=?1", nativeQuery = true)

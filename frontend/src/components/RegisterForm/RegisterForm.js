@@ -86,6 +86,19 @@ const RegistrationForm = () => {
             }
 
             const user = await response.json();
+
+            const userIdResponse = await fetch(`http://localhost:8080/api/1/users/getId`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    login: login
+                }),
+            });
+
+            user.id = await userIdResponse.json();
+
             await handleRegistrationSuccess(user);
         } catch (error) {
             alert(error);
