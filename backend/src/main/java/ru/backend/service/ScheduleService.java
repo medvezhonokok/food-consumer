@@ -31,15 +31,17 @@ public class ScheduleService {
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B12";
     private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:NT12";
 
-    public Set<ScheduleItem> getSchedule() {
+    private final Set<ScheduleItem> schedule = new HashSet<>();
+
+    {
         long before = System.currentTimeMillis();
-        Set<ScheduleItem> schedule = new HashSet<>();
 
         List<String> waiters = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_WAITER_RANGE);
         List<String> baristas = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_BARISTA_RANGE);
         List<String> managers = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_MANAGER_RANGE);
 
-        logger.info("Successfully get spreadsheet `workers` data from spreadsheet.Total workers count is: %d".formatted(waiters.size() + baristas.size() + managers.size()));
+        logger.info(("Successfully get spreadsheet `workers` data from spreadsheet. "
+                + "Total workers count is: %d").formatted(waiters.size() + baristas.size() + managers.size()));
 
         List<List<String>> scheduleHeader = GoogleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE);
@@ -71,7 +73,9 @@ public class ScheduleService {
         long after = System.currentTimeMillis();
 
         logger.info("Successfully sent " + schedule.size() + " schedule items in " + (after - before) + "ms.");
+    }
 
+    public Set<ScheduleItem> getSchedule() {
         return schedule;
     }
 
