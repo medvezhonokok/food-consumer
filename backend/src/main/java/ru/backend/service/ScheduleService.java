@@ -1,8 +1,10 @@
 package ru.backend.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import ru.backend.model.Month;
+import ru.backend.model.Role;
 import ru.backend.model.ScheduleItem;
 import ru.backend.parser.GoogleSheetParser;
 
@@ -18,25 +20,38 @@ public class ScheduleService {
 
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY/edit#gid=592135575
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
-    private static final String SPREADSHEET_WORKER_RANGE = "B30:B40";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "KT5:NK7";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_RANGE = "KT30:NK40";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:NT7";
+
+    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B30:B40";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO30:NT40";
+
+    private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B15:B19";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO15:NT19";
+
+    private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B12";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:NT12";
 
     public Set<ScheduleItem> getSchedule() {
         long before = System.currentTimeMillis();
         Set<ScheduleItem> schedule = new HashSet<>();
 
-        List<String> workers = GoogleSheetParser.getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_WORKER_RANGE)
-                .stream().filter(workerName -> workerName != null && workerName.size() == 1)
-                .map(workerName -> workerName.get(0)).toList();
+        List<String> waiters = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_WAITER_RANGE);
+        List<String> baristas = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_BARISTA_RANGE);
+        List<String> managers = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_MANAGER_RANGE);
 
-        logger.info("Successfully get spreadsheet `workers` data from spreadsheet.");
+        logger.info("Successfully get spreadsheet `workers` data from spreadsheet.Total workers count is: %d".formatted(waiters.size() + baristas.size() + managers.size()));
 
         List<List<String>> scheduleHeader = GoogleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE);
 
-        List<List<String>> mainSchedule = GoogleSheetParser
-                .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_RANGE);
+        List<List<String>> mainWaiterSchedule = GoogleSheetParser
+                .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE);
+
+        List<List<String>> mainBaristaSchedule = GoogleSheetParser
+                .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE);
+
+        List<List<String>> mainManagerSchedule = GoogleSheetParser
+                .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE);
 
         logger.info("Successfully get spreadsheet `schedule` data from spreadsheet.");
 
@@ -49,6 +64,30 @@ public class ScheduleService {
             logger.info("Stated parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
         }
 
+        addWorkersSchedule(waiters, mainWaiterSchedule, scheduleHeader, predMonth, schedule, Role.WAITER);
+        addWorkersSchedule(baristas, mainBaristaSchedule, scheduleHeader, predMonth, schedule, Role.BARISTA);
+        addWorkersSchedule(managers, mainManagerSchedule, scheduleHeader, predMonth, schedule, Role.MANAGER);
+
+        long after = System.currentTimeMillis();
+
+        logger.info("Successfully sent " + schedule.size() + " schedule items in " + (after - before) + "ms.");
+
+        return schedule;
+    }
+
+    @NonNull
+    private List<String> getWorkerListBySpreadSheetRange(String spreadSheetRange) {
+        return GoogleSheetParser.getSpreadsheetData(SPREADSHEET_ID, spreadSheetRange)
+                .stream().filter(workerName -> workerName != null && workerName.size() == 1)
+                .map(workerName -> workerName.get(0)).toList();
+    }
+
+    private void addWorkersSchedule(List<String> workers,
+                                    List<List<String>> mainSchedule,
+                                    List<List<String>> scheduleHeader,
+                                    java.time.Month predMonth,
+                                    Set<ScheduleItem> schedule,
+                                    Role role) {
         for (int i = 0; i < workers.size(); i++) {
             int scheduleDateIndex = 0;
 
@@ -69,24 +108,15 @@ public class ScheduleService {
 
                 if (mainSchedule.get(i).get(j) != null && !mainSchedule.get(i).get(j).isEmpty()) {
                     int scheduleItemDay = Integer.parseInt(scheduleHeader.get(2).get(scheduleDateIndex));
-                    int scheduleItemYear = 2023;
-
-                    if (!scheduleItemMonth.equals(java.time.Month.DECEMBER)) {
-                        scheduleItemYear = 2024;
-                    }
+                    int scheduleItemYear = 2024;
 
                     LocalDateTime dateTime = LocalDateTime.of(scheduleItemYear, scheduleItemMonth, scheduleItemDay, 0, 0);
-                    schedule.add(new ScheduleItem(workers.get(i), dateTime, mainSchedule.get(i).get(j)));
+                    schedule.add(new ScheduleItem(workers.get(i), dateTime, mainSchedule.get(i).get(j), role));
                 }
 
                 scheduleDateIndex++;
             }
         }
-        long after = System.currentTimeMillis();
-
-        logger.info("Successfully sent " + schedule.size() + " schedule items in " + (after - before) + "ms.");
-
-        return schedule;
     }
 
 

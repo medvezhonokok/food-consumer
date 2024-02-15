@@ -3,7 +3,7 @@ import styles from './ScheduleBox.module.css';
 import {Card, Placeholder} from 'react-bootstrap';
 
 const ScheduleBox = (props: {
-    scheduleElem: { workerName: string, creationTime: Date, info: string, loading?: boolean }
+    scheduleElem: { workerName: string, creationTime: Date, info: string, waiter: boolean, loading?: boolean }
 }) => {
     const {scheduleElem} = props
 

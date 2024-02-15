@@ -8,19 +8,20 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ScheduleItem {
-
     private String workerName;
 
     private LocalDateTime creationTime;
 
     private String info;
 
-//    private long id;
+    private boolean waiter;
 
+    private Role role;
 
-    public ScheduleItem(String workerName, LocalDateTime creationTime, String info) {
+    public ScheduleItem(String workerName, LocalDateTime creationTime, String info, Role role) {
         this.workerName = workerName;
         this.creationTime = creationTime;
         this.info = info;
+        this.role = role;
     }
 }
