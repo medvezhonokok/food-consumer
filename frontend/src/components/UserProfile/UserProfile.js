@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const UserProfile = ({ user }) => {
     const [newLogin, setNewLogin] = useState(user ? user.login : '');
@@ -68,11 +70,10 @@ const UserProfile = ({ user }) => {
                 </div>
                 <div className={styles.inputContainer}>
                     <label className={styles.label}>Phone Number:</label>
-                    <input
-                        type="text"
+                    <PhoneInput
+                        defaultCountry="Russia"
                         value={newPhoneNumber}
-                        onChange={(e) => setNewPhoneNumber(e.target.value)}
-                        className={`${styles.input} ${phoneNumberError ? styles.inputError : ''}`}
+                        onChange={(value) => setNewPhoneNumber(value)}
                     />
                     {phoneNumberError && <div className={styles.error}>{phoneNumberError}</div>}
                 </div>

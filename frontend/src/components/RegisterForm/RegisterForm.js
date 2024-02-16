@@ -101,8 +101,14 @@ const RegistrationForm = () => {
 
             await handleRegistrationSuccess(user);
         } catch (error) {
-            alert(error);
-            setErrors({registration: 'Registration failed'});
+            if (error.message.includes('Duplicate entry')) {
+                setErrors({
+                    registration: 'This login or phone number is already registered',
+                });
+            } else {
+                console.error('Registration failed:', error.message);
+                setErrors({ registration: 'Registration failed' });
+            }
         }
     };
 
