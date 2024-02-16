@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     int countByLogin(String login);
 
+    int countByPhoneNumber(String phoneNumber);
+
     User findByLogin(String login);
 
     @Transactional

@@ -27,6 +27,12 @@ public class UserCredentialsRegisterValidator implements Validator {
                         "login-in-use",
                         "Login already in use");
             }
+
+            if (!userService.isPhoneNumberVacant(registerForm.getPhoneNumber())) {
+                errors.rejectValue("phoneNumber",
+                        "phoneNumber-in-use",
+                        "This phone number has already registered");
+            }
         }
     }
 }

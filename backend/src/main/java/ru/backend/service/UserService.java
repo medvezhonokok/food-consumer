@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.countByLogin(login) == 0;
     }
 
+    public boolean isPhoneNumberVacant(String phoneNumber) {
+        return userRepository.countByPhoneNumber(phoneNumber) == 0;
+    }
+
     public void register(UserCredentials credentials) {
         logger.info("Started to register new user {login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
 
