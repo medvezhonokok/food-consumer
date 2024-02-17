@@ -6,6 +6,8 @@ import ru.backend.form.UserCredentials;
 import ru.backend.model.User;
 import ru.backend.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private static final Logger logger = Logger.getLogger(UserService.class);
@@ -52,5 +54,9 @@ public class UserService {
 
     public User findUserByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

@@ -11,6 +11,7 @@ import ru.backend.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/1/users")
@@ -60,5 +61,10 @@ public class UserController {
     @PostMapping("/update/{id}")
     public void updateUserSettings(@PathVariable(name = "id") Long userId, @RequestBody UserCredentials userCredentials) {
         userService.updateUserSettingsById(userId, userCredentials.getPhoneNumber());
+    }
+
+    @GetMapping("/all")
+    public List<User> findAll () {
+        return userService.findAll();
     }
 }

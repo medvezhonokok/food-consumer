@@ -13,6 +13,7 @@ import Notes from "./components/Notes/Notes";
 import store from "./store";
 import Schedule from "./components/Schedule/Schedule";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Users from "./components/Users/Users";
 
 const router = createBrowserRouter([
     {
@@ -38,9 +39,34 @@ const router = createBrowserRouter([
     {
         path: "profile",
         element: <div><UserProfile user={getUserFromLocalStorage()}/></div>
+    },
+    {
+        path: "users",
+        element: <div><Users user={getUserFromLocalStorage()} users={await getUsers()}/></div>
     }
 ]);
 
+async function getUsers()    {
+    try {
+        const usersResponse = await fetch("http://localhost:8080/api/1/users/all", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!usersResponse.ok) {
+            const errorText = await usersResponse.text();
+            alert(errorText);
+            return [];
+        }
+
+        return await usersResponse.json();
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        return [];
+    }
+}
 function getUserFromLocalStorage() {
     const userString = localStorage.getItem('user');
 
