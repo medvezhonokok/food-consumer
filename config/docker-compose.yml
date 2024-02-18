@@ -1,0 +1,67 @@
+version: '3.8'
+services:
+  tinode-server:
+    image: tinode/tinode-mysql:latest
+    container_name: tinode-srv
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - static_value:
+      - media_value:
+      - umd_value:
+    environment:
+      MYSQL_DSN: root:67b7f471fa16819e@tcp(db)/tinode
+    ports:
+      - '6060:6060'
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 67b7f471fa16819e
+      MYSQL_DATABASE: food-consumer
+      MYSQL_USER: food-consumer
+      MYSQL_PASSWORD: 67b7f471fa16819e
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./config/database/initdb.d:/docker-entrypoint-initdb.d
+
+  pma:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    restart: unless-stopped
+    ports:
+      - "3333:80"
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: food-consumer
+      PMA_PASSWORD: 67b7f471fa16819e
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    image: nginx
+    ports:
+      - "3331:3331"
+    volumes:
+      - static_value:/etc/nginx/static
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+    # network_mode: host
+    #ronment:
+      #- NGINX_PORT=3331
+  spring:
+    container_name: spring
+    restart: unless-stopped
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      SPRING_PROFILES_ACTIVE: test
+volumes:
+  dbdata:
+  static_value:

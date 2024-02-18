@@ -23,6 +23,12 @@ public class TaskService {
     private static final String SPREADSHEET_ID = "1y5PpIKd2fJdDN4d44vTm90nJBI4fB__GDcwUneRpS_I";
     private static final String SPREADSHEET_RANGE = "A2:Z";
 
+    private final GoogleSheetParser googleSheetParser;
+
+    public TaskService(GoogleSheetParser googleSheetParser) {
+        this.googleSheetParser = googleSheetParser;
+    }
+
     private static LocalDateTime getLocalDateTime(String date, String time) throws ParseException {
         try {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("d.M.u"));
@@ -37,7 +43,7 @@ public class TaskService {
 
     public List<Task> findAll() {
         List<Task> tasks = new ArrayList<>();
-        List<List<String>> spreadsheetData = GoogleSheetParser.getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_RANGE);
+        List<List<String>> spreadsheetData = googleSheetParser.getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_RANGE);
 
         spreadsheetData.stream().filter(row -> row != null && row.size() > 2).forEach(row -> {
             String date = row.get(0);

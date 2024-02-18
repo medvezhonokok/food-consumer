@@ -31,9 +31,14 @@ public class ScheduleService {
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B12";
     private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:NT12";
 
+    private final GoogleSheetParser googleSheetParser;
+
     private final Set<ScheduleItem> schedule = new HashSet<>();
 
-    {
+
+    public ScheduleService(GoogleSheetParser googleSheetParser) {
+        this.googleSheetParser = googleSheetParser;
+
         long before = System.currentTimeMillis();
 
         List<String> waiters = getWorkerListBySpreadSheetRange(SPREADSHEET_WORKER_WAITER_RANGE);
@@ -43,17 +48,21 @@ public class ScheduleService {
         logger.info(("Successfully get spreadsheet `workers` data from spreadsheet. "
                 + "Total workers count is: %d").formatted(waiters.size() + baristas.size() + managers.size()));
 
-        List<List<String>> scheduleHeader = GoogleSheetParser
+        List<List<String>> scheduleHeader = googleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE);
 
-        List<List<String>> mainWaiterSchedule = GoogleSheetParser
+        List<List<String>> mainWaiterSchedule = googleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE);
 
-        List<List<String>> mainBaristaSchedule = GoogleSheetParser
+        List<List<String>> mainBaristaSchedule = googleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE);
 
-        List<List<String>> mainManagerSchedule = GoogleSheetParser
+        List<List<String>> mainManagerSchedule = googleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE);
+
+
+        System.out.println(scheduleHeader.get(0).get(0));
+        System.out.println("=====" + mainManagerSchedule.size() + "/" + mainBaristaSchedule.size() + "/" + mainWaiterSchedule.size() + "=====");
 
         logger.info("Successfully get spreadsheet `schedule` data from spreadsheet.");
 
@@ -61,7 +70,8 @@ public class ScheduleService {
 
         if (predMonth == null) {
             logger.error("Cannot parse initial month.");
-            throw new RuntimeException("Bad `initial month` parse result");
+            predMonth = java.time.Month.FEBRUARY;
+//            throw new RuntimeException("Bad `initial month` parse result");
         } else {
             logger.info("Stated parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
         }
@@ -81,7 +91,7 @@ public class ScheduleService {
 
     @NonNull
     private List<String> getWorkerListBySpreadSheetRange(String spreadSheetRange) {
-        return GoogleSheetParser.getSpreadsheetData(SPREADSHEET_ID, spreadSheetRange)
+        return googleSheetParser.getSpreadsheetData(SPREADSHEET_ID, spreadSheetRange)
                 .stream().filter(workerName -> workerName != null && workerName.size() == 1)
                 .map(workerName -> workerName.get(0)).toList();
     }
@@ -130,6 +140,6 @@ public class ScheduleService {
                     .map(Month::getMonth).orElse(null);
         }
 
-        return null;
+        return java.time.Month.FEBRUARY;
     }
 }

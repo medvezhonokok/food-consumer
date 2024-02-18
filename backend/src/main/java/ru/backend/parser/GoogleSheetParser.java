@@ -14,6 +14,9 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public final class GoogleSheetParser {
     private static final Logger logger = Logger.getLogger(GoogleSheetParser.class);
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -32,10 +36,13 @@ public final class GoogleSheetParser {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
-    private GoogleSheetParser() {
+    private final ResourceLoader resourceLoader;
+
+    private GoogleSheetParser(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
     }
 
-    private static Credential getCredentials(final NetHttpTransport httpTransport) {
+    private Credential getCredentials(final NetHttpTransport httpTransport) {
         try {
             InputStream in = GoogleSheetParser.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
 
@@ -45,6 +52,10 @@ public final class GoogleSheetParser {
             }
 
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+            java.io.File DATA_STORE_DIR = new java.io.File( resourceLoader.getResource("classpath:/tokens/StoredCredential").getURI().getPath());
+            FileDataStoreFactory DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+
 
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
@@ -67,7 +78,7 @@ public final class GoogleSheetParser {
                 .collect(Collectors.toList());
     }
 
-    public static List<List<String>> getSpreadsheetData(String spreadsheetId, String range) {
+    public List<List<String>> getSpreadsheetData(String spreadsheetId, String range) {
         try {
             NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
