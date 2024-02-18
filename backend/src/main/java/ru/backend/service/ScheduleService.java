@@ -1,5 +1,6 @@
 package ru.backend.service;
 
+import lombok.Getter;
 import org.apache.log4j.Logger;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ public class ScheduleService {
 
     private final GoogleSheetParser googleSheetParser;
 
+    @Getter
     private final Set<ScheduleItem> schedule = new HashSet<>();
 
 
@@ -60,20 +62,15 @@ public class ScheduleService {
         List<List<String>> mainManagerSchedule = googleSheetParser
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE);
 
-
-        System.out.println(scheduleHeader.get(0).get(0));
-        System.out.println("=====" + mainManagerSchedule.size() + "/" + mainBaristaSchedule.size() + "/" + mainWaiterSchedule.size() + "=====");
-
         logger.info("Successfully get spreadsheet `schedule` data from spreadsheet.");
 
         java.time.Month predMonth = getEnglishUpperCaseMonthOrNull(scheduleHeader.get(0).get(0).trim().toUpperCase());
 
         if (predMonth == null) {
             logger.error("Cannot parse initial month.");
-            predMonth = java.time.Month.FEBRUARY;
-//            throw new RuntimeException("Bad `initial month` parse result");
+            throw new RuntimeException("Bad `initial month` parse result");
         } else {
-            logger.info("Stated parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
+            logger.info("Started parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
         }
 
         addWorkersSchedule(waiters, mainWaiterSchedule, scheduleHeader, predMonth, schedule, Role.WAITER);
@@ -83,10 +80,6 @@ public class ScheduleService {
         long after = System.currentTimeMillis();
 
         logger.info("Successfully sent " + schedule.size() + " schedule items in " + (after - before) + "ms.");
-    }
-
-    public Set<ScheduleItem> getSchedule() {
-        return schedule;
     }
 
     @NonNull
@@ -140,6 +133,6 @@ public class ScheduleService {
                     .map(Month::getMonth).orElse(null);
         }
 
-        return java.time.Month.FEBRUARY;
+        return null;
     }
 }
