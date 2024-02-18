@@ -6,10 +6,6 @@ services:
     depends_on:
       - db
     restart: unless-stopped
-    volumes:
-      - static_value:
-      - media_value:
-      - umd_value:
     environment:
       MYSQL_DSN: root:67b7f471fa16819e@tcp(db)/tinode
     ports:
@@ -48,10 +44,9 @@ services:
     ports:
       - "3331:3331"
     volumes:
-      - static_value:/etc/nginx/static
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
-    # network_mode: host
-    #ronment:
+      # network_mode: host
+      #ronment:
       #- NGINX_PORT=3331
   spring:
     container_name: spring
@@ -61,7 +56,7 @@ services:
       dockerfile: Dockerfile
     environment:
       DB_HOST: db
-      SPRING_PROFILES_ACTIVE: test
+      SPRING_PROFILES_ACTIVE: docker
 volumes:
   dbdata:
   static_value:
