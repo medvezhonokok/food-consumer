@@ -3,7 +3,6 @@ package ru.backend.service;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.backend.model.Task;
-import ru.backend.parser.GoogleSheetParser;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -23,10 +22,10 @@ public class TaskService {
     private static final String SPREADSHEET_ID = "1y5PpIKd2fJdDN4d44vTm90nJBI4fB__GDcwUneRpS_I";
     private static final String SPREADSHEET_RANGE = "A2:Z";
 
-    private final GoogleSheetParser googleSheetParser;
+    private final GoogleSheetService googleSheetService;
 
-    public TaskService(GoogleSheetParser googleSheetParser) {
-        this.googleSheetParser = googleSheetParser;
+    public TaskService(GoogleSheetService googleSheetService) {
+        this.googleSheetService = googleSheetService;
     }
 
     private static LocalDateTime getLocalDateTime(String date, String time) throws ParseException {
@@ -43,7 +42,7 @@ public class TaskService {
 
     public List<Task> findAll() {
         List<Task> tasks = new ArrayList<>();
-        List<List<String>> spreadsheetData = googleSheetParser.getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_RANGE);
+        List<List<String>> spreadsheetData = googleSheetService.getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_RANGE);
 
         spreadsheetData.stream().filter(row -> row != null && row.size() > 2).forEach(row -> {
             String date = row.get(0);

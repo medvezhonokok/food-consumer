@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.backend.model.Month;
 import ru.backend.model.Role;
 import ru.backend.model.ScheduleItem;
-import ru.backend.parser.GoogleSheetParser;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -32,14 +31,14 @@ public class ScheduleService {
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B12";
     private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:NT12";
 
-    private final GoogleSheetParser googleSheetParser;
+    private final GoogleSheetService googleSheetService;
 
     @Getter
     private final Set<ScheduleItem> schedule = new HashSet<>();
 
 
-    public ScheduleService(GoogleSheetParser googleSheetParser) {
-        this.googleSheetParser = googleSheetParser;
+    public ScheduleService(GoogleSheetService googleSheetService) {
+        this.googleSheetService = googleSheetService;
 
         long before = System.currentTimeMillis();
 
@@ -50,16 +49,16 @@ public class ScheduleService {
         logger.info(("Successfully get spreadsheet `workers` data from spreadsheet. "
                 + "Total workers count is: %d").formatted(waiters.size() + baristas.size() + managers.size()));
 
-        List<List<String>> scheduleHeader = googleSheetParser
+        List<List<String>> scheduleHeader = googleSheetService
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE);
 
-        List<List<String>> mainWaiterSchedule = googleSheetParser
+        List<List<String>> mainWaiterSchedule = googleSheetService
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE);
 
-        List<List<String>> mainBaristaSchedule = googleSheetParser
+        List<List<String>> mainBaristaSchedule = googleSheetService
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE);
 
-        List<List<String>> mainManagerSchedule = googleSheetParser
+        List<List<String>> mainManagerSchedule = googleSheetService
                 .getSpreadsheetData(SPREADSHEET_ID, SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE);
 
         logger.info("Successfully get spreadsheet `schedule` data from spreadsheet.");
@@ -84,7 +83,7 @@ public class ScheduleService {
 
     @NonNull
     private List<String> getWorkerListBySpreadSheetRange(String spreadSheetRange) {
-        return googleSheetParser.getSpreadsheetData(SPREADSHEET_ID, spreadSheetRange)
+        return googleSheetService.getSpreadsheetData(SPREADSHEET_ID, spreadSheetRange)
                 .stream().filter(workerName -> workerName != null && workerName.size() == 1)
                 .map(workerName -> workerName.get(0)).toList();
     }
