@@ -60,6 +60,12 @@ services:
     environment:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
+
+  front-end:
+    build:
+      context: ../frontend
+    ports:
+      - "3000:3000"
 volumes:
   dbdata:
   static_value:
