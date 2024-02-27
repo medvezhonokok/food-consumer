@@ -52,11 +52,11 @@ services:
   spring:
     container_name: spring
     restart: unless-stopped
-    build:           	
+    build:
       context: ../backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"		
+      - "8080:8080"
     environment:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
