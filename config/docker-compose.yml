@@ -23,7 +23,7 @@ services:
       MYSQL_PASSWORD: 67b7f471fa16819e
     volumes:
       - dbdata:/var/lib/mysql
-      - ./initdb.d:/docker-entrypoint-initdb.d
+      - ./database/initdb.d:/docker-entrypoint-initdb.d
 
   pma:
     image: phpmyadmin/phpmyadmin:5.2.1
