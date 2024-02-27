@@ -1,10 +1,37 @@
 // Users.jsx
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './Users.module.css';
 import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
-const Users = ({user, users}) => {
+const Users = ({user}) => {
+    const [users, setUsers] = useState([])
+
+    async function getUsers() {
+        try {
+            const usersResponse = await fetch("http://localhost:8080/api/1/users/all", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!usersResponse.ok) {
+                const errorText = await usersResponse.text();
+                alert(errorText);
+                return [];
+            }
+
+            return await usersResponse.json();
+        } catch (error) {
+            console.error('Error fetching users:', error);
+            return [];
+        }
+    }
+
+    useEffect(() => {
+        getUsers().then(setUsers)
+    })
     return (
         <div className={styles.Users} data-testid="Users">
             {user ? <CustomNavbar user={user}/> : null}
