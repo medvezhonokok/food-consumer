@@ -1,12 +1,21 @@
 FROM eclipse-temurin:17-jdk-jammy
 
-RUN mkdir /app
+WORKDIR /app
+
 RUN apt-get update && apt-get install -y maven
 
-COPY . /app
-RUN cd /app
-WORKDIR /app
+# Copy only the POM file
+COPY ./pom.xml /app/
+
+# Download Maven dependencies (caching if POM file hasn't changed)
+RUN mvn dependency:go-offline
+
+# Copy the rest of the project files
+COPY . /app/
+
+# Compile and run the application
+RUN mvn clean compile
 
 EXPOSE 8080
 
-ENTRYPOINT mvn clean compile exec:java -Dspring-boot.run.profiles=docker
+ENTRYPOINT mvn exec:java -Dspring-boot.run.profiles=docker

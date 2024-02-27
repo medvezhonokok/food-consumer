@@ -10,9 +10,10 @@ services:
       MYSQL_DSN: root:67b7f471fa16819e@tcp(db)/tinode
     ports:
       - '6060:6060'
+
   db:
-    image: mysql:5.7
-    restart: unless-stopped
+    image: mariadb:10.11
+    restart: always
     ports:
       - "3306:3306"
     environment:
@@ -20,16 +21,15 @@ services:
       MYSQL_DATABASE: food-consumer
       MYSQL_USER: food-consumer
       MYSQL_PASSWORD: 67b7f471fa16819e
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - dbdata:/var/lib/mysql
-      - ./config/database/initdb.d:/docker-entrypoint-initdb.d
+      - ./initdb.d:/docker-entrypoint-initdb.d
 
   pma:
     image: phpmyadmin/phpmyadmin:5.2.1
-    restart: unless-stopped
+    restart: always
     ports:
-      - "3333:80"
+      - "3078:80"
     depends_on:
       - db
     environment:
@@ -37,6 +37,7 @@ services:
       PMA_PORT: 3306
       PMA_USER: food-consumer
       PMA_PASSWORD: 67b7f471fa16819e
+
   nginx:
     container_name: nginx
     restart: unless-stopped
@@ -51,9 +52,11 @@ services:
   spring:
     container_name: spring
     restart: unless-stopped
-    build:
+    build:           	
       context: ../backend
       dockerfile: Dockerfile
+    ports:
+      - "8080:8080"		
     environment:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
