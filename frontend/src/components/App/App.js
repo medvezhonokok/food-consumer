@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import LoginForm from '../LoginForm/LoginForm';
@@ -40,14 +40,14 @@ function App() {
             <div>
                 {isLoggedIn ? (
                     <div>
-                        <CustomNavbar user={user} />
-                        <MenuButtons handleLogout={handleLogout} />
+                        <CustomNavbar user={user}/>
+                        <MenuButtons handleLogout={handleLogout}/>
                     </div>
                 ) : (
                     <div>
                         {showLoginForm ? (
                             <>
-                                <LoginForm />
+                                <LoginForm/>
                                 <p style={styles.switchFormText}>
                                 <span onClick={handleSwitchForm} style={styles.switchFormTextButton}>
                                     Don't have an account?
@@ -56,7 +56,7 @@ function App() {
                             </>
                         ) : (
                             <>
-                                <RegisterForm />
+                                <RegisterForm/>
                                 <p style={styles.switchFormText}>
                                 <span onClick={handleSwitchForm} style={styles.switchFormTextButton}>
                                     Already have an account?

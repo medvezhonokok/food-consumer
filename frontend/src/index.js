@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     },
     {
         path: "users",
-        element: <div><Users user={getUserFromLocalStorage()} /></div>
+        element: <div><Users user={getUserFromLocalStorage()}/></div>
     }
 ]);
 

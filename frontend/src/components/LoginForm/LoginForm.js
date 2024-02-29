@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styles from './LoginForm.module.css';
 import {Button} from "react-bootstrap";
 
@@ -8,7 +8,7 @@ const LoginForm = () => {
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         if (name === 'login') {
             setLogin(value);
         } else if (name === 'password') {
@@ -65,7 +65,7 @@ const LoginForm = () => {
             await handleLoginSuccess(jwtToken);
         } catch (error) {
             console.error('Authentication failed:', error);
-            setErrors({ authentication: 'Authentication failed' });
+            setErrors({authentication: 'Authentication failed'});
         }
     };
 

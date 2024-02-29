@@ -107,7 +107,7 @@ const RegistrationForm = () => {
                 });
             } else {
                 console.error('Registration failed:', error.message);
-                setErrors({ registration: 'Registration failed' });
+                setErrors({registration: 'Registration failed'});
             }
         }
     };

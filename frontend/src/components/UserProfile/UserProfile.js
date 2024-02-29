@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({user}) => {
     const [newLogin, setNewLogin] = useState(user ? user.login : '');
     const [newPhoneNumber, setNewPhoneNumber] = useState(user ? user.phoneNumber : '');
     const [loginError, setLoginError] = useState('');
@@ -47,7 +47,7 @@ const UserProfile = ({ user }) => {
             const errorText = await response.text();
             throw new Error(errorText);
         } else {
-            const updatedUser = { ...user, phoneNumber: newPhoneNumber };
+            const updatedUser = {...user, phoneNumber: newPhoneNumber};
             localStorage.setItem('user', JSON.stringify(updatedUser));
             window.location.reload();
             alert("Номер телефона был успешно обновлен!")
