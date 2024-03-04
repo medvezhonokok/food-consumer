@@ -46,9 +46,7 @@ services:
       - "3331:3331"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
-      # network_mode: host
-      #ronment:
-      #- NGINX_PORT=3331
+
   spring:
     container_name: spring
     restart: unless-stopped
@@ -60,6 +58,17 @@ services:
     environment:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
+
+  react:
+    container_name: react
+    restart: unless-stopped
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://nginx:3331
 volumes:
   dbdata:
   static_value:
