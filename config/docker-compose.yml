@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
     image: nginx
     ports:
-      - "3331:3331"
+      - "3332:3331"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
 
@@ -68,7 +68,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      REACT_APP_API_URL: http://nginx:3331
+      REACT_APP_API_URL: http://nginx:3332
 volumes:
   dbdata:
   static_value:
