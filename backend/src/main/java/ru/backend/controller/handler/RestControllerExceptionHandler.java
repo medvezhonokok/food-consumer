@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.backend.exception.NoSuchResourceException;
 import ru.backend.exception.ValidationException;
 
-
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
     @ExceptionHandler(NoSuchResourceException.class)

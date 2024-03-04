@@ -17,6 +17,7 @@ const Schedule = ({user}) => {
     const getSchedule = async () => {
         try {
             const response = await client.get('/api/schedule');
+
             return response.map((el) => ({
                 workerName: el.workerName,
                 creationTime: new Date(el.creationTime),

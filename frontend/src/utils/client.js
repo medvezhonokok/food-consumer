@@ -9,13 +9,14 @@ class Client {
     async get(url: string, p: ?{}) {
         return this._fetch("GET", url + "?" + this._objectToParamsString(p))
     }
-
-    async post(url: string, p: ?{}) {
-        return this.postJson(url, p)
-    }
-
-    async postJson(url: string, p: {}) {
-        return this._fetch("POST", url, 'application/json', JSON.stringify(p, this._replacer))
+    async post(url: string, body: {}) {
+        return fetch(this.baseUrl + url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
     }
 
     async postParams(url, p) {
@@ -39,7 +40,6 @@ class Client {
 
         return Object.keys(p).reduce((s, k) => s + (s === "" ? "" : "&") + k + "=" + encodeURIComponent(p[k]), "")
     }
-
 
     async _fetch(method: string, url: string, contentType: ?string, body: ?string) {
         let error = null

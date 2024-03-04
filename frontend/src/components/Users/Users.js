@@ -1,15 +1,16 @@
-// Users.jsx
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './Users.module.css';
 import CustomNavbar from "../CustomNavbar/CustomNavbar";
+import client from "../../utils/client";
 
 const Users = ({user}) => {
     const [users, setUsers] = useState([])
 
     async function getUsers() {
         try {
-            const usersResponse = await fetch("http://localhost:8080/api/1/users/all", {
+            // todo use function from `client.js`.....
+            const usersResponse = await fetch(client.baseUrl + "/api/1/users/all", {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

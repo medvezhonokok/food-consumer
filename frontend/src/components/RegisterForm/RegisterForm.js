@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styles from './RegisterForm.module.css';
+import client from "../../utils/client";
 
 const RegistrationForm = () => {
     const [login, setLogin] = useState('');
@@ -22,16 +23,13 @@ const RegistrationForm = () => {
         localStorage.setItem('user', JSON.stringify(user));
 
         try {
-            const jwtResponse = await fetch(`http://localhost:8080/api/1/jwt`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            const jwtResponse = await client.post(
+                `/api/1/jwt`,
+                {
                     login: user.login,
-                    password: user.password,
-                }),
-            });
+                    password: user.password
+                }
+            );
 
             if (!jwtResponse.ok) {
                 const errorText = await jwtResponse.text();
@@ -68,17 +66,14 @@ const RegistrationForm = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/1/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            const response = await client.post(
+                `/api/1/users`,
+                {
                     login,
                     phoneNumber,
-                    password,
-                }),
-            });
+                    password
+                }
+            );
 
             if (!response.ok) {
                 const errorText = await response.text();
@@ -86,16 +81,12 @@ const RegistrationForm = () => {
             }
 
             const user = await response.json();
-
-            const userIdResponse = await fetch(`http://localhost:8080/api/1/users/getId`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            const userIdResponse = await client.post(
+                `/api/1/users/getId`,
+                {
                     login: login
-                }),
-            });
+                }
+            );
 
             user.id = await userIdResponse.json();
 

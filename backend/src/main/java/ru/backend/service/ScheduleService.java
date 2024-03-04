@@ -9,10 +9,7 @@ import ru.backend.model.Role;
 import ru.backend.model.ScheduleItem;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ScheduleService {
@@ -20,16 +17,16 @@ public class ScheduleService {
 
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY/edit#gid=592135575
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:NT7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:OY7";
 
     private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B30:B40";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO30:NT40";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO30:OY40";
 
     private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B15:B19";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO15:NT19";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO15:OY19";
 
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B12";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:NT12";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:OY12";
 
     private final GoogleSheetService googleSheetService;
 
@@ -68,6 +65,7 @@ public class ScheduleService {
         if (predMonth == null) {
             logger.error("Cannot parse initial month.");
             throw new RuntimeException("Bad `initial month` parse result");
+//            predMonth = java.time.Month.of(new Date(System.currentTimeMillis()).getMonth());
         } else {
             logger.info("Started parsing spreadsheet schedule data with month: '" + predMonth.name() + "'.");
         }

@@ -12,7 +12,6 @@ import ru.backend.service.UserService;
 
 import javax.validation.Valid;
 
-
 @RestController
 @RequestMapping("/api/1")
 public class JwtController {

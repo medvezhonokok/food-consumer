@@ -3,6 +3,7 @@ import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import client from "../../utils/client";
 
 const UserProfile = ({user}) => {
     const [newLogin, setNewLogin] = useState(user ? user.login : '');
@@ -33,15 +34,12 @@ const UserProfile = ({user}) => {
         }
 
         const userId = user.id;
-        const response = await fetch(`http://localhost:8080/api/1/users/update/${userId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                phoneNumber: newPhoneNumber,
-            }),
-        });
+        const response = await client.post(
+            `/api/1/users/update/${userId}`,
+            {
+                phoneNumber: newPhoneNumber
+            }
+        );
 
         if (!response.ok) {
             const errorText = await response.text();

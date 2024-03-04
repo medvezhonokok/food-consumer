@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styles from './LoginForm.module.css';
 import {Button} from "react-bootstrap";
+import client from "../../utils/client";
 
 const LoginForm = () => {
     const [login, setLogin] = useState('');
@@ -20,7 +21,7 @@ const LoginForm = () => {
         localStorage.setItem('jwtToken', jwtToken);
 
         try {
-            const userResponse = await fetch(`http://localhost:8080/api/1/users/auth?jwt=${jwtToken}`, {
+            const userResponse = await fetch(client.baseUrl + `/api/1/users/auth?jwt=${jwtToken}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,
@@ -44,16 +45,12 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/api/1/jwt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+            const response = await client.post(
+                '/api/1/jwt',
+                {
                     login,
-                    password,
-                }),
-            });
+                    password
+                });
 
             if (!response.ok) {
                 const errorText = await response.text();

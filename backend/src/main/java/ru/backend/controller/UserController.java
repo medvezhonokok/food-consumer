@@ -52,9 +52,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getAllErrors().toString());
         }
-
         String login = credentials.getLogin();
-
         return userService.findUserByLogin(login).getId();
     }
 
