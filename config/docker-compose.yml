@@ -38,14 +38,14 @@ services:
       PMA_USER: food-consumer
       PMA_PASSWORD: 67b7f471fa16819e
 
-  nginx:
-    container_name: nginx
-    restart: unless-stopped
-    image: nginx
-    ports:
-      - "3332:3331"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+#  nginx:
+#    container_name: nginx
+#    restart: unless-stopped
+#    image: nginx
+#    ports:
+#      - "3332:3331"
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
 
   spring:
     container_name: spring
@@ -59,16 +59,16 @@ services:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
 
-  react:
-    container_name: react
-    restart: unless-stopped
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      REACT_APP_API_URL: http://nginx:3332
+#  react:
+#    container_name: react
+#    restart: unless-stopped
+#    build:
+#      context: ../frontend
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      REACT_APP_API_URL: http://nginx:3332
 volumes:
   dbdata:
   static_value:
