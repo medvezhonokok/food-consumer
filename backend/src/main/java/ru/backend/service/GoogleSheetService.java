@@ -53,8 +53,8 @@ public final class GoogleSheetService {
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
             // TODO??????
-            java.io.File DATA_STORE_DIR = new java.io.File(resourceLoader.getResource("classpath:/tokens/StoredCredential").getURI().getPath());
-            FileDataStoreFactory DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+//            java.io.File DATA_STORE_DIR = new java.io.File(resourceLoader.getResource("classpath:/tokens/StoredCredential").getURI().getPath());
+//            FileDataStoreFactory DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
 
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets, SCOPES)

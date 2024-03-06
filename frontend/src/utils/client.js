@@ -2,21 +2,19 @@ class Client {
     constructor() {
         this.baseUrl = process.env.REACT_APP_SERVER_URL
         if (!this.baseUrl) {
-            throw new Error("REACT_APP_SERVER_URL not found in env")
+            this.baseUrl = ''
         }
     }
 
     async get(url: string, p: ?{}) {
         return this._fetch("GET", url + "?" + this._objectToParamsString(p))
     }
-    async post(url: string, body: {}) {
-        return fetch(this.baseUrl + url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        });
+    async post(url: string, p: ?{}) {
+        return this.postJson(url, p)
+    }
+
+    async postJson(url: string, p: {}) {
+        return this._fetch("POST", url, 'application/json', JSON.stringify(p))
     }
 
     async postParams(url, p) {
@@ -25,14 +23,6 @@ class Client {
 
     async del(url, p) {
         return this._fetch("DELETE", url + "/" + p)
-    }
-
-    openLogin() {
-        window.location.replace('/login')
-    }
-
-    logout() {
-        // todo implement
     }
 
     _objectToParamsString(p: {}) {
@@ -62,20 +52,12 @@ class Client {
             }
 
             res = await fetch(this.baseUrl + url, params)
-
             if (res.ok) {
                 if (res.headers.get("Content-Type") === 'application/json') {
                     return await res.json()
                 } else {
-                    return null
+                    return res.text()
                 }
-            } else if (res.status === 403) {
-                this.openLogin()
-                error = "Надо залогиниться!"
-            } else if (res.status === 401) {
-                error = "Доступно только администратору"
-            } else {
-                error = await res.text()
             }
         } catch (e) {
             this._showError(e.message);

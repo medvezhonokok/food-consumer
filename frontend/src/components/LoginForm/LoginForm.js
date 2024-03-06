@@ -21,19 +21,7 @@ const LoginForm = () => {
         localStorage.setItem('jwtToken', jwtToken);
 
         try {
-            const userResponse = await fetch(client.baseUrl + `/api/1/users/auth?jwt=${jwtToken}`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
-
-            if (!userResponse.ok) {
-                alert("Oops, an error occurred!");
-                return;
-            }
-
-            const user = await userResponse.json();
+            const user = await client.get(`/api/1/users/auth`, {jwt: jwtToken});
             localStorage.setItem('user', JSON.stringify(user));
             window.location.reload();
         } catch (error) {
@@ -45,21 +33,13 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await client.post(
-                '/api/1/jwt',
-                {
-                    login,
-                    password
-                });
+            const response = await client.postJson("/api/1/jwt", {
+                login: login,
+                password: password,
+            })
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
 
-            const jwtToken = await response.text();
-
-            await handleLoginSuccess(jwtToken);
+            await handleLoginSuccess(response);
         } catch (error) {
             console.error('Authentication failed:', error);
             setErrors({authentication: 'Authentication failed'});

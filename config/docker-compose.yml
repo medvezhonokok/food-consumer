@@ -59,16 +59,16 @@ services:
       DB_HOST: db
       SPRING_PROFILES_ACTIVE: docker
 
-#  react:
-#    container_name: react
-#    restart: unless-stopped
-#    build:
-#      context: ../frontend
-#      dockerfile: Dockerfile
-#    ports:
-#      - "3000:3000"
-#    environment:
-#      REACT_APP_API_URL: http://nginx:3332
+  react:
+    container_name: react
+    restart: unless-stopped
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+    ports:
+      - "3000:80"
 volumes:
   dbdata:
   static_value:
