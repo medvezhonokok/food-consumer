@@ -7,7 +7,7 @@ const SideMenu = (props: { show: boolean, onClose: Function }) => {
         <Button href={'tasks'}>Tasks</Button>,
         <Button href={'orders'}>Orders</Button>,
         <Button href={'schedule'}>Schedule</Button>,
-        <Button href={'http://localhost:6060'}>Chat</Button>,
+        <Button href={'http://5.101.51.223:6060'}>Chat</Button>,
     ]
 
     return (
