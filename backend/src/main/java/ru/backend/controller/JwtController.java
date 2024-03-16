@@ -13,7 +13,7 @@ import ru.backend.service.UserService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/1")
+@RequestMapping("/1")
 public class JwtController {
     private final JwtService jwtService;
     private final UserService userService;
