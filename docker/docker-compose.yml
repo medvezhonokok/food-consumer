@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+
+  # db for chat
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-chat
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - '3307:3307'
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # server for chat
+  tinode-server:
+    image: tinode/tinode-mysql:latest
+    container_name: tinode-srv
+    ports:
+      - '6060:6060'
+
+  # db for main application (backend)
+  maria-db:
+    image: mariadb:10.11
+    container_name: maria-db
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 67b7f471fa16819e
+      MYSQL_DATABASE: food-consumer
+      MYSQL_USER: food-consumer
+      MYSQL_PASSWORD: 67b7f471fa16819e
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./database/initdb.d:/docker-entrypoint-initdb.d
+
+  # phpMyAdmin just to check db connection (remove if needed)
+  pma:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    restart: always
+    ports:
+      - "3081:80"
+    depends_on:
+      - maria-db
+    environment:
+      PMA_HOST: maria-db
+      PMA_PORT: 3306
+      PMA_USER: food-consumer
+      PMA_PASSWORD: 67b7f471fa16819e
+
+  # main back application container
+  java-backend:
+    build:
+      context: ./../backend
+      dockerfile: Dockerfile
+    container_name: java-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - maria-db
+
+volumes:
+  dbdata:
+  static_value:
+  mongodb-data:
+  mysql-data:
