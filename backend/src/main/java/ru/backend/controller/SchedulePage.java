@@ -15,7 +15,7 @@ public class SchedulePage {
         this.scheduleService = scheduleService;
     }
 
-    @GetMapping(value = "/schedule")
+    @GetMapping(value = "/api/schedule")
     public Set<ScheduleItem> getSchedule() {
         return scheduleService.getSchedule();
     }

@@ -14,7 +14,7 @@ import javax.validation.ValidationException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/1/users")
+@RequestMapping("/api/1/users")
 public class UserController {
     private final JwtService jwtService;
     private final UserService userService;

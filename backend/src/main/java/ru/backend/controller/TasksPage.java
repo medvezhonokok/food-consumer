@@ -15,7 +15,7 @@ public class TasksPage {
         this.taskService = taskService;
     }
 
-    @GetMapping(value = "/tasks")
+    @GetMapping(value = "/api/tasks")
     public List<Task> getTasks() {
         return taskService.findAll();
     }
