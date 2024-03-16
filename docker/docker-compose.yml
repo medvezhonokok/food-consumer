@@ -64,18 +64,6 @@ services:
       - "8080:8080"
     depends_on:
       - maria-db
-
-  react:
-    container_name: react
-    restart: unless-stopped
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
-    ports:
-      - "3000:8000"
-
 volumes:
   dbdata:
   static_value:
