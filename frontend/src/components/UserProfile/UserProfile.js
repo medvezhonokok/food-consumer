@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import client from "../../utils/client";
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({user}) => {
     const [newLogin, setNewLogin] = useState(user ? user.login : '');
     const [newPhoneNumber, setNewPhoneNumber] = useState(user ? user.phoneNumber : '');
     const [loginError, setLoginError] = useState('');
@@ -34,15 +34,21 @@ const UserProfile = ({ user }) => {
         }
 
         const userId = user.id;
-        const response = await client.postJson(`/api/1/users/update/${userId}`, {
-            phoneNumber: newPhoneNumber,
+        const response = await fetch(client.baseUrl + `/api/1/users/update/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phoneNumber: newPhoneNumber,
+            }),
         });
 
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(errorText);
         } else {
-            const updatedUser = { ...user, phoneNumber: newPhoneNumber };
+            const updatedUser = {...user, phoneNumber: newPhoneNumber};
             localStorage.setItem('user', JSON.stringify(updatedUser));
             window.location.reload();
             alert("Номер телефона был успешно обновлен!")
@@ -79,3 +85,4 @@ const UserProfile = ({ user }) => {
 };
 
 export default UserProfile;
+
