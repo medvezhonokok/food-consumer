@@ -43,12 +43,15 @@ class Client {
                 credentials: 'include'
             }
 
-            params['headers'] = {
-                'Access-Control-Allow-Origin': 'http://5.101.51.223:8000'
-            }
-
             if (contentType) {
-                params['headers']['Content-Type'] = contentType;
+                params['headers'] = {
+                    'Content-Type': contentType,
+                    'Access-Control-Allow-Origin': 'http://5.101.51.223:8000'
+                }
+            } else {
+                params['headers'] = {
+                    'Access-Control-Allow-Origin': 'http://5.101.51.223:8000'
+                }
             }
 
             if (body) {
