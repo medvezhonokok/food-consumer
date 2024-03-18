@@ -33,16 +33,28 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await client.postJson("/api/1/jwt", {
-                login: login,
-                password: password,
-            })
+            const response = await fetch(client.baseUrl + '/api/1/jwt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    login,
+                    password,
+                }),
+            });
 
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
 
-            await handleLoginSuccess(response);
+            const jwtToken = await response.text();
+
+            await handleLoginSuccess(jwtToken);
         } catch (error) {
             console.error('Authentication failed:', error);
-            setErrors({authentication: 'Authentication failed'});
+            setErrors({authentication: 'Invalid login or password'});
         }
     };
 
