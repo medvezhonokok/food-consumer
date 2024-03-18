@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import styles from './Users.module.css';
 import CustomNavbar from "../CustomNavbar/CustomNavbar";
 import client from "../../utils/client";
@@ -9,7 +8,6 @@ const Users = ({user}) => {
 
     async function getUsers() {
         try {
-            // todo use function from `client.js`.....
             const usersResponse = await fetch(client.baseUrl + "/api/1/users/all", {
                 method: 'GET',
                 headers: {
@@ -33,6 +31,7 @@ const Users = ({user}) => {
     useEffect(() => {
         getUsers().then(setUsers)
     })
+
     return (
         <div className={styles.Users} data-testid="Users">
             {user ? <CustomNavbar user={user}/> : null}
@@ -50,16 +49,5 @@ const Users = ({user}) => {
     );
 };
 
-Users.propTypes = {
-    users: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            phoneNumber: PropTypes.string.isRequired,
-            login: PropTypes.string.isRequired,
-            creationTime: PropTypes.string.isRequired,
-            // Add more prop types for additional user details
-        })
-    ).isRequired,
-};
 
 export default Users;

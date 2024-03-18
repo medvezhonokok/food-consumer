@@ -24,4 +24,14 @@ public class ScheduleItem {
         this.info = info;
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ScheduleItem item) {
+            return item.getInfo().equals(info) && item.getWorkerName().equals(workerName)
+                    && item.getRole() == role && item.waiter == waiter;
+        }
+
+        return false;
+    }
 }
