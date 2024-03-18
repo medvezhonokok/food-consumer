@@ -17,6 +17,10 @@ public class UserCredentials {
     private String login;
 
     @NotEmpty
+    @Size(min = 6, max = 36)
+    private String name;
+
+    @NotEmpty
     @Size(min = 1, max = 60)
     private String password;
 
@@ -24,4 +28,10 @@ public class UserCredentials {
     @Size(min = 3, max = 12)
     @Pattern(regexp = "[+]?[0-9]+", message = "Excepted numbers or plus")
     private String phoneNumber;
+
+    private boolean isManager;
+
+    private boolean isWaiter;
+
+    private boolean isBarista;
 }

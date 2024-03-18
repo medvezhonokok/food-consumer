@@ -39,8 +39,9 @@ const Users = ({user}) => {
                 {user ? users.map((user) => (
                     <div key={user.id} className={styles.userCard}>
                         <div className={styles.userInfo}>
-                            <h3>{user.login}</h3>
+                            <h3>{user.name}</h3>
                             <p>Phone Number: {user.phoneNumber}</p>
+                            <p>Login: {user.login}</p>
                         </div>
                     </div>
                 )) : null}

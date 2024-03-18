@@ -31,4 +31,15 @@ public class User {
 
     @CreationTimestamp
     private Date creationTime;
+
+    @NotEmpty
+    @Size(min = 2, max = 24)
+    @Pattern(regexp = "[a-zA-Z]{6,36}")
+    private String name;
+
+    private boolean isManager;
+
+    private boolean isWaiter;
+
+    private boolean isBarista;
 }

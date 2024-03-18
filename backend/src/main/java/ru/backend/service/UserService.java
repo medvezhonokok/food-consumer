@@ -34,11 +34,18 @@ public class UserService {
     }
 
     public void register(UserCredentials credentials) {
-        logger.info("Started to register new user {login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
+        logger.info("Started to register new user {login=" + credentials.getLogin()
+                + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
 
         User user = new User();
+
+        user.setName(credentials.getName());
         user.setLogin(credentials.getLogin());
         user.setPhoneNumber(credentials.getPhoneNumber());
+
+        user.setManager(credentials.isManager());
+        user.setBarista(credentials.isBarista());
+        user.setWaiter(credentials.isWaiter());
 
         userRepository.save(user);
         userRepository.updatePasswordSha(user.getId(), user.getLogin(), credentials.getPassword());
