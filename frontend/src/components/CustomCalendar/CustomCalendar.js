@@ -6,13 +6,12 @@ import {BsChevronDown, BsChevronUp} from "react-icons/bs";
 
 const CustomCalendar = function ({value, onChange}) {
 
-    // let initialized = false;
-    // if (!initialized) {
-    //     const elements = document.querySelectorAll('.react-calendar__tile.react-calendar__month-view__days__day');
-    //     elements.forEach(element => {
-    //         element.style.borderRadius = '0.4rem';
-    //     });
-    // }
+    // change lib css..
+    const elements = document.querySelectorAll('.react-calendar__tile--active');
+    elements.forEach(element => {
+        element.style.background = '#a09e73';
+        element.style.borderRadius = '0.6rem';
+    });
 
     const [isCalendarViewContainerHide, setIsCalendarViewContainerHide] = useState(true);
     const hideOrShowCalendarViewContainer = () => {

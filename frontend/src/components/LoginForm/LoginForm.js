@@ -85,7 +85,7 @@ const LoginForm = () => {
                     <div className={styles.error}>{errors.authentication}</div>
                 )}
 
-                <Button type="submit" className="btn btn-primary">Log in</Button>
+                <Button type="submit" className={styles.button} >Log in</Button>
             </form>
         </div>
     );

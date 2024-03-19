@@ -1,51 +1,84 @@
-import React from 'react';
+import React, {createRef} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './custom.scss'
+import './custom.scss';
+import {createBrowserRouter, RouterProvider, useLocation, useOutlet} from 'react-router-dom';
+import {CSSTransition, SwitchTransition} from 'react-transition-group';
+import {Container} from 'react-bootstrap';
 import App from './components/App/App';
 import * as serviceWorkerRegistration from './worker/serviceWorkerRegistration';
 import reportWebVitals from './utils/reportWebVitals';
-import {Provider} from "react-redux";
-import {createBrowserRouter, RouterProvider,} from "react-router-dom";
-import Tasks from "./components/Tasks/Tasks";
-import Notes from "./components/Notes/Notes";
-import store from "./store";
-import Schedule from "./components/Schedule/Schedule";
-import UserProfile from "./components/UserProfile/UserProfile";
-import Users from "./components/Users/Users";
+import {Provider} from 'react-redux';
+import Tasks from './components/Tasks/Tasks';
+import Notes from './components/Notes/Notes';
+import store from './store';
+import Schedule from './components/Schedule/Schedule';
+import UserProfile from './components/UserProfile/UserProfile';
+import Users from './components/Users/Users';
+
+const routes = [
+    {path: '/', name: 'Home', element: <App/>, nodeRef: createRef()},
+    {path: '/orders', name: 'Orders', element: <div><Notes/></div>, nodeRef: createRef()},
+    {
+        path: '/tasks',
+        name: 'Tasks',
+        element: <div><Tasks user={getUserFromLocalStorage()}/></div>,
+        nodeRef: createRef()
+    },
+    {
+        path: '/schedule',
+        name: 'Schedule',
+        element: <div><Schedule user={getUserFromLocalStorage()}/></div>,
+        nodeRef: createRef()
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        element: <div><UserProfile user={getUserFromLocalStorage()}/></div>,
+        nodeRef: createRef()
+    },
+    {path: '/users', name: 'Users', element: <div><Users user={getUserFromLocalStorage()}/></div>, nodeRef: createRef()}
+];
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <App/>,
+        path: '/',
+        element: <PathContainer/>,
+        children: routes.map((route) => ({
+            index: route.path === '/',
+            path: route.path === '/' ? undefined : route.path,
+            element: route.element,
+        })),
     },
-    {
-        path: "about",
-        element: <div>About</div>,
-    },
-    {
-        path: "orders",
-        element: <div><Notes/></div>,
-    },
-    {
-        path: "tasks",
-        element: <div><Tasks user={getUserFromLocalStorage()}/></div>,
-    },
-    {
-        path: "schedule",
-        element: <div><Schedule user={getUserFromLocalStorage()}/></div>
-    },
-    {
-        path: "profile",
-        element: <div><UserProfile user={getUserFromLocalStorage()}/></div>
-    },
-    {
-        path: "users",
-        element: <div><Users user={getUserFromLocalStorage()}/></div>
-    }
 ]);
 
+function PathContainer() {
+    const location = useLocation();
+    const currentOutlet = useOutlet();
+    const {nodeRef} = routes.find((route) => route.path === location.pathname) ?? {};
+    return (
+        <>
+            <Container className="container">
+                <SwitchTransition>
+                    <CSSTransition
+                        key={location.pathname}
+                        nodeRef={nodeRef}
+                        timeout={300}
+                        classNames="page"
+                        unmountOnExit
+                    >
+                        {(state) => (
+                            <div ref={nodeRef} className="page">
+                                {currentOutlet}
+                            </div>
+                        )}
+                    </CSSTransition>
+                </SwitchTransition>
+            </Container>
+        </>
+    );
+}
 
 function getUserFromLocalStorage() {
     const userString = localStorage.getItem('user');
@@ -58,6 +91,7 @@ function getUserFromLocalStorage() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
     <React.StrictMode>
         <Provider store={store}>
@@ -66,12 +100,6 @@ root.render(
     </React.StrictMode>
 );
 
-// If you want your App to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.unregister();
 
-// If you want to start measuring performance in your App, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

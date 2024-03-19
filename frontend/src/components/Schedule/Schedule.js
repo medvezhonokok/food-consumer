@@ -96,22 +96,22 @@ const Schedule = ({user}) => {
                             ) : (
                                 <>
                                     <ToggleButtonGroup
-                                        style={{textAlign: "center", marginBottom: '2rem', display: "flow"}}
-                                        type="radio" name="options"
-                                        defaultValue={2}>
-                                        <ToggleButton id="tbg-radio-1" value={1}
-                                                      onChange={() => changeRole("MANAGER")}>
-                                            Manager's schedule
+                                        style={{textAlign: "center", marginBottom: '2rem', display: "flow", width: "100%"}}
+                                        type="radio"
+                                        name="options"
+                                        defaultValue={2}
+                                    >
+                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-1" value={1} onChange={() => changeRole("MANAGER")} size="lg">
+                                            Manager
                                         </ToggleButton>
-                                        <ToggleButton id="tbg-radio-2" value={2}
-                                                      onChange={() => changeRole("WAITER")}>
-                                            Waiter's schedule
+                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-2" value={2} onChange={() => changeRole("WAITER")} size="lg">
+                                            Waiter
                                         </ToggleButton>
-                                        <ToggleButton id="tbg-radio-3" value={3}
-                                                      onChange={() => changeRole("BARISTA")}>
-                                            Barista's schedule
+                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-3" value={3} onChange={() => changeRole("BARISTA")} size="lg">
+                                            Barista
                                         </ToggleButton>
                                     </ToggleButtonGroup>
+
                                     {
                                         // filteredScheduleByDate
                                         workerScheduleRole === "WAITER" ?
