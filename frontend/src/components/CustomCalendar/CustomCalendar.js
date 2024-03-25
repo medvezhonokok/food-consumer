@@ -7,11 +7,11 @@ import {BsChevronDown, BsChevronUp} from "react-icons/bs";
 const CustomCalendar = function ({value, onChange}) {
 
     // change lib css..
-    const elements = document.querySelectorAll('.react-calendar__tile--active');
-    elements.forEach(element => {
-        element.style.background = '#a09e73';
-        element.style.borderRadius = '0.6rem';
-    });
+    // const elements = document.querySelectorAll('.react-calendar__tile--active');
+    // elements.forEach(element => {
+    //     element.style.background = '#a09e73';
+    //     element.style.borderRadius = '0.6rem';
+    // });
 
     const [isCalendarViewContainerHide, setIsCalendarViewContainerHide] = useState(true);
     const hideOrShowCalendarViewContainer = () => {

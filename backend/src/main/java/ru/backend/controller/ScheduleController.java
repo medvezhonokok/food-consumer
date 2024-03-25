@@ -8,10 +8,10 @@ import ru.backend.service.ScheduleService;
 import java.util.Set;
 
 @RestController
-public class SchedulePage {
+public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    public SchedulePage(ScheduleService scheduleService) {
+    public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 

@@ -2,7 +2,9 @@ package ru.backend.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import ru.backend.model.PermanentTask;
 import ru.backend.model.Task;
+import ru.backend.repository.PermanentTaskRepository;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -18,17 +20,25 @@ import java.util.stream.IntStream;
 public class TaskService {
     private static final Logger logger = Logger.getLogger(TaskService.class);
 
+    private static final String SPREADSHEET_RANGE = "A2:Z";
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/1y5PpIKd2fJdDN4d44vTm90nJBI4fB__GDcwUneRpS_I/edit#gid=0
     private static final String SPREADSHEET_ID = "1y5PpIKd2fJdDN4d44vTm90nJBI4fB__GDcwUneRpS_I";
-    private static final String SPREADSHEET_RANGE = "A2:Z";
 
     private final GoogleSheetService googleSheetService;
 
-    public TaskService(GoogleSheetService googleSheetService) {
+    private final PermanentTaskRepository permanentTaskRepository;
+
+    public TaskService(GoogleSheetService googleSheetService, PermanentTaskRepository permanentTaskRepository) {
         this.googleSheetService = googleSheetService;
+        this.permanentTaskRepository = permanentTaskRepository;
     }
 
     private static LocalDateTime getLocalDateTime(String date, String time) throws ParseException {
+        if (date == null || date.isEmpty()) {
+            LocalDate currentDate = LocalDate.now();
+            date = currentDate.format(DateTimeFormatter.ofPattern("d.M.u"));
+        }
+
         try {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("d.M.u"));
             LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:m"));
@@ -59,5 +69,25 @@ public class TaskService {
         });
 
         return tasks;
+    }
+
+    public List<PermanentTask> getPermanentTasks() {
+        return permanentTaskRepository.findAll();
+    }
+
+    public PermanentTask findPermanentTaskById(Long taskId) {
+        return permanentTaskRepository.findById(taskId).orElse(null);
+    }
+
+    public void updateUserId(Long taskId, Long userId) {
+        permanentTaskRepository.updateUserIdByTaskId(taskId, userId);
+    }
+
+    public void removePermanentTaskById(Long taskId) {
+        permanentTaskRepository.deleteById(taskId);
+    }
+
+    public void save(PermanentTask task) {
+        permanentTaskRepository.save(task);
     }
 }

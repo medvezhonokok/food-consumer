@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,9 +49,9 @@ public final class GoogleSheetService {
                     .execute();
 
             return response.getValues().stream().map(GoogleSheetService::toUTF8StringList).collect(Collectors.toList());
-        } catch (IOException | GeneralSecurityException e) {
+        } catch (NullPointerException | IOException | GeneralSecurityException e) {
             logger.error("Unexpected exception while parsing spreadsheet[id=" + spreadsheetId + "]: " + e);
-            throw new RuntimeException(e);
+            return new ArrayList<>();
         }
     }
 

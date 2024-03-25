@@ -42,4 +42,6 @@ public class User {
     private boolean isWaiter;
 
     private boolean isBarista;
+
+    private boolean admin;
 }
