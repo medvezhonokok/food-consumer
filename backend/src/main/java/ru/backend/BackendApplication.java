@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EntityScan("ru.backend.model")
-@EnableScheduling
 public class BackendApplication {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
