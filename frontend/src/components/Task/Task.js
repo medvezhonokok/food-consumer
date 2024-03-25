@@ -22,9 +22,11 @@ const Task = ({task, user}) => {
             throw new Error(errorText);
         }
 
-        if (await response.text() === "ALREADY_REMOVED") {
+        const responseBody = await response.text();
+
+        if (responseBody === "ALREADY_REMOVED") {
             message = "Данное задание было удалено";
-        } else if (await response.text() === "ALREADY_TAKEN") {
+        } else if (responseBody === "ALREADY_TAKEN") {
             message = "Данное задание уже взято другим человеком.";
         } else if (task.userId === null) {
             message = "Задание взято.";
@@ -35,6 +37,7 @@ const Task = ({task, user}) => {
         alert(message);
         window.location.reload();
     };
+
 
 
     const removeTask = async (taskId) => {
