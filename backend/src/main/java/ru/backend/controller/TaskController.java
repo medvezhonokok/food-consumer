@@ -39,7 +39,9 @@ public class TaskController {
         PermanentTask task = taskService.findPermanentTaskById(taskId);
 
         // TODO: ADD LOGGING
-        if (task.getUserId() == null) {
+        if (task == null) {
+            return "ALREADY_REMOVED";
+        } else if (task.getUserId() == null) {
             taskService.updateUserId(taskId, userId);
             return "OK";
         } else if (!task.getUserId().equals(userId)) {
