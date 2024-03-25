@@ -1,7 +1,9 @@
 package ru.backend.service;
 
 import org.apache.log4j.Logger;
+import org.mortbay.util.StringUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.backend.form.UserCredentials;
 import ru.backend.model.User;
 import ru.backend.repository.UserRepository;
@@ -53,10 +55,19 @@ public class UserService {
         logger.info("Successfully registered user{login=" + credentials.getLogin() + ", phoneNumber=" + credentials.getPhoneNumber() + "}");
     }
 
-    public void updateUserSettingsById(long userId, String phoneNumber) {
+    public void updateUserSettingsById(long userId, UserCredentials userCredentials) {
+        String phoneNumber = userCredentials.getPhoneNumber();
+        String name = userCredentials.getName();
+
         logger.info("Stated updating user settings with id=" + userId + ", updated phoneNumber=" + phoneNumber);
 
-        userRepository.updatePhoneNumber(userId, phoneNumber);
+        if (phoneNumber != null && !phoneNumber.isBlank()) {
+            userRepository.updatePhoneNumber(userId, phoneNumber);
+        }
+
+        if (name != null && !name.isBlank()) {
+            userRepository.updateUserName(userId, name);
+        }
     }
 
     public User findUserByLogin(String login) {

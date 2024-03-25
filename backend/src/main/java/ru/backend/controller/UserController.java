@@ -58,7 +58,7 @@ public class UserController {
 
     @PostMapping("/update/{id}")
     public void updateUserSettings(@PathVariable(name = "id") Long userId, @RequestBody UserCredentials userCredentials) {
-        userService.updateUserSettingsById(userId, userCredentials.getPhoneNumber());
+        userService.updateUserSettingsById(userId, userCredentials);
     }
 
     @GetMapping("/all")

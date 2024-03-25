@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import styles from './UserProfile.module.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import client from "../../utils/client";
 
-const UserProfile = ({user}) => {
-    const [newLogin, setNewLogin] = useState(user ? user.login : '');
+const UserProfile = ({ user }) => {
     const [newPhoneNumber, setNewPhoneNumber] = useState(user ? user.phoneNumber : '');
-    const [loginError, setLoginError] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
+
+    const [newName, setNewName] = useState(user ? user.name : '');
+    const [nameError, setNameError] = useState('');
 
     if (!user) {
         return <div>Nothing there</div>;
@@ -23,6 +24,13 @@ const UserProfile = ({user}) => {
             isValid = false;
         } else {
             setPhoneNumberError('');
+        }
+
+        if (newName.trim() === '') {
+            setNameError('Name is required');
+            isValid = false;
+        } else {
+            setNameError('');
         }
 
         return isValid;
@@ -41,6 +49,7 @@ const UserProfile = ({user}) => {
             },
             body: JSON.stringify({
                 phoneNumber: newPhoneNumber,
+                name: newName,
             }),
         });
 
@@ -48,10 +57,10 @@ const UserProfile = ({user}) => {
             const errorText = await response.text();
             throw new Error(errorText);
         } else {
-            const updatedUser = {...user, phoneNumber: newPhoneNumber};
+            const updatedUser = { ...user, phoneNumber: newPhoneNumber, name: newName };
             localStorage.setItem('user', JSON.stringify(updatedUser));
             window.location.reload();
-            alert("Номер телефона был успешно обновлен!")
+            alert("Данные обновлены!!!")
         }
     };
 
@@ -61,16 +70,26 @@ const UserProfile = ({user}) => {
             <div className={styles.container}>
                 <h2 className={styles.heading}>User Profile</h2>
                 <div className={styles.inputContainer}>
-                    <label className={styles.label}>Login:</label>
-                    <textarea
-                        value={newLogin}
-                        readOnly // Add readOnly attribute
-                        className={`${styles.textarea} ${loginError ? styles.textareaError : ''}`}
+                    <label className={styles.label}>Login</label>
+                    <input
+                        type="text"
+                        value={user.login}
+                        readOnly={true}
+                        className={`${styles.input}`}
                     />
-                    {loginError && <div className={styles.error}>{loginError}</div>}
                 </div>
                 <div className={styles.inputContainer}>
-                    <label className={styles.label}>Phone Number:</label>
+                    <label className={styles.label}>Name</label>
+                    <input
+                        type="text"
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        className={`${styles.input} ${nameError ? styles.inputError : ''}`}
+                    />
+                    {nameError && <div className={styles.error}>{nameError}</div>}
+                </div>
+                <div className={styles.inputContainer}>
+                    <label className={styles.label}>Phone Number</label>
                     <PhoneInput
                         defaultCountry="Russia"
                         value={newPhoneNumber}
@@ -85,4 +104,3 @@ const UserProfile = ({user}) => {
 };
 
 export default UserProfile;
-
