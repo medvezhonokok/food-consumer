@@ -13,7 +13,7 @@ const MenuButtons = ({ handleLogout }) => {
     };
 
     return (
-        <div style={{ marginTop: '4rem', marginBottom: '3rem'}}>
+        <div style={{ marginTop: '8rem', marginBottom: '3rem'}}>
             <Stack direction="vertical" gap={3} className={`d-flex flex-column align-items-center`}>
                 <Link to="/tasks" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Tasks</Link>
                 <Link to="/orders" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Orders</Link>

@@ -56,6 +56,8 @@ const Tasks = ({user}) => {
             return taskHour >= 16 && taskHour < 21;
         } else if (currentHour >= 21 && currentHour < 23) {
             return taskHour >= 21 && taskHour < 23;
+        } else if (currentHour >= 23) {
+            return taskHour >= 23;
         } else {
             return false;
         }
@@ -110,7 +112,7 @@ const Tasks = ({user}) => {
         (user ?
                 <>
                     <CustomNavbar user={user}/>
-                    <div style={{marginTop: "2rem"}}>
+                    <div style={{marginTop: "5rem"}}>
                         <CustomCalendar value={dateState} onChange={changeDate}/>
                     </div>
                     <div style={{margin: "4rem 0"}}>
