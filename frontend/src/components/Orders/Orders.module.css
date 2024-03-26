@@ -1,27 +1,43 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
 .Orders {
-    position: relative;
-    top: 3em;
-    padding-bottom: 1em;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    margin-top: 6rem;
 }
 
-.Create {
-    position: fixed;
-    bottom: 3%;
-    right: 5%;
+.Actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
-.Btn {
-    color: #B5B285;
+.NewOrder {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 7rem;
 }
 
-.Menu {
-    position: fixed;
-    bottom: 3%;
-    left: 5%;
+.TextArea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
 }
 
 .CenteredContent {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 200px;
+    font-size: 20px;
 }

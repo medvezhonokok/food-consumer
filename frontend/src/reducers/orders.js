@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const ordersSlice = createSlice({
     name: 'orders',
@@ -25,8 +25,14 @@ export const ordersSlice = createSlice({
             state.value = JSON.parse(localStorage.getItem("orders")) || {}; // Используем пустой объект, если данные в localStorage отсутствуют
             console.log("init");
         },
+
+        add(state, action) {
+            const { id, text } = action.payload;
+            state.value[id] = { id, text };
+            localStorage.setItem("orders", JSON.stringify(state.value));
+        }
     },
 });
 
-export const {update, remove, init} = ordersSlice.actions;
+export const { update, remove, init, add } = ordersSlice.actions;
 export default ordersSlice.reducer;

@@ -1,4 +1,11 @@
 .CustomNavbar {
-    border-bottom: 1px gray solid;
-    background-color: #eeeeee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Занимает всю ширину экрана */
+    height: 70px; /* Высота плашки */
+    border-bottom: 1px solid gray; /* Линия под плашкой */
+    background-color: #eeeeee; /* Цвет фона плашки */
+    padding: 0 20px; /* Отступы слева и справа */
+    box-sizing: border-box; /* Учитываем отступы внутри размеров */
 }

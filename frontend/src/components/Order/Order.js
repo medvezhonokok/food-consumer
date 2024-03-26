@@ -1,36 +1,46 @@
-import React, {useState} from 'react';
+// Order.js
+
+import React, { useState } from 'react';
 import styles from './Order.module.css';
-import Textarea from '@mui/joy/Textarea';
-import useDeferredEffect from "../../utils/hooks";
-import {useDispatch, useSelector} from "react-redux";
-import {remove, update} from "../../reducers/orders";
-import {useSwipeable} from "react-swipeable";
+import { useDispatch, useSelector } from "react-redux";
+import { remove, update } from "../../reducers/orders";
+import { useSwipeable } from "react-swipeable";
 
-const Order = (props: { orderId: number }) => {
-    const orders = useSelector(state => state.orders.value)
+const Order = ({ orderId }) => {
     const dispatch = useDispatch()
-    const [text, setText] = useState(orders[props.orderId].text);
+    const order = useSelector(state => state.orders.value[orderId]);
+    const [text, setText] = useState(order.text);
     const [show, setShow] = useState(true);
+    const [editedText, setEditedText] = useState(order.text); // Локальное состояние для отслеживания изменений текста
 
-    function del() {
+    const handleRemove = () => {
         setShow(false)
-        setTimeout(() => dispatch(remove({id: props.orderId})), 500)
+        setTimeout(() => dispatch(remove({ id: orderId })), 500)
     }
 
     const handlers = useSwipeable({
-        onSwipedLeft: del,
+        onSwipedLeft: handleRemove,
         swipeDuration: 300
     })
 
-    useDeferredEffect(200, () => {
-        dispatch(update({id: props.orderId, text: text}))
-        console.log("updated")
-    }, [text])
+    const handleTextChange = (e) => {
+        setEditedText(e.target.value); // Обновляем локальное состояние при изменении текста в поле ввода
+    };
+
+    const handleSave = () => {
+        dispatch(update({ id: orderId, text: editedText })); // Отправляем обновленный текст в Redux при сохранении изменений
+        setText(editedText); // Обновляем текст в компоненте сразу после сохранения
+    }
 
     return (
         <div className={`${styles.Order} ${show ? "" : styles.Removed}`} data-testid="Order" {...handlers}>
-            <Textarea className={"w-75 m-auto bg-light"} value={text} onChange={e => setText(e.target.value)}
-                      variant={"plain"}/>
+            <textarea
+                className={styles.TextArea}
+                value={editedText}
+                onChange={handleTextChange}
+                placeholder="Enter your note here..."
+            />
+            {/*<button className={styles.SaveButton} onClick={handleSave}>Save</button>*/}
         </div>
     );
 }
