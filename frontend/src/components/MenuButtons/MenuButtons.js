@@ -19,7 +19,7 @@ const MenuButtons = ({ handleLogout }) => {
                 <Link to="/orders" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Orders</Link>
                 <Link to="/schedule" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Schedule</Link>
                 <Link to="/users" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>All users</Link>
-                <a href="http://5.101.51.223:6060" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Chat</a>
+                <Link to="/chat" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Chat</Link>
                 <Link to="/profile" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Profile</Link>
                 <Button onClick={handleLogout} className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Log out</Button>
             </Stack>
