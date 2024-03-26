@@ -1,11 +1,9 @@
-// StopListElements.js
-
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './StopListElements.module.css';
 import StopListElement from "../StopListElement/StopListElement";
-import { Collapse, Container, Stack } from "react-bootstrap";
-import { useSwipeable } from "react-swipeable";
-import { GripHorizontal } from "react-bootstrap-icons";
+import {Collapse, Container, Stack} from "react-bootstrap";
+import {useSwipeable} from "react-swipeable";
+import {GripHorizontal} from "react-bootstrap-icons";
 import client from "../../utils/client";
 
 const StopListElements = () => {
@@ -38,38 +36,33 @@ const StopListElements = () => {
         }
     }
 
-    const handleUpdateElement = (updatedElement) => {
-        // Обновляем локальное состояние
+    const handleUpdateElement = async (updatedElement) => {
         const updatedElements = stopListElements.map(element => {
             if (element.id === updatedElement.id) {
-                console.log("here" + element.id);
                 return updatedElement;
             } else {
                 return element;
             }
         });
+
         setStopListElements(updatedElements);
 
-        // Отправляем обновления на сервер
-        // sendUpdateToServer(updatedElement);
-    };
+        const requestBody = {
+            dishId: updatedElement.id,
+            name: updatedElement.name,
+        };
 
-    const sendUpdateToServer = async (updatedElement) => {
-        try {
-            const response = await fetch(client.baseUrl + `/api/dishes/${updatedElement.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedElement),
-            });
+        const response = await fetch(`${client.baseUrl}/api/update_dish`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody)
+        });
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Error updating stop list element:', errorText);
-            }
-        } catch (error) {
-            console.error('Error updating stop list element:', error);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
         }
     };
 
@@ -77,7 +70,7 @@ const StopListElements = () => {
         if (show) {
             getStopListElements().then(setStopListElements);
         }
-    }, [show]); // Запускаем useEffect только при изменении show
+    }, [show]);
 
     return (
         <>
@@ -87,16 +80,16 @@ const StopListElements = () => {
                 {...handlers}
             >
                 <Collapse in={show}>
-                    <Stack gap={3} className={`${styles.StopListElements} mt-5 mb-5`} data-testid="StopListElements">
-                        {stopListElements.map((element, index) => (
-                            <StopListElement
-                                key={index}
-                                stopListElement={element}
-                                onUpdate={handleUpdateElement}
-                            />
-                        ))}
-                    </Stack>
-                </Collapse>
+                <Stack gap={3} className={`${styles.StopListElements} mt-5 mb-5`} data-testid="StopListElements">
+                    {stopListElements.map((element, index) => (
+                        <StopListElement
+                            key={index}
+                            stopListElement={element}
+                            onUpdate={handleUpdateElement}
+                        />
+                    ))}
+                </Stack>
+            </Collapse>
                 <span className={styles.Bar}><GripHorizontal/></span>
             </Container>
         </>

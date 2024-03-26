@@ -1,21 +1,21 @@
 .StopListElements {
-
+    margin-top: 6rem;
+    overflow-y: auto;
 }
-
 .Container {
     z-index: 10;
-    position: fixed;
-    top: 70px;
+    top:4.15rem;
     left: 0;
     width: 100%;
+    position: absolute;
     min-height: 5%;
 }
+
 .StopListElements {
     width: 100%;
     max-width: 600px;
     margin-top: 6rem;
 }
-
 
 .ShowList {
 
@@ -51,23 +51,4 @@
     margin-right: 50%;
     bottom: 2%;
 }
-/*!* StopListElements.module.css *!*/
 
-/*.Container {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    padding: 20px;*/
-/*}*/
-
-
-/*.Bar {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 50%;*/
-/*    transform: translateX(-50%);*/
-/*    width: 30px;*/
-/*    height: 5px;*/
-/*    background-color: #ccc;*/
-/*    cursor: pointer;*/
-/*}*/

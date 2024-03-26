@@ -1,23 +1,21 @@
-/* StopListElement.module.css */
-
 .StopListElement {
     display: flex;
     align-items: center;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 1rem; /* Добавляем расстояние между элементами */
+    margin-bottom: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
 }
-
 
 .StopListElement:hover {
     background-color: #f0f0f0;
 }
 
-.StopListElement input[type="text"] {
-    width: 100%;
+.StopListElement textarea {
+    width: calc(100% - 70px);
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -25,7 +23,10 @@
 }
 
 .StopListElement button {
-    margin-left: 10px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
     padding: 8px 12px;
     font-size: 16px;
     background-color: #007bff;
