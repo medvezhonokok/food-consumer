@@ -1,5 +1,6 @@
 package ru.backend;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -11,12 +12,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @EntityScan("ru.backend.model")
 public class BackendApplication {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
+    @Value("${backend.js.url}")
+    private String backendJsUrl;
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://5.101.51.223:8000", "http://5.101.51.223:3000", "http://5.101.51.223:3331", "http://5.101.51.223:50902")
+                registry.addMapping("/**")
+                        .allowedOrigins(frontendUrl, backendJsUrl)
                         .allowedMethods("*")
                         .allowCredentials(true);
             }
