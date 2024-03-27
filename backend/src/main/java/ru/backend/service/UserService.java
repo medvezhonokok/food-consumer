@@ -1,9 +1,7 @@
 package ru.backend.service;
 
 import org.apache.log4j.Logger;
-import org.mortbay.util.StringUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import ru.backend.form.UserCredentials;
 import ru.backend.model.User;
 import ru.backend.repository.UserRepository;
@@ -59,7 +57,7 @@ public class UserService {
         String phoneNumber = userCredentials.getPhoneNumber();
         String name = userCredentials.getName();
 
-        logger.info("Stated updating user settings with id=" + userId + ", updated phoneNumber=" + phoneNumber);
+        logger.info("Stated updating user settings with id=" + userId + ", login=" + userCredentials.getLogin());
 
         if (phoneNumber != null && !phoneNumber.isBlank()) {
             userRepository.updatePhoneNumber(userId, phoneNumber);

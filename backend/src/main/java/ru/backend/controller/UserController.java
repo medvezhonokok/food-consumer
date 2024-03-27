@@ -39,7 +39,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserCredentials register(@RequestBody @Valid UserCredentials credentials, BindingResult bindingResult) {
+    public UserCredentials register(@RequestBody @Valid UserCredentials credentials,
+                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getAllErrors().toString());
         }
@@ -48,7 +49,8 @@ public class UserController {
     }
 
     @PostMapping("/getId")
-    public Long getUserIdByLogin(@RequestBody UserCredentials credentials, BindingResult bindingResult) {
+    public Long getUserIdByLogin(@RequestBody UserCredentials credentials,
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult.getAllErrors().toString());
         }
@@ -57,7 +59,8 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public void updateUserSettings(@PathVariable(name = "id") Long userId, @RequestBody UserCredentials userCredentials) {
+    public void updateUserSettings(@PathVariable(name = "id") Long userId,
+                                   @RequestBody UserCredentials userCredentials) {
         userService.updateUserSettingsById(userId, userCredentials);
     }
 
