@@ -3,12 +3,13 @@
     overflow-y: auto;
 }
 .Container {
+    position: fixed;
     z-index: 10;
     top:4.15rem;
     left: 0;
     width: 100%;
-    position: absolute;
     min-height: 5%;
+    transition: height 0.3s ease;
 }
 
 .StopListElements {
@@ -28,6 +29,7 @@
 
 .ShowModal {
     display: block;
+    height: auto; /* Устанавливаем высоту в auto, чтобы показать плашку */
 }
 
 .HideModal {
@@ -52,3 +54,8 @@
     bottom: 2%;
 }
 
+.HideModal {
+    display: block;
+    height: 0; /* Устанавливаем высоту в 0, чтобы скрыть плашку */
+    overflow: hidden; /* Скрытие содержимого, которое выходит за пределы блока */
+}

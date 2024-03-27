@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import LoginForm from '../LoginForm/LoginForm';
@@ -16,27 +16,15 @@ function App() {
     };
 
     const user = getUserFromLocalStorage();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!user);
-
-    useEffect(() => {
-        setIsLoggedIn(!!user);
-    }, [user]);
-
-    const handleLogout = () => {
-        localStorage.removeItem('jwtToken');
-        localStorage.removeItem('user');
-        setIsLoggedIn(false);
-        window.location.pathname = '/';
-    };
 
     return (
         <div className="App">
             <div>
-                {isLoggedIn ?
+                {user ?
                     (
                         <div>
                             <CustomNavbar user={user}/>
-                            <MenuButtons handleLogout={handleLogout}/>
+                            <MenuButtons/>
                         </div>
                     ) :
                     (
@@ -49,6 +37,5 @@ function App() {
         </div>
     );
 }
-
 
 export default App;

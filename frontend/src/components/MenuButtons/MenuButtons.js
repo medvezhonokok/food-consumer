@@ -3,7 +3,7 @@ import { Button, Stack } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import styles from './MenuButtons.module.css';
 
-const MenuButtons = ({ handleLogout }) => {
+const MenuButtons = () => {
     let style = {
         width: '13rem',
         height: '3.5rem',
@@ -21,7 +21,6 @@ const MenuButtons = ({ handleLogout }) => {
                 <Link to="/users" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>All users</Link>
                 <a href="http://5.101.51.223:6060" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Chat</a>
                 <Link to="/profile" className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Profile</Link>
-                <Button onClick={handleLogout} className={`btn btn-primary btn-lg ${styles.animatedButton}`} style={style}>Log out</Button>
             </Stack>
         </div>
     );

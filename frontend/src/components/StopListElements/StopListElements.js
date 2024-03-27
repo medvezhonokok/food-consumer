@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './StopListElements.module.css';
 import StopListElement from "../StopListElement/StopListElement";
-import {Collapse, Container, Stack} from "react-bootstrap";
-import {useSwipeable} from "react-swipeable";
-import {GripHorizontal} from "react-bootstrap-icons";
+import { Collapse, Container, Stack } from "react-bootstrap";
+import { useSwipeable } from "react-swipeable";
+import { GripHorizontal } from "react-bootstrap-icons";
 import client from "../../utils/client";
 
 const StopListElements = () => {
     const [stopListElements, setStopListElements] = useState([]);
     const [show, setShow] = useState(false);
+
     const handlers = useSwipeable({
-        onSwipedUp: () => setShow(false),
-        onSwipedDown: () => setShow(true),
+        onSwipedUp: () => setShow(false), // Скрыть плашку при свайпе вверх
+        onSwipedDown: () => setShow(true), // Показать плашку при свайпе вниз
     });
 
     async function getStopListElements() {
@@ -80,16 +81,16 @@ const StopListElements = () => {
                 {...handlers}
             >
                 <Collapse in={show}>
-                <Stack gap={3} className={`${styles.StopListElements} mt-5 mb-5`} data-testid="StopListElements">
-                    {stopListElements.map((element, index) => (
-                        <StopListElement
-                            key={index}
-                            stopListElement={element}
-                            onUpdate={handleUpdateElement}
-                        />
-                    ))}
-                </Stack>
-            </Collapse>
+                    <Stack gap={3} className={`${styles.StopListElements} mt-5 mb-5`} data-testid="StopListElements">
+                        {stopListElements.map((element, index) => (
+                            <StopListElement
+                                key={index}
+                                stopListElement={element}
+                                onUpdate={handleUpdateElement}
+                            />
+                        ))}
+                    </Stack>
+                </Collapse>
                 <span className={styles.Bar}><GripHorizontal/></span>
             </Container>
         </>

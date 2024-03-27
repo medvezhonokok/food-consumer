@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './Orders.module.css';
 import Order from "../Order/Order";
 import { useDispatch, useSelector } from "react-redux";
-import { init, add, update } from "../../reducers/orders"; // Добавляем действие update
+import { init, add, update, remove } from "../../reducers/orders"; // Добавляем действие update и remove
 import { Button } from "@mui/material";
 import { v4 } from "uuid";
 import { Stack } from "react-bootstrap";
 import { useSwipeable } from 'react-swipeable'; // Импортируем хук useSwipeable
-import MenuButton from "../MenuButton/MenuButton";
 
 const Orders = ({ user }) => {
     const orders = useSelector(state => state.orders.value)
@@ -30,8 +29,20 @@ const Orders = ({ user }) => {
     };
 
     const handleBackToList = () => {
+        if (addingNewOrder && !newOrderText.trim()) {
+            // Если создаваемая заметка пуста, просто заканчиваем процесс добавления
+            setAddingNewOrder(false);
+            setNewOrderText('');
+            return;
+        }
+
         if (editingOrder) {
-            dispatch(update({ id: editingOrder, text: newOrderText }));
+            if (!newOrderText.trim()) {
+                // Если текст пуст при редактировании, удаляем заметку
+                dispatch(remove({ id: editingOrder }));
+            } else {
+                dispatch(update({ id: editingOrder, text: newOrderText }));
+            }
             setEditingOrder(null);
         } else if (addingNewOrder) {
             const newOrderId = v4();
@@ -52,15 +63,12 @@ const Orders = ({ user }) => {
     let content;
     if (addingNewOrder || editingOrder) {
         content = (
-            <div className={styles.NewOrder} {...swipeHandlers}> {/* Применяем swipeHandlers к элементу .NewOrder */}
+            <div className={styles.NewOrder} {...swipeHandlers}>
                 <textarea
                     className={styles.TextArea}
                     value={newOrderText}
                     onChange={(e) => setNewOrderText(e.target.value)}
                 />
-                <div className={styles.Actions}>
-                    <Button onClick={handleBackToList}>Save</Button> {/* Изменяем кнопку для сохранения */}
-                </div>
             </div>
         );
     } else {
@@ -68,7 +76,7 @@ const Orders = ({ user }) => {
             <div className={`${styles.CenteredContent} `}>No tasks for today</div> : (
                 <Stack gap={3}>
                     {Object.values(orders).reverse().map(o => (
-                        <div key={o.id} onClick={() => handleEditOrder(o.id)}> {/* Добавляем обработчик клика для каждого заказа */}
+                        <div key={o.id} onClick={() => handleEditOrder(o.id)}>
                             <Order orderId={o.id} />
                         </div>
                     ))}
@@ -81,7 +89,7 @@ const Orders = ({ user }) => {
                     {filteredOrders}
                 </div>
                 <div className={styles.Actions}>
-                    <Button onClick={handleAddNewOrder}>Add</Button> {/* Изменяем обработчик клика для добавления заказа */}
+                    <Button onClick={handleAddNewOrder}>Add</Button>
                 </div>
             </>
         );

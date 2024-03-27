@@ -5,7 +5,16 @@
     width: 100%; /* Занимает всю ширину экрана */
     height: 70px; /* Высота плашки */
     border-bottom: 1px solid gray; /* Линия под плашкой */
-    background-color: #eeeeee; /* Цвет фона плашки */
+    background-color: #ffffff; /* Цвет фона плашки */
     padding: 0 20px; /* Отступы слева и справа */
     box-sizing: border-box; /* Учитываем отступы внутри размеров */
 }
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }}
