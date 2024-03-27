@@ -45,12 +45,7 @@ class Client {
 
             if (contentType) {
                 params['headers'] = {
-                    'Content-Type': contentType,
-                    // 'Access-Control-Allow-Origin': 'http://5.101.51.223:8000'
-                }
-            } else {
-                params['headers'] = {
-                    // 'Access-Control-Allow-Origin': 'http://5.101.51.223:8000'
+                    'Content-Type': contentType
                 }
             }
 
@@ -80,17 +75,6 @@ class Client {
     _showError(text: string) {
         //    todo implement
         alert(`error: ${text}`)
-    }
-
-    _replacer(key: string, value: string) {
-        // todo implement if needed
-        // value always is string, so refere to original object value
-        // this is refered to original obkject being jsonifing
-        // if (this[key] instanceof Date) {
-        //     return this[key].getTime();
-        // }
-        // return value;
-
     }
 }
 

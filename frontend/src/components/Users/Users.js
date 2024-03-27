@@ -33,20 +33,26 @@ const Users = ({user}) => {
     })
 
     return (
-        <div className={styles.Users} data-testid="Users">
-            {user ? <CustomNavbar user={user}/> : null}
-            <div className={styles.userList}>
-                {user ? users.map((user) => (
-                    <div key={user.id} className={styles.userCard}>
-                        <div className={styles.userInfo}>
-                            <h3>{user.name}</h3>
-                            <p>Phone Number: {user.phoneNumber}</p>
-                            <p>Login: {user.login}</p>
+        user
+            ?
+            <div className={styles.Users} data-testid="Users">
+                {user ? <CustomNavbar user={user}/> : null}
+                <div className={styles.userList}>
+                    {users.map((user) => (
+                        <div key={user.id} className={styles.userCard}>
+                            <div className={styles.userInfo}>
+                                <h3>{user.name}</h3>
+                                <p>Phone Number: {user.phoneNumber}</p>
+                                <p>Login: {user.login}</p>
+                            </div>
                         </div>
-                    </div>
-                )) : null}
+                    ))}
+                </div>
             </div>
-        </div>
+            :
+            <>
+                nothing there
+            </>
     );
 };
 

@@ -5,7 +5,7 @@ import CustomNavbar from "../CustomNavbar/CustomNavbar";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-const socket = io.connect("http://5.101.51.223:3001");
+const socket = io.connect(process.env.REACT_APP_SOCKET_URL);
 
 const Chat = ({user}) => {
     const [message, setMessage] = useState("");
