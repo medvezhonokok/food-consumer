@@ -41,8 +41,19 @@ services:
       - "8080:8080"
     depends_on:
       - maria-db
+
+  # js backend (for chat only)
+  js-backend:
+    build:
+      context: ./../js-backend
+      dockerfile: Dockerfile
+    container_name: js-backend
+    restart: always
+    ports:
+      - "3001:3001"
+    depends_on:
+      - maria-db
+
 volumes:
   dbdata:
   static_value:
-  mongodb-data:
-  mysql-data:

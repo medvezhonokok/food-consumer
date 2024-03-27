@@ -5,24 +5,27 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const mysql = require("mysql2");
 
+require('dotenv').config();
+
 app.use(cors());
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://5.101.51.223:8000",
+        origin: process.env.SOCKET_IO_ORIGIN,
         methods: ["GET", "POST"],
     },
 });
 
 const connection = mysql.createConnection({
-    host: 'maria-db',
-    port: '3306',
-    user: 'food-consumer',
-    password: '67b7f471fa16819e',
-    database: 'food-consumer'
+    host: "maria-db",
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
+
 
 connection.connect((err) => {
     if (err) {
@@ -63,6 +66,6 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(3001, () => {
-    console.log("SERVER IS RUNNING");
+server.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server is running on port ${process.env.SERVER_PORT}`);
 });
