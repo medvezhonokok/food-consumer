@@ -16,6 +16,7 @@ import store from './store';
 import Schedule from './components/Schedule/Schedule';
 import UserProfile from './components/UserProfile/UserProfile';
 import Users from './components/Users/Users';
+import Chat from "./components/Chat/Chat";
 
 const routes = [
     {path: '/', name: 'Home', element: <App/>, nodeRef: createRef()},
@@ -38,7 +39,18 @@ const routes = [
         element: <div><UserProfile user={getUserFromLocalStorage()}/></div>,
         nodeRef: createRef()
     },
-    {path: '/users', name: 'Users', element: <div><Users user={getUserFromLocalStorage()}/></div>, nodeRef: createRef()}
+    {
+        path: '/chat',
+        name: 'Chat',
+        element: <div><Chat user={getUserFromLocalStorage()}/></div>,
+        nodeRef: createRef()
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        element: <div><Users user={getUserFromLocalStorage()}/></div>,
+        nodeRef: createRef()
+    }
 ];
 
 const router = createBrowserRouter([
@@ -64,7 +76,7 @@ function PathContainer() {
                     <CSSTransition
                         key={location.pathname}
                         nodeRef={nodeRef}
-                        timeout={300}
+                        timeout={150}
                         classNames="page"
                         unmountOnExit
                     >

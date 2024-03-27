@@ -1,28 +1,5 @@
 version: '3.8'
 services:
-
-  # db for chat
-  mysql:
-    image: mysql:5.7
-    container_name: mysql-chat
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    ports:
-      - '3307:3307'
-    volumes:
-      - mysql-data:/var/lib/mysql
-
-  tinode-server:
-    image: tinode/tinode-mysql:latest
-    container_name: tinode-srv
-    depends_on:
-      - mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_DSN: 'mysql://root@tcp(mysql)/tinode'
-    ports:
-      - '6060:6060'
-
   # db for main application (backend)
   maria-db:
     image: mariadb:10.11
@@ -64,8 +41,19 @@ services:
       - "8080:8080"
     depends_on:
       - maria-db
+
+  # js backend (for chat only)
+  js-backend:
+    build:
+      context: ./../js-backend
+      dockerfile: Dockerfile
+    container_name: js-backend
+    restart: always
+    ports:
+      - "3001:3001"
+    depends_on:
+      - maria-db
+
 volumes:
   dbdata:
   static_value:
-  mongodb-data:
-  mysql-data:
