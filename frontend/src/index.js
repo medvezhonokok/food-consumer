@@ -63,7 +63,9 @@ const router = createBrowserRouter([
             element: route.element,
         })),
     },
-]);
+], {
+    swipe: false
+});
 
 function PathContainer() {
     const location = useLocation();
