@@ -107,7 +107,6 @@ const Tasks = ({user}) => {
         window.location.reload();
     };
 
-
     return (
         (user ?
                 <>
