@@ -15,18 +15,18 @@ import java.util.*;
 public class ScheduleService {
     private static final Logger logger = Logger.getLogger(ScheduleService.class);
 
-    // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY/edit#gid=592135575
+    // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:OY7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:PZ7";
 
-    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B31:B44";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO31:OY44";
+    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B31:B43";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO31:PZ44";
 
     private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B16:B20";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO16:OY20";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO16:PZ20";
 
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B13";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:OY13";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:PZ13";
 
     private final GoogleSheetService googleSheetService;
 
