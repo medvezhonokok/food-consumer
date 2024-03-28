@@ -24,7 +24,7 @@ const routes = [
     {
         path: '/tasks',
         name: 'Tasks',
-        element: <div><Tasks user={getUserFromLocalStorage()}/></div>,
+        element: <div><Tasks user={getUserFromLocalStorage()} options={{gestureEnabled: false}}/></div>,
         nodeRef: createRef()
     },
     {
