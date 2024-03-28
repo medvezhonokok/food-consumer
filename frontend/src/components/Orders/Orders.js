@@ -1,22 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './Orders.module.css';
 import Order from "../Order/Order";
 import { useDispatch, useSelector } from "react-redux";
-import { init, add, update, remove } from "../../reducers/orders"; // Добавляем действие update и remove
+import { init, add, update, remove } from "../../reducers/orders";
 import { Button } from "@mui/material";
 import { v4 } from "uuid";
 import { Stack } from "react-bootstrap";
-import { useSwipeable } from 'react-swipeable'; // Импортируем хук useSwipeable
+import { useSwipeable } from 'react-swipeable';
 
 const Orders = ({ user }) => {
-    const orders = useSelector(state => state.orders.value)
-    const dispatch = useDispatch()
+    const orders = useSelector(state => state.orders.value);
+    const dispatch = useDispatch();
     const [addingNewOrder, setAddingNewOrder] = useState(false);
     const [newOrderText, setNewOrderText] = useState('');
-    const [editingOrder, setEditingOrder] = useState(null); // Состояние для хранения информации о редактируемом заказе
+    const [editingOrder, setEditingOrder] = useState(null);
+    const textareaRef = useRef();
+    const [buttonWidth, setButtonWidth] = useState('auto');
+
+    const textareaRefs = useRef([]);
+
+    const focusEndOfTextarea = () => {
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(textareaRef.current.value.length, textareaRef.current.value.length);
+    };
 
     useEffect(() => {
-        dispatch(init())
+        dispatch(init());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (addingNewOrder || editingOrder) {
+            focusEndOfTextarea();
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }, [addingNewOrder, editingOrder]);
+
+    useEffect(() => {
+        function handleResize() {
+            setButtonWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const handleAddNewOrder = () => {
@@ -25,20 +51,19 @@ const Orders = ({ user }) => {
 
     const handleEditOrder = (orderId) => {
         setEditingOrder(orderId);
-        setNewOrderText(orders[orderId].text); // Устанавливаем текст редактируемого заказа в текстовое поле
+        setNewOrderText(orders[orderId].text);
     };
 
     const handleBackToList = () => {
-        if (addingNewOrder && !newOrderText.trim()) {
-            // Если создаваемая заметка пуста, просто заканчиваем процесс добавления
+        if ((addingNewOrder || editingOrder) && !newOrderText.trim()) {
             setAddingNewOrder(false);
+            setEditingOrder(null);
             setNewOrderText('');
             return;
         }
 
         if (editingOrder) {
             if (!newOrderText.trim()) {
-                // Если текст пуст при редактировании, удаляем заметку
                 dispatch(remove({ id: editingOrder }));
             } else {
                 dispatch(update({ id: editingOrder, text: newOrderText }));
@@ -60,44 +85,37 @@ const Orders = ({ user }) => {
         onSwipedRight: handleSwipeRight
     });
 
-    let content;
-    if (addingNewOrder || editingOrder) {
-        content = (
-            <div className={styles.NewOrder} {...swipeHandlers}>
-                <textarea
-                    className={styles.TextArea}
-                    value={newOrderText}
-                    onChange={(e) => setNewOrderText(e.target.value)}
-                />
-            </div>
-        );
-    } else {
-        let filteredOrders = !orders || orders.length === 0 ?
-            <div className={`${styles.CenteredContent} `}>No tasks for today</div> : (
-                <Stack gap={3}>
-                    {Object.values(orders).reverse().map(o => (
-                        <div key={o.id} onClick={() => handleEditOrder(o.id)}>
-                            <Order orderId={o.id} />
-                        </div>
-                    ))}
-                </Stack>
-            );
-
-        content = (
-            <>
-                <div className={styles.Orders} data-testid="Orders">
-                    {filteredOrders}
-                </div>
-                <div className={styles.Actions}>
-                    <Button onClick={handleAddNewOrder}>Add</Button>
-                </div>
-            </>
-        );
-    }
-
     return (
         <div className={styles.Container}>
-            {content}
+            {(addingNewOrder || editingOrder) ? (
+                <div className={`${styles.NewOrder} ${addingNewOrder ? styles.Open : ''}`} {...swipeHandlers}>
+                    <textarea
+                        ref={textareaRef}
+                        className={styles.TextArea}
+                        value={newOrderText}
+                        onChange={(e) => setNewOrderText(e.target.value)}
+                    />
+                </div>
+            ) : (
+                <>
+                    <div className={styles.Orders} data-testid="Orders">
+                        {!orders || orders.length === 0 ? (
+                            <div className={`${styles.CenteredContent} `}>No tasks for today</div>
+                        ) : (
+                            <Stack gap={3}>
+                                {Object.values(orders).reverse().map((o, index) => (
+                                    <div key={o.id} onClick={() => handleEditOrder(o.id)}>
+                                        <Order orderId={o.id} textareaRef={ref => textareaRefs.current[index] = ref} />
+                                    </div>
+                                ))}
+                            </Stack>
+                        )}
+                    </div>
+                    <div className={styles.Actions}>
+                        <Button onClick={handleAddNewOrder} style={{ width: buttonWidth }}>Add</Button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

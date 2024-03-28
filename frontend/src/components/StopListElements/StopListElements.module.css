@@ -1,15 +1,19 @@
 .StopListElements {
     margin-top: 6rem;
     overflow-y: auto;
+    background-color: #ffffff;
 }
 .Container {
     position: fixed;
+    background-color: #ffffff !important;
     z-index: 10;
-    top:4.15rem;
+    top: 3.75rem;
     left: 0;
     width: 100%;
+    max-width: 1000px;
     min-height: 5%;
     transition: height 0.3s ease;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .StopListElements {
@@ -25,6 +29,7 @@
 .HideList {
     height: 5%;
     position: fixed;
+    background-color: #ffffff;
 }
 
 .ShowModal {
@@ -49,6 +54,7 @@
 }
 
 .Bar {
+    background-color: #ffffff;
     margin-left: 50%;
     margin-right: 50%;
     bottom: 2%;

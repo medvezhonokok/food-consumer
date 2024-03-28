@@ -1,4 +1,5 @@
 .StopListElement {
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     border: none;
@@ -18,7 +19,8 @@
     border-radius: 5px;
     user-select: none;
     outline: none;
-    background-color: #f8f9fa;
+    /*background-color: #f8f9fa;*/
+    background-color: #ffffff;
 }
 
 .StopListElement button {
@@ -28,8 +30,7 @@
     transform: translateY(-50%);
     padding: 8px 12px;
     font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -37,5 +38,5 @@
 }
 
 .StopListElement button:hover {
-    background-color: #0056b3;
+    background-color: #ffffff;
 }

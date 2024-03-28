@@ -8,6 +8,7 @@
 }
 
 .Chat__messages {
+    margin-bottom: 5rem;
     flex: 1;
     overflow-y: auto;
     padding: 10px;
@@ -19,9 +20,13 @@
     align-items: center;
     padding: 10px;
     background-color: #f9f9f9;
+    position: fixed; /* Используйте позиционирование "fixed" для фиксации в нижней части экрана */
     bottom: 0;
+    left: 0; /* Выравнивание по левому краю */
+    width: 100%; /* Растянуть на всю ширину экрана */
     z-index: 1;
 }
+
 
 .Chat__input textarea {
     flex: 1;
@@ -30,10 +35,12 @@
     resize: vertical;
     border: 1px solid #ccc;
     border-radius: 5px;
+    max-height: 100px; /* Опционально: задайте максимальную высоту для textarea */
+    overflow-y: auto; /* Добавьте вертикальную прокрутку при достижении максимальной высоты */
 }
 
 .Chat__input Button {
-    padding: 15px 0;
+    padding: 15px 20px; /* Увеличьте отступы для лучшего внешнего вида */
     color: #fff;
     background: #d2ce9f;
     border: 0.1rem solid #9d9b7f;
