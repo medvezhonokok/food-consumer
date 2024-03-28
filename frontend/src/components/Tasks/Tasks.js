@@ -107,10 +107,16 @@ const Tasks = ({user}) => {
         window.location.reload();
     };
 
+    const element = document.getElementById('main-module');
+
+    element.addEventListener('touchstart', (e) => {
+        if (e.pageX > 20 && e.pageX < window.innerWidth - 20) return;
+        e.preventDefault();
+    });
 
     return (
         (user ?
-                <>
+                <div id={"main-module"}>
                     <CustomNavbar user={user}/>
                     <div style={{marginTop: "5rem"}}>
                         <CustomCalendar value={dateState} onChange={changeDate}/>
@@ -151,7 +157,7 @@ const Tasks = ({user}) => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                </>
+                </div>
                 :
                 <>nothing there</>
         )
