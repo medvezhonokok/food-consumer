@@ -1,25 +1,24 @@
 .StopListElement {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 5px;
     margin-bottom: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-}
-
-.StopListElement:hover {
-    background-color: #f0f0f0;
+    overflow: hidden;
 }
 
 .StopListElement textarea {
     width: calc(100% - 70px);
-    padding: 8px;
+    padding: 0.3rem;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 5px;
+    user-select: none;
+    outline: none;
+    background-color: #f8f9fa;
 }
 
 .StopListElement button {

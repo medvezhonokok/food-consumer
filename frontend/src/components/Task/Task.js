@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Task.module.css';
-import {Button, Card, Placeholder} from "react-bootstrap";
+import { Button, Card, Placeholder, Row, Col } from "react-bootstrap";
 import client from "../../utils/client";
 
-const Task = ({task, user}) => {
+const Task = ({ task, user }) => {
     const ftime = () => `${task.time.getHours().toString().padStart(2, "0")}:${task.time.getMinutes().toString().padStart(2, "0")}`;
 
     const handleCompleteClick = async () => {
@@ -59,41 +59,37 @@ const Task = ({task, user}) => {
 
     return (
         <Card className={"border-1 rounded-2 m-auto w-75"}>
-            <Card.Header>
-                <span
-                    className={`${styles.Header} text-secondary`}
-                ><b>
-                    {task.loading ?
-                        <Placeholder animation={"glow"}><Placeholder xs={6}/></Placeholder>
-                        : ftime()
-                    }
-                </b></span>
-                <div style={{float: "right", marginLeft: "1rem"}} className="ml-auto">
-                    {!task.loading && user.admin && (
-                        <Button onClick={() => removeTask(task.id)}>
-                            Remove
-                        </Button>
-                    )}
-                </div>
-                <div style={{float: "right"}} className="ml-auto">
-                    {!task.loading && (
-                        <Button
-                            style={task.userId !== null && task.userId !== user.id ? {display: "none"} : {background: "#B5B285"}}
-                            variant={task.userId === null ? "success" : "warning"} onClick={handleCompleteClick}>
-                            {task.userId === null ? "Взять" : "Отказаться"}
-                        </Button>
-                    )}
-                </div>
+            <Card.Header className="d-flex justify-content-center">
+        <span className={`${styles.Header} text-secondary`}><b>
+          {task.loading ?
+              <Placeholder animation={"glow"}><Placeholder xs={6} /></Placeholder>
+              : ftime()
+          }
+        </b></span>
             </Card.Header>
-            <Card.Body className={"w-100 h-100"}>
-                <Card.Text>
+            <Card.Body className={"w-100 h-100 d-flex flex-column"}>
+                <Card.Text className="flex-grow-1">
                     {task.loading ?
                         <Placeholder animation={"glow"}>
-                            <Placeholder xs={4}/> <Placeholder xs={6}/> <Placeholder xs={7}/>
+                            <Placeholder xs={4} /> <Placeholder xs={6} /> <Placeholder xs={7} />
                         </Placeholder>
                         : task.text
                     }
                 </Card.Text>
+                <Row className="mt-auto">
+                    <Col>
+                        <Button className={`${styles.Button} btn-danger w-100`} onClick={() => removeTask(task.id)}>
+                            Удалить
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button className={`${styles.Button} btn-warning w-100`}
+                                style={task.userId !== null && task.userId !== user.id ? { display: "none" } : { background: "#B5B285" }}
+                                onClick={handleCompleteClick}>
+                            {task.userId === null ? "Взять" : "Отказаться"}
+                        </Button>
+                    </Col>
+                </Row>
             </Card.Body>
         </Card>
     );

@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './StopListElement.module.css';
-import {Dot} from "react-bootstrap-icons";
+import { Dot } from "react-bootstrap-icons";
 
-const StopListElement = ({stopListElement, onUpdate}) => {
+const StopListElement = ({ stopListElement, onUpdate }) => {
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState(stopListElement.name);
     const [isEditingActive, setIsEditingActive] = useState(false);
@@ -46,6 +46,7 @@ const StopListElement = ({stopListElement, onUpdate}) => {
     useEffect(() => {
         if (editing && inputRef.current) {
             inputRef.current.focus();
+            inputRef.current.setSelectionRange(inputRef.current.value.length, inputRef.current.value.length);
         }
     }, [editing]);
 
@@ -66,14 +67,12 @@ const StopListElement = ({stopListElement, onUpdate}) => {
     return (
         <div ref={containerRef} className={styles.StopListElement} onClick={handleEdit}>
             {editing ? (
-                <>
-                    <textarea
-                        ref={inputRef}
-                        value={name}
-                        onChange={handleNameChange}
-                    />
-                    <button onClick={handleSave}>Save</button>
-                </>
+                <textarea
+                    ref={inputRef}
+                    value={name}
+                    onChange={handleNameChange}
+                    onBlur={handleSave}
+                />
             ) : (
                 <>
                     <Dot /> {truncateText(stopListElement.name)}

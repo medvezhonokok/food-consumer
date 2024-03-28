@@ -1,8 +1,25 @@
 .Task {
+    display: flex;
+    flex-direction: column;
 }
 
 .Header {
     width: 3em;
     font-size: 1.5em;
     float: left;
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+
+.Button {
+    margin-left: 0rem;
+    margin-top: 1rem;
 }
