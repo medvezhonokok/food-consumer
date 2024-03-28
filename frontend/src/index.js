@@ -24,7 +24,7 @@ const routes = [
     {
         path: '/tasks',
         name: 'Tasks',
-        element: <div><Tasks user={getUserFromLocalStorage()} options={{gestureEnabled: false}}/></div>,
+        element: <div><Tasks user={getUserFromLocalStorage()}/></div>,
         nodeRef: createRef()
     },
     {
@@ -63,9 +63,7 @@ const router = createBrowserRouter([
             element: route.element,
         })),
     },
-], {
-    swipe: false
-});
+]);
 
 function PathContainer() {
     const location = useLocation();
