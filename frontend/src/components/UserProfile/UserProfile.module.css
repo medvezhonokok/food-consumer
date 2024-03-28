@@ -59,6 +59,7 @@
 .label {
     font-weight: bold;
     color: #333;
+    margin-bottom: 5px;
 }
 
 .input {
@@ -100,3 +101,13 @@
 .button:hover {
     background-color: #a99f7a;
 }
+
+.textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+
+

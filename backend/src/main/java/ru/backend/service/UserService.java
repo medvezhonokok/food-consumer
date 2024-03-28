@@ -56,8 +56,9 @@ public class UserService {
     public void updateUserSettingsById(long userId, UserCredentials userCredentials) {
         String phoneNumber = userCredentials.getPhoneNumber();
         String name = userCredentials.getName();
+        String about = userCredentials.getAbout();
 
-        logger.info("Stated updating user settings with id=" + userId + ", login=" + userCredentials.getLogin());
+        logger.info("Stated updating user settings with id=" + userId + ", name=\"" + name +"\"");
 
         if (phoneNumber != null && !phoneNumber.isBlank()) {
             userRepository.updatePhoneNumber(userId, phoneNumber);
@@ -65,6 +66,10 @@ public class UserService {
 
         if (name != null && !name.isBlank()) {
             userRepository.updateUserName(userId, name);
+        }
+
+        if (about != null && !about.isBlank()) {
+            userRepository.updateAbout(userId, about);
         }
     }
 

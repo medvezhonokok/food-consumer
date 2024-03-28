@@ -37,6 +37,9 @@ public class User {
     @Pattern(regexp = "[a-zA-Z]{6,36}")
     private String name;
 
+    @Size(max = 250)
+    private String about;
+
     private boolean isManager;
 
     private boolean isWaiter;
