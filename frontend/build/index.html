@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
     <meta name="theme-color" content="#ffffff"/>
     <meta name="description" content="Web site created using create-react-app"/>
-    <meta name="orientation" content="portrait">
     <link rel="manifest" href="/manifest.json"/>
     <title>Index</title>
+    <style>
+        @media screen and (orientation: landscape) {
+            body {
+                transform: rotate(90deg);
+                transform-origin: center;
+                width: 100vh;
+                height: 100vw;
+                overflow-x: hidden;
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
     <script defer="defer" src="/static/js/main.bd4ae7f4.js"></script>
     <link href="/static/css/main.801a9e47.css" rel="stylesheet">
 </head>
