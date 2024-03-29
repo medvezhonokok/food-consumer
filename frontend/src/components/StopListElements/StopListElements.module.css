@@ -3,6 +3,7 @@
     overflow-y: auto;
     background-color: #ffffff;
 }
+
 .Container {
     position: fixed;
     background-color: #ffffff !important;
@@ -11,7 +12,7 @@
     left: 0;
     width: 100%;
     max-width: 1000px;
-    min-height: 5%;
+    min-height: 10%;
     transition: height 0.3s ease;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -22,10 +23,6 @@
     margin-top: 6rem;
 }
 
-.ShowList {
-
-}
-
 .HideList {
     height: 5%;
     position: fixed;
@@ -34,7 +31,7 @@
 
 .ShowModal {
     display: block;
-    height: auto; /* Устанавливаем высоту в auto, чтобы показать плашку */
+    height: auto;
 }
 
 .HideModal {
@@ -42,26 +39,37 @@
 }
 
 .Modal {
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .Bar {
     background-color: #ffffff;
     margin-left: 50%;
     margin-right: 50%;
-    bottom: 2%;
 }
 
 .HideModal {
     display: block;
     height: 0; /* Устанавливаем высоту в 0, чтобы скрыть плашку */
     overflow: hidden; /* Скрытие содержимого, которое выходит за пределы блока */
+}
+
+.Collapse {
+    max-height: 200px;
+    overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту Collapse */
+}
+
+textarea {
+    width: calc(100% - 20px); /* Ширина textarea будет на 20 пикселей меньше ширины родительского контейнера */
+    min-height: 100px; /* Минимальная высота textarea */
+    resize: vertical; /* Разрешаем только вертикальное изменение размера */
+    overflow-y: auto; /* Добавляем вертикальную прокрутку, если текст становится больше доступного пространства */
 }

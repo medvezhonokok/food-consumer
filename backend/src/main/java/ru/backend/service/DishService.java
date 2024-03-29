@@ -26,4 +26,12 @@ public class DishService {
     public void updateNameById(String name, Long dishId) {
         dishRepository.updateNameById(dishId, name);
     }
+
+    public void removeDishById(Long dishId) {
+        dishRepository.deleteById(dishId);
+    }
+
+    public void save(Dish dish) {
+        dishRepository.save(dish);
+    }
 }

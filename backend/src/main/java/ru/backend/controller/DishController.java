@@ -1,6 +1,9 @@
 package ru.backend.controller;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import ru.backend.model.Dish;
 import ru.backend.service.DishService;
 
@@ -28,7 +31,23 @@ public class DishController {
         Dish dish = dishService.findById(dishId);
 
         if (dish != null) {
-            dishService.updateNameById(name, dishId);
+            if (name == null || name.isBlank()) {
+                dishService.removeDishById(dishId);
+            } else {
+                dishService.updateNameById(name, dishId);
+            }
+        }
+    }
+
+    @PostMapping(value = "/api/add_dish")
+    public void addDish(@RequestBody Map<String, Object> requestBody) {
+        String name = String.valueOf(requestBody.get("name"));
+
+        if (name != null && !name.isBlank()) {
+            Dish dish = new Dish();
+            dish.setName(name);
+
+            dishService.save(dish);
         }
     }
 }
