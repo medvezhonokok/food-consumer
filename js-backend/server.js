@@ -10,7 +10,6 @@ require('dotenv').config();
 app.use(cors());
 
 const server = http.createServer(app);
-
 const io = new Server(server, {
     cors: {
         origin: process.env.SOCKET_IO_ORIGIN,
@@ -20,27 +19,32 @@ const io = new Server(server, {
 
 async function connectToDatabase() {
     try {
-        const connection = await mysql.createConnection({
+        const pool = await mysql.createPool({
             host: process.env.DB_HOST,
             port: process.env.DB_PORT,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME
+            database: process.env.DB_NAME,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
         });
         console.log("Connected to maria-db");
-        return connection;
+        return pool;
     } catch (error) {
         console.error("Error connecting to db:", error);
         throw error;
     }
 }
 
-connectToDatabase().then(connection => {
+connectToDatabase().then(pool => {
     io.on("connection", (socket) => {
         socket.on("get_message_history", async () => {
             try {
-                const results = await connection.query("SELECT * FROM messages ORDER BY createdAt ASC");
-                socket.emit("message_history", results[0]);
+                const connection = await pool.getConnection();
+                const [results] = await connection.query("SELECT * FROM messages ORDER BY createdAt ASC");
+                connection.release();
+                socket.emit("message_history", results);
             } catch (error) {
                 console.error("Error fetching message history:", error);
             }
@@ -48,10 +52,12 @@ connectToDatabase().then(connection => {
 
         socket.on("send_message", async (data) => {
             try {
+                const connection = await pool.getConnection();
                 await connection.query(
                     "INSERT INTO messages (text, sender, createdAt) VALUES (?, ?, NOW())",
                     [data.text, data.sender.name]
                 );
+                connection.release();
                 io.emit("receive_message", {
                     text: data.text,
                     sender: data.sender,
