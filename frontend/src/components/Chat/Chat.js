@@ -21,10 +21,6 @@ const Chat = ({ user }) => {
     };
 
     useEffect(() => {
-        Notification.requestPermission().then(permission => {
-            console.log('Notification permission:', permission);
-        });
-
         socket.emit("get_message_history");
         socket.on("message_history", (history) => {
             setMessageHistory(history);
@@ -38,7 +34,6 @@ const Chat = ({ user }) => {
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setMessageHistory(prevHistory => [...prevHistory, data]);
-            sendBrowserNotification(data);
         });
 
         scrollToBottom();
@@ -58,14 +53,6 @@ const Chat = ({ user }) => {
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     }
-
-    const sendBrowserNotification = (message) => {
-        if (Notification.permission === 'granted') {
-            new Notification('Новое сообщение', {
-                body: message.text,
-            });
-        }
-    };
 
     return (
         <>
