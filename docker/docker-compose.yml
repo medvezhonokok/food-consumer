@@ -10,7 +10,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 67b7f471fa16819e
       MYSQL_DATABASE: food-consumer
-      MYSQL_USER: food-consumer
+      MYSQL_USER: root
       MYSQL_PASSWORD: 67b7f471fa16819e
     volumes:
       - dbdata:/var/lib/mysql
