@@ -27,7 +27,7 @@ services:
     environment:
       PMA_HOST: maria-db
       PMA_PORT: 3306
-      PMA_USER: food-consumer
+      PMA_USER: root
       PMA_PASSWORD: 67b7f471fa16819e
 
   # main back application container
