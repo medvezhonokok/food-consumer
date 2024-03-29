@@ -10,6 +10,7 @@ const MenuButtons = () => {
             <Button href={'users'} className="btn btn-primary" style={{width: '10rem'}}>All users</Button>
             <Button href={'chat'} className="btn btn-primary" style={{width: '10rem'}}>Chat</Button>
             <Button href={'profile'} className="btn btn-primary" style={{width: '10rem'}}>Profile</Button>
+            <Button href={'test'} className="btn btn-primary" style={{width: '10rem'}}>Test</Button>
         </Stack>
     </div>)
 };
