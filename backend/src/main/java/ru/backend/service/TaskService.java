@@ -1,6 +1,7 @@
 package ru.backend.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.backend.model.PermanentTask;
 import ru.backend.model.Task;
@@ -89,5 +90,10 @@ public class TaskService {
 
     public void save(PermanentTask task) {
         permanentTaskRepository.save(task);
+    }
+
+    @Scheduled(cron = "0 1 0 * * *") // Every day in 00:01
+    public void resetUserIds() {
+        permanentTaskRepository.resetUserId();
     }
 }
