@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Schedule.module.css';
-import {Spinner, Stack, ToggleButton, ToggleButtonGroup} from 'react-bootstrap';
+import { Spinner, Stack } from 'react-bootstrap';
 import 'react-calendar/dist/Calendar.css';
 import CustomCalendar from '../CustomCalendar/CustomCalendar';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import client from '../../utils/client';
 import moment from 'moment/moment';
 import ScheduleBox from '../ScheduleBox/ScheduleBox';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-const Schedule = ({user}) => {
+const Schedule = ({ user }) => {
     const [schedule, setSchedule] = useState([]);
     const [dateState, setDateState] = useState(new Date());
-    const [workerScheduleRole, setWorkerScheduleRole] = useState("WAITER");
     const [loading, setLoading] = useState(true);
 
     const getSchedule = async () => {
         try {
             const response = await client.get('/api/schedule');
-
             return response.map((el) => ({
                 workerName: el.workerName,
                 creationTime: new Date(el.creationTime),
@@ -39,7 +40,6 @@ const Schedule = ({user}) => {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, []);
 
@@ -54,29 +54,28 @@ const Schedule = ({user}) => {
         setDateState(e);
     };
 
-    const changeRole = (role) => {
-        setWorkerScheduleRole(role);
+    const renderScheduleByRole = (role) => {
+        const filteredScheduleByRole = schedule
+            .filter((worker) => worker.role === role)
+            .filter((scheduleElem) => {
+                const taskDay = moment(scheduleElem.creationTime);
+                return taskDay.isSame(moment(dateState), 'day') && taskDay.isSame(moment(dateState), 'month');
+            })
+            .map((scheduleElem) => <ScheduleBox key={scheduleElem.workerName} scheduleElem={scheduleElem}/>);
+
+
+        return checkOnEmpty(filteredScheduleByRole, role);
+    }
+
+    const allRoles = ['WAITER', 'BARISTA', 'MANAGER'];
+
+    const carouselSettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
     };
-
-    let filteredScheduleByDate = schedule
-        .filter((scheduleElem) => {
-            const taskDay = moment(scheduleElem.creationTime);
-            return taskDay.isSame(moment(dateState), 'day') && taskDay.isSame(moment(dateState), 'month');
-        })
-        .map((scheduleElem) => <ScheduleBox key={scheduleElem.workerName} scheduleElem={scheduleElem}/>);
-
-    let filteredWaiterScheduleByDate = filteredScheduleByDate
-        .filter((worker) => worker.props.scheduleElem.role === "WAITER");
-
-    let filteredBaristaScheduleByDate = filteredScheduleByDate
-        .filter((worker) => worker.props.scheduleElem.role === "BARISTA");
-
-    let filteredManagerScheduleByDate = filteredScheduleByDate
-        .filter((worker) => worker.props.scheduleElem.role === "MANAGER");
-
-    filteredManagerScheduleByDate = checkOnEmpty(filteredManagerScheduleByDate, "Manager");
-    filteredBaristaScheduleByDate = checkOnEmpty(filteredBaristaScheduleByDate, "Barista");
-    filteredWaiterScheduleByDate = checkOnEmpty(filteredWaiterScheduleByDate, "Waiter");
 
     return (
         <>
@@ -84,10 +83,10 @@ const Schedule = ({user}) => {
                 <>
                     <CustomNavbar user={user}/>
                     <Stack gap={3} className={`${styles.Schedule} mt-3`} data-testid="Schedule">
-                        <div style={{marginTop: "5rem"}}>
+                        <div style={{ marginTop: "5rem" }}>
                             <CustomCalendar value={dateState} onChange={changeDate}/>
                         </div>
-                        <div style={{marginTop: '2rem'}}>
+                        <div style={{ marginTop: '2rem' }}>
                             {loading ? (
                                 <div className="text-center">
                                     <Spinner animation="border" role="status">
@@ -96,42 +95,14 @@ const Schedule = ({user}) => {
                                 </div>
                             ) : (
                                 <>
-                                    <ToggleButtonGroup
-                                        style={{
-                                            textAlign: "center",
-                                            marginBottom: '2rem',
-                                            display: "flow",
-                                            width: "100%"
-                                        }}
-                                        type="radio"
-                                        name="options"
-                                        defaultValue={2}
-                                    >
-                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-1" value={1}
-                                                      onChange={() => changeRole("MANAGER")} size="lg">
-                                            Manager
-                                        </ToggleButton>
-                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-2" value={2}
-                                                      onChange={() => changeRole("WAITER")} size="lg">
-                                            Waiter
-                                        </ToggleButton>
-                                        <ToggleButton style={{fontWeight: "bold"}} id="tbg-radio-3" value={3}
-                                                      onChange={() => changeRole("BARISTA")} size="lg">
-                                            Barista
-                                        </ToggleButton>
-                                    </ToggleButtonGroup>
-
-                                    {
-                                        // filteredScheduleByDate
-                                        workerScheduleRole === "WAITER" ?
-                                            filteredWaiterScheduleByDate
-                                            :
-                                            (
-                                                workerScheduleRole === "BARISTA"
-                                                    ? filteredBaristaScheduleByDate
-                                                    : filteredManagerScheduleByDate
-                                            )
-                                    }
+                                    {allRoles.map((role) => (
+                                        <div key={role} style={{marginBottom: "5rem"}}>
+                                            <h2>{role}</h2>
+                                            <Slider {...carouselSettings}>
+                                                {renderScheduleByRole(role)}
+                                            </Slider>
+                                        </div>
+                                    ))}
                                 </>
                             )}
                         </div>
