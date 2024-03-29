@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './StopListElements.module.css';
 import StopListElement from "../StopListElement/StopListElement";
-import { Collapse, Container, Stack, Button } from "react-bootstrap";
-import { useSwipeable } from "react-swipeable";
-import { GripHorizontal } from "react-bootstrap-icons";
+import {Button, Stack} from "react-bootstrap";
 import client from "../../utils/client";
 
 const StopListElements = () => {
     const [stopListElements, setStopListElements] = useState([]);
-    const [show, setShow] = useState(false);
     const [addingNewElement, setAddingNewElement] = useState(false);
     const [newElement, setNewElement] = useState('');
-
-    const handlers = useSwipeable({
-        onSwipedUp: () => setShow(false),
-        onSwipedDown: () => setShow(true),
-    });
 
     async function getStopListElements() {
         try {
@@ -96,43 +88,37 @@ const StopListElements = () => {
     };
 
     useEffect(() => {
-        if (show) {
-            getStopListElements().then(setStopListElements);
-        }
-    }, [show]);
+        getStopListElements().then(setStopListElements);
+    }, []);
 
     return (
         <>
-            <div className={`${styles.Modal} ${show ? styles.ShowModal : styles.HideModal}`} />
-            <Container
-                className={`rounded-bottom-5 ps-5 pe-5 bg-light ${styles.Container}`}
-                {...handlers}
-            >
-                <Collapse in={show} className={`${styles.Collapse}`}>
-                    <Stack gap={3} className={`${styles.StopListElements} mt-5 mb-5`} data-testid="StopListElements">
-                        {stopListElements.map((element, index) => (
-                            <StopListElement
-                                key={index}
-                                stopListElement={element}
-                                onUpdate={handleUpdateElement}
-                            />
-                        ))}
-                        {addingNewElement && (
-                            <textarea
-                                autoFocus
-                                value={newElement}
-                                onChange={(e) => setNewElement(e.target.value)}
-                                onBlur={handleAddElement}
-                                placeholder="Enter new item..."
-                            />
-                        )}
-                        {!addingNewElement &&
-                            <Button onClick={handleAddElement}>Add</Button>
-                        }
-                    </Stack>
-                </Collapse>
-                <span className={styles.Bar}><GripHorizontal /></span>
-            </Container>
+            <div/>
+            <Stack gap={3} style={{marginTop: "1rem"}} className={`${styles.StopListElements} mt-5 mb-5`}>
+                {stopListElements.map((element, index) => (
+                    <StopListElement
+                        key={index}
+                        stopListElement={element}
+                        onUpdate={handleUpdateElement}
+                    />
+                ))}
+                {addingNewElement && (
+                    <textarea
+                        autoFocus
+                        value={newElement}
+                        onChange={(e) => setNewElement(e.target.value)}
+                        onBlur={handleAddElement}
+                        placeholder="Enter new item..."
+                    />
+                )}
+                {!addingNewElement &&
+                    <Button style={{
+                        width: "4rem",
+                        marginRight: "auto",
+                        marginLeft: "auto"
+                    }} onClick={handleAddElement}>Add</Button>
+                }
+            </Stack>
         </>
     );
 };

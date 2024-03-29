@@ -1,0 +1,119 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.Orders {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.Actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.Actions button {
+    color: #ffffff;
+    border: 1px solid #a09e73;
+    border-radius: 12px;
+    margin: 20px auto;
+    padding: 20px;
+    width: 70%;
+    text-align: center;
+    background-color: #bcba91;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    animation: scaleIn 0.3s ease;
+}
+ /* maybe
+/*.Actions button:hover {*/
+/*    transform: scale(1.2);*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
+
+/*@keyframes scaleIn {*/
+/*    from {*/
+/*        transform: scale(1);*/
+/*    }*/
+/*    to {*/
+/*        transform: scale(1.2);*/
+/*    }*/
+/*}*/
+
+.NewOrder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease, blurIn 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.Open {
+    animation: fadeIn 0.3s ease, blurIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes blurIn {
+    from {
+        backdrop-filter: blur(0);
+    }
+    to {
+        backdrop-filter: blur(100px); /* Максимальное значение размытия */
+    }
+}
+
+
+.TextArea {
+    width: calc(100% - -40px);
+    height: calc(100% - -100px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1rem solid #ffffff;
+    border-radius: 5px;
+    resize: none;
+    margin-bottom: 20px;
+    user-select: none;
+    outline: none;
+}
+
+.CenteredContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 20px;
+}

@@ -1,123 +1,49 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import styles from './Orders.module.css';
-import Order from "../Order/Order";
-import { useDispatch, useSelector } from "react-redux";
-import { init, add, update, remove } from "../../reducers/orders";
-import { Button } from "@mui/material";
-import { v4 } from "uuid";
-import { Stack } from "react-bootstrap";
-import { useSwipeable } from 'react-swipeable';
+import StopListElements from "../StopListElements/StopListElements";
+import OrderList from "../OrderList/OrderList";
+import CustomNavbar from "../CustomNavbar/CustomNavbar";
+import Drawer from 'react-modern-drawer'
 
-const Orders = ({ user }) => {
-    const orders = useSelector(state => state.orders.value);
-    const dispatch = useDispatch();
-    const [addingNewOrder, setAddingNewOrder] = useState(false);
-    const [newOrderText, setNewOrderText] = useState('');
-    const [editingOrder, setEditingOrder] = useState(null);
-    const textareaRef = useRef();
-    const [buttonWidth, setButtonWidth] = useState('auto');
+import {BsChevronDown} from "react-icons/bs";
+import {Button} from "react-bootstrap";
 
-    const textareaRefs = useRef([]);
+import 'react-modern-drawer/dist/index.css'
 
-    const focusEndOfTextarea = () => {
-        textareaRef.current.focus();
-        textareaRef.current.setSelectionRange(textareaRef.current.value.length, textareaRef.current.value.length);
+const Orders = () => {
+    const getUserFromLocalStorage = () => {
+        const userString = localStorage.getItem('user');
+        return userString ? JSON.parse(userString) : null;
     };
 
-    useEffect(() => {
-        dispatch(init());
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (addingNewOrder || editingOrder) {
-            focusEndOfTextarea();
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    }, [addingNewOrder, editingOrder]);
-
-    useEffect(() => {
-        function handleResize() {
-            setButtonWidth(window.innerWidth);
-        }
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const handleAddNewOrder = () => {
-        setAddingNewOrder(true);
-    };
-
-    const handleEditOrder = (orderId) => {
-        setEditingOrder(orderId);
-        setNewOrderText(orders[orderId].text);
-    };
-
-    const handleBackToList = () => {
-        if ((addingNewOrder || editingOrder) && !newOrderText.trim()) {
-            setAddingNewOrder(false);
-            setEditingOrder(null);
-            setNewOrderText('');
-            return;
-        }
-
-        if (editingOrder) {
-            if (!newOrderText.trim()) {
-                dispatch(remove({ id: editingOrder }));
-            } else {
-                dispatch(update({ id: editingOrder, text: newOrderText }));
-            }
-            setEditingOrder(null);
-        } else if (addingNewOrder) {
-            const newOrderId = v4();
-            dispatch(add({ id: newOrderId, text: newOrderText }));
-        }
-        setNewOrderText("");
-        setAddingNewOrder(false);
-    };
-
-    const handleSwipeRight = () => {
-        handleBackToList();
-    };
-
-    const swipeHandlers = useSwipeable({
-        onSwipedRight: handleSwipeRight
-    });
+    const [isOpen, setIsOpen] = React.useState(false)
+    const toggleDrawer = () => {
+        setIsOpen((prevState) => !prevState)
+    }
+    const user = getUserFromLocalStorage();
 
     return (
-        <div className={styles.Container}>
-            {(addingNewOrder || editingOrder) ? (
-                <div className={`${styles.NewOrder} ${addingNewOrder ? styles.Open : ''}`} {...swipeHandlers}>
-                    <textarea
-                        ref={textareaRef}
-                        className={styles.TextArea}
-                        value={newOrderText}
-                        onChange={(e) => setNewOrderText(e.target.value)}
-                    />
+        (user
+                ? <div className={styles.OrdersContainer}>
+                    <div className={styles.Notes} data-testid="Orders">
+                        <CustomNavbar user={user}/>
+                        <div className={styles.ButtonContainer}>
+                            <Button className={styles.ShowButton} onClick={toggleDrawer}>
+                                <BsChevronDown style={{fontSize: '0.5rem'}}/>
+                            </Button>
+                        </div>
+                        <Drawer className={styles.Drawer}
+                                open={isOpen}
+                                onClose={toggleDrawer}
+                                direction='top'
+                                size={400}>
+                            <StopListElements/>
+                        </Drawer>
+                        <OrderList/>
+                    </div>
                 </div>
-            ) : (
-                <>
-                    <div className={styles.Orders} data-testid="Orders">
-                        {!orders || orders.length === 0 ? (
-                            <div className={`${styles.CenteredContent} `}>No tasks for today</div>
-                        ) : (
-                            <Stack gap={3}>
-                                {Object.values(orders).reverse().map((o, index) => (
-                                    <div key={o.id} onClick={() => handleEditOrder(o.id)}>
-                                        <Order orderId={o.id} textareaRef={ref => textareaRefs.current[index] = ref} />
-                                    </div>
-                                ))}
-                            </Stack>
-                        )}
-                    </div>
-                    <div className={styles.Actions}>
-                        <Button onClick={handleAddNewOrder} style={{ width: buttonWidth }}>Add</Button>
-                    </div>
-                </>
-            )}
-        </div>
+                : <>nothing there</>
+        )
     );
 }
-
 export default Orders;

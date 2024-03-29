@@ -69,7 +69,9 @@
     ]
   },
   "devDependencies": {
+    "@material-tailwind/react": "^2.1.9",
     "@mui/icons-material": "^5.15.14",
+    "react-modern-drawer": "^1.2.2",
     "socket.io-client": "^4.7.5"
   }
 }

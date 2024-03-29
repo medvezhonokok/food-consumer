@@ -33,7 +33,7 @@ public class DishController {
         if (dish != null) {
             if (name == null || name.isBlank()) {
                 dishService.removeDishById(dishId);
-            } else {
+            } else if (!name.equals(dish.getName())){
                 dishService.updateNameById(name, dishId);
             }
         }

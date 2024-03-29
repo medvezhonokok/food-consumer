@@ -1,75 +1,14 @@
 .StopListElements {
-    margin-top: 6rem;
+    margin: 0;
+    padding-top: 2rem;
     overflow-y: auto;
     background-color: #ffffff;
 }
 
-.Container {
-    position: fixed;
-    background-color: #ffffff !important;
-    z-index: 10;
-    top: 3.75rem;
-    left: 0;
-    width: 100%;
-    max-width: 1000px;
-    min-height: 10%;
-    transition: height 0.3s ease;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-.StopListElements {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 6rem;
-}
-
-.HideList {
-    height: 5%;
-    position: fixed;
-    background-color: #ffffff;
-}
-
-.ShowModal {
-    display: block;
-    height: auto;
-}
-
-.HideModal {
-    display: none;
-}
-
-.Modal {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.Bar {
-    background-color: #ffffff;
-    margin-left: 50%;
-    margin-right: 50%;
-}
-
-.HideModal {
-    display: block;
-    height: 0; /* Устанавливаем высоту в 0, чтобы скрыть плашку */
-    overflow: hidden; /* Скрытие содержимого, которое выходит за пределы блока */
-}
-
-.Collapse {
-    max-height: 200px;
-    overflow-y: auto; /* Добавляем вертикальную прокрутку, если содержимое превышает высоту Collapse */
-}
-
 textarea {
-    width: calc(100% - 20px); /* Ширина textarea будет на 20 пикселей меньше ширины родительского контейнера */
-    min-height: 100px; /* Минимальная высота textarea */
-    resize: vertical; /* Разрешаем только вертикальное изменение размера */
-    overflow-y: auto; /* Добавляем вертикальную прокрутку, если текст становится больше доступного пространства */
+    border: none;
+    width: calc(100% - 20px);
+    min-height: 100px;
+    resize: vertical;
+    overflow-y: auto;
 }
