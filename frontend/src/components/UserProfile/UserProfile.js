@@ -16,7 +16,9 @@ const UserProfile = ({user}) => {
     const [newAbout, setNewAbout] = useState(user ? user.about : '');
     const [aboutError, setAboutError] = useState('');
 
-    const [profileImage, setProfileImage] = useState(null);
+    const pathToUserAvatar = `/avatars/` + user.login + ".JPG";
+
+    console.log(pathToUserAvatar);
 
     if (!user) {
         return <div>Nothing there</div>;
@@ -26,11 +28,6 @@ const UserProfile = ({user}) => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('user');
         window.location.pathname = '/';
-    };
-
-    const handleImageChange = (event) => {
-        const imageFile = event.target.files[0];
-        setProfileImage(imageFile);
     };
 
     const handleSaveChanges = async () => {
@@ -93,12 +90,7 @@ const UserProfile = ({user}) => {
             <div className={styles.container}>
                 <h2 className={styles.heading}>User Profile</h2>
                 <div className={styles.imageContainer}>
-                    {profileImage ? (
-                        <img src={URL.createObjectURL(profileImage)} alt="Profile" className={styles.profileImage}/>
-                    ) : (
-                        <div className={styles.defaultImage}>Add Photo</div>
-                    )}
-                    <input type="file" accept="image/*" onChange={handleImageChange} className={styles.imageInput}/>
+                    <img src={pathToUserAvatar} alt="Profile" className={styles.profileImage}/>
                 </div>
                 <div className={styles.inputContainer}>
                     <label className={styles.label}>Login</label>
