@@ -54,6 +54,16 @@ services:
     depends_on:
       - maria-db
 
+  # js back (test notification, will rewrite to java)
+  js-backend-2:
+    build:
+      context: ./../server
+      dockerfile: Dockerfile
+    container_name: js-backend-2
+    restart: always
+    ports:
+      - "3002:3002"
+    
 volumes:
   dbdata:
   static_value:
