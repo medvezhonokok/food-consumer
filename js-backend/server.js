@@ -63,6 +63,11 @@ connectToDatabase().then(pool => {
                     sender: data.sender,
                     createdAt: new Date()
                 });
+
+                io.emit("send_push_notification", {
+                    title: `new by ${data.sender.name}`,
+                    message: `text is ${data.text}`
+                });
             } catch (error) {
                 console.error("Error saving message:", error);
             }

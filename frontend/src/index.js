@@ -6,6 +6,7 @@ import './custom.scss'
 import App from './components/App/App';
 import reportWebVitals from './utils/reportWebVitals';
 import {Provider} from "react-redux";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import Tasks from "./components/Tasks/Tasks";
 import Orders from "./components/Orders/Orders";
@@ -78,5 +79,7 @@ root.render(
         </Provider>
     </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();
 
 reportWebVitals();

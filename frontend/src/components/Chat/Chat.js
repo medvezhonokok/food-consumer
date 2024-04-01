@@ -43,6 +43,28 @@ const Chat = ({ user }) => {
         };
     }, [messageHistory]);
 
+    useEffect(() => {
+        socket.on("send_push_notification", (data) => {
+            showNotification(data.title, data.message);
+        });
+
+        return () => {
+            socket.off("send_push_notification");
+        };
+    }, []);
+
+    function showNotification(title, message) {
+        if (Notification.permission === "granted") {
+            new Notification(title, {
+                body: message,
+            });
+        }
+    }
+
+    useEffect(() => {
+        Notification.requestPermission();
+    }, []);
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
