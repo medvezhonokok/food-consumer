@@ -3,9 +3,10 @@
   "name": "O... C... P...",
   "icons": [
     {
-      "src": "logo.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "logo-72.png",
+      "sizes": "72x72 64x64 32x32 24x24 16x16",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
