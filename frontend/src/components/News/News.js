@@ -52,17 +52,19 @@ const News = ({user}) => {
                 body: formData,
             });
             if (response.ok) {
-                alert("Новость добавлена")
+                alert("Новость добавлена");
+                setTimeout(() => {
+                    setShowAddForm(false);
+                    setDescription('');
+                    setFile(null);
+                }, 2000);
             } else {
-                console.error('Failed to add news');
+                const errorText = await response.text();
+                console.error('Failed to add news: ', errorText);
             }
         } catch (error) {
             console.error('Error:', error);
         }
-
-        setShowAddForm(false);
-        setDescription('');
-        setFile(null);
     };
 
     return (
