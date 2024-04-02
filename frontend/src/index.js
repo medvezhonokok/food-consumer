@@ -15,7 +15,7 @@ import Schedule from "./components/Schedule/Schedule";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Users from "./components/Users/Users";
 import Chat from "./components/Chat/Chat";
-import Tester from "./components/Tester/Tester";
+import News from "./components/News/News";
 
 const router = createBrowserRouter([
     {
@@ -54,9 +54,9 @@ const router = createBrowserRouter([
         element: <div><Users user={getUserFromLocalStorage()}/></div>,
     },
     {
-        path: "/test",
-        name: "Test",
-        element: <div><Tester/></div>
+        path: "/news",
+        name: "News",
+        element: <div><News user={getUserFromLocalStorage()}/></div>
     }
 ]);
 
