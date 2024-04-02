@@ -3,6 +3,7 @@ import './App.css';
 import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import LoginForm from '../LoginForm/LoginForm';
 import MenuButtons from '../MenuButtons/MenuButtons';
+import BottomNavbar from '../BottomNavbar/BottomNavbar';
 
 function App() {
     const getUserFromLocalStorage = () => {
@@ -23,6 +24,7 @@ function App() {
                 {user ?
                     (
                         <div>
+                            <BottomNavbar user={user}/>
                             <CustomNavbar user={user}/>
                             <MenuButtons/>
                         </div>

@@ -1,5 +1,5 @@
 .Chat {
-    padding-top: 5rem;
+    padding-top: 0rem;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -8,7 +8,7 @@
 }
 
 .Chat__messages {
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     flex: 1;
     overflow-y: auto;
     padding: 10px;
@@ -18,60 +18,62 @@
 .Chat__input {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     background-color: #f9f9f9;
-    position: fixed; /* Используйте позиционирование "fixed" для фиксации в нижней части экрана */
+    position: fixed;
     bottom: 0;
-    left: 0; /* Выравнивание по левому краю */
-    width: 100%; /* Растянуть на всю ширину экрана */
+    left: 0;
+    width: 100%;
+    height: 3rem;
     z-index: 1;
+    border-top: 1px solid #ddd;
 }
-
 
 .Chat__input textarea {
     flex: 1;
+    size: 2rem;
     margin-right: 10px;
     padding: 8px;
-    resize: vertical;
+    resize: none;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    max-height: 100px; /* Опционально: задайте максимальную высоту для textarea */
-    overflow-y: auto; /* Добавьте вертикальную прокрутку при достижении максимальной высоты */
+    border-radius: 20px;
+    overflow-y: auto;
 }
 
 .Chat__input Button {
-    padding: 15px 20px; /* Увеличьте отступы для лучшего внешнего вида */
+    padding: 10px 15px;
     color: #fff;
-    background: #d2ce9f;
-    border: 0.1rem solid #9d9b7f;
-    border-radius: 5px;
+    background: #000000;
+    border: none;
+    border-radius: 20px;
     cursor: pointer;
 }
 
+.Chat__input Button:hover {
+    background-color: #1e1e1e;
+}
 
 .Chat__message {
     margin: 10px 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 .Chat__myMessage {
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 10px;
-    max-width: 240px;
+    max-width: 70%;
     align-self: flex-end;
-    background-color: #B5B285;
+    background-color: #2d2d2d;
     color: #fff;
-    margin-left: auto; /* Выравниваем сообщения справа */
 }
 
 .Chat__otherMessage {
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 10px;
-    max-width: 240px;
+    max-width: 70%;
     align-self: flex-start;
     background-color: #f0f0f0;
-    margin-right: auto; /* Выравниваем сообщения слева */
 }
 
 .Chat__otherMessage .author {
@@ -80,21 +82,13 @@
 }
 
 .time {
-    margin-left: 11rem;
-    font-size: 0.8rem; /* Размер шрифта времени сообщения */
-    color: #666; /* Цвет текста времени сообщения */
-    /*margin-top: 0.3rem; !* Отступ над временем сообщения *!*/
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: auto;
 }
 
-.Chat__input Button:hover {
-    background-color: #B5B285; /* Изменяем цвет фона при наведении */
+.Chat__input textarea::placeholder {
+    font-size: 0.8rem; /* Уменьшаем размер шрифта placeholder */
+    line-height: 1rem; /* Уменьшаем высоту строки */
 }
 
-@keyframes scroll {
-    0% {
-        transform: translateY(100%);
-    }
-    100% {
-        transform: translateY(0%);
-    }
-}
