@@ -65,7 +65,6 @@ const News = ({user}) => {
                 setShowAddForm(false);
                 setDescription('');
                 setFile(null);
-                // Обновляем список новостей после успешного добавления новости
                 fetchNewsList();
             } else {
                 alert("Failed to add news");

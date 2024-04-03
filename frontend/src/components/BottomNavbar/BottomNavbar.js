@@ -1,23 +1,31 @@
 import React from 'react';
-import { Button, Col, Container, Navbar } from 'react-bootstrap';
+import {Button, Col, Container, Navbar} from 'react-bootstrap';
 import styles from './BottomNavbar.module.css';
 
-const BottomNavbar = ({ user }) => {
+const BottomNavbar = ({user}) => {
     return (
-        <Navbar className={`${styles.BottomNavbar}`} sticky={'bottom'} data-testid="BottomNavbar">
-            <Container fluid>
-                <Col className="d-flex justify-content-center align-items-center">
-                    {user && (
-                        <div className="d-flex">
-                            <Button href={'profile'} className={`btn ${styles.navButton}`}>P</Button>
-                            <Button href={'chat'} className={`btn ${styles.navButton}`}>C</Button>
-                            <Button href={'users'} className={`btn ${styles.navButton}`}>A</Button>
-                            <Button href={'news'} className={`btn ${styles.navButton}`}>N</Button>
+        <Container>
+            <Col>
+                {user && (
+                    <div className={`${styles.BottomNavbar}`}>
+                        <div className={`${styles.buttons}`}>
+                            <Button href={'news'} className={`btn ${styles.navButton}`}>
+                                <img src="news.png" alt="Avatar" className="w-100 h-100"/>
+                            </Button>
+                            <Button href={'users'} className={`btn ${styles.navButton}`}>
+                                <img src="allusers.png" alt="Avatar" className="w-100 h-100"/>
+                            </Button>
+                            <Button href={'chat'} className={`btn ${styles.navButton}`}>
+                                <img src="chat.png" alt="Avatar" className="w-100 h-100"/>
+                            </Button>
+                            <Button href={'profile'} className={`btn ${styles.navButton}`}>
+                                <img src="profile.png" alt="Avatar" className="w-100 h-100"/>
+                            </Button>
                         </div>
-                    )}
-                </Col>
-            </Container>
-        </Navbar>
+                    </div>
+                )}
+            </Col>
+        </Container>
     );
 };
 

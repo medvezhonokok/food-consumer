@@ -1,29 +1,55 @@
 .BottomNavbar {
+    bottom: 0;
+    height: 5rem; /* change to 7 rem*/
     background-color: #000000;
     position: fixed;
-    width: 90%; /* Уменьшаем ширину на 10% */
-    height: 6rem;
-    padding: 1.5rem;
-    border-radius: 2rem;
-    display: flex;
-    align-items: center;
+    width: 90%;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    left: 50%; /* Позиционируем по центру */
-    transform: translateX(-50%); /* Сдвигаем на половину ширины назад */
-    margin: auto; /* Центрируем по вертикали */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.buttons {
+    margin-top: 0.5rem;
 }
 
 .navButton {
-    border: 1px solid #ccc;
-    background-color: #000000;
-    right: 50%; /* Позиционируем по центру */
-    transform: translateX(-30%);
-    width: 4rem;
-    height: 4rem;
-    border-radius: 30%; /* Сделаем кнопки круглыми */
-    margin: 0 0.5rem; /* Добавим небольшой отступ между кнопками */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавим тень */
-    font-size: 1.5rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    padding: 0 0.3rem;
+    margin: 0 0.4rem;
+    border-radius: 30%;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+.navButton:hover {
+    background-color: #333333;
+}
+
+.navButton:active {
+    transform: scale(0.85);
+}
+
+@media only screen and (max-width: 375px) {
+    .BottomNavbar {
+        height: 5rem;
+    }
+
+    .navButton {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media only screen and (min-width: 376px) {
+    .BottomNavbar {
+        height: 7rem;
+    }
+
+    .navButton {
+        width: 4rem;
+        height: 4rem;
+    }
 }
