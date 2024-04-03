@@ -1,6 +1,7 @@
 package ru.backend.service;
 
 import org.springframework.stereotype.Service;
+import ru.backend.model.Comment;
 import ru.backend.repository.CommentRepository;
 
 @Service
@@ -12,4 +13,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    public void save(Comment comment) {
+        commentRepository.save(comment);
+    }
 }

@@ -1,15 +1,16 @@
 package ru.backend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.backend.model.Comment;
 import ru.backend.model.News;
 import ru.backend.model.User;
+import ru.backend.service.CommentService;
+import ru.backend.service.FileService;
 import ru.backend.service.NewsService;
 import ru.backend.service.UserService;
-import ru.backend.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,34 +19,65 @@ import java.util.List;
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
+    private final FileService fileService;
+    private final CommentService commentService;
 
-    public NewsController(NewsService newsService, UserService userService) {
+    public NewsController(NewsService newsService, UserService userService, FileService fileService, CommentService commentService) {
         this.newsService = newsService;
         this.userService = userService;
+        this.fileService = fileService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/api/news")
-    public List<News> getAll() {
-        return newsService.findAll();
+    public ResponseEntity<List<News>> getAll() {
+        List<News> news = newsService.findAll();
+        return ResponseEntity.ok().body(news);
     }
 
     @PostMapping("/api/news/add")
-    public synchronized void addNews(@RequestParam("file") MultipartFile file,
-                        @RequestParam("description") String description,
-                        @RequestParam("userId") Long userId) {
+    public synchronized ResponseEntity<String> addNews(@RequestParam("file") MultipartFile file,
+                                                       @RequestParam("description") String description,
+                                                       @RequestParam("userId") Long userId) {
         User author = userService.findById(userId);
 
         if (author != null && author.isAdmin()) {
             News news = new News();
             news.setDescription(description);
             news.setAuthor(author);
+
             try {
-                String filePath = FileUtils.saveFileAndGetOriginalName(file);
+                String filePath = fileService.saveImageToStorage(file);
                 news.setPathToFile(filePath);
                 newsService.addNews(news);
+                return ResponseEntity.ok().body("SUCCESS");
             } catch (IOException e) {
                 // No operations.
             }
         }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAILED");
+    }
+
+    @PostMapping("/api/news/add_comment_{newsId}")
+    public ResponseEntity<String> addComment(@PathVariable("newsId") Long newsId,
+                                             @RequestParam("text") String text,
+                                             @RequestParam("userId") Long userId) {
+        News news = newsService.findById(newsId);
+        User commentAuthor = userService.findById(userId);
+
+        if (news != null && commentAuthor != null) {
+            Comment comment = new Comment();
+
+            comment.setAuthor(commentAuthor);
+            comment.setText(text);
+            comment.setNews(news);
+            news.getComments().add(comment);
+
+            commentService.save(comment);
+            return ResponseEntity.ok().body("SUCCESS");
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment");
     }
 }

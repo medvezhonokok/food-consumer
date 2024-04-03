@@ -1,5 +1,6 @@
 package ru.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,7 @@ public class Comment {
     @CreationTimestamp
     private LocalDateTime creationTime;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "news_id")
     private News news;

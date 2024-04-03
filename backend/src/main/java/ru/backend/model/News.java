@@ -1,5 +1,7 @@
 package ru.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +34,7 @@ public class News {
     @JoinColumn(name = "user_id")
     private User author;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "news")
     private List<Comment> comments;
 
