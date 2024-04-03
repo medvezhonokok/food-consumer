@@ -41,6 +41,8 @@ services:
       - "8080:8080"
     depends_on:
       - maria-db
+    volumes:
+      - /root/food-consumer/backend/src/main/resources/static/images:/root/food-consumer/backend/src/main/resources/static/images
 
   # js backend (for chat only)
   js-backend:
@@ -56,4 +58,3 @@ services:
 
 volumes:
   dbdata:
-  static_value:
