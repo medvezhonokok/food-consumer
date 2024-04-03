@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import client from "../../utils/client";
 import styles from './News.module.css';
 import axios from "axios";
+import imageCompression from 'browser-image-compression';
+import heic2any from "heic2any";
 
 const News = ({user}) => {
     const [comment, setComment] = useState('');
@@ -33,8 +35,23 @@ const News = ({user}) => {
         setDescription(event.target.value);
     };
 
-    const handleFileChange = (event) => {
+    const handleFileChange = async (event) => {
         setFile(event.target.files[0]);
+    };
+
+    const compressImage = async (file) => {
+        const options = {
+            maxSizeMB: 10,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        };
+
+        try {
+            return await imageCompression(file, options);
+        } catch (error) {
+            console.error("Ошибка при сжатии изображения:", error);
+            return file;
+        }
     };
 
     const handleAddNews = () => {
@@ -47,12 +64,31 @@ const News = ({user}) => {
         setShowCommentForm({[newsId]: true});
     };
 
-    const handleSubmit = async (event, newsId) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
+        let compressedFile = file;
+
+        if (file && file.name.toLowerCase().endsWith('.heic')) {
+            try {
+                const blob = await heic2any({
+                    blob: file,
+                    toType: 'image/png'
+                });
+
+                compressedFile = await compressImage(
+                    new File([blob], file.name.replace(/\.heic$/i, '.png'), {type: 'image/png'})
+                );
+            } catch (error) {
+                alert("Новость не добавлена, файл охуеть какой огромный");
+                return;
+            }
+        }
+
         const formData = new FormData();
+
         formData.append('description', description);
-        formData.append('file', file);
+        formData.append('file', compressedFile);
         formData.append('userId', user.id);
 
         try {

@@ -13,12 +13,12 @@ import java.util.UUID;
 @Service
 public class FileService {
     private static final Logger logger = Logger.getLogger(FileService.class);
+    private static final String IMAGES_DIRECTORY_PATH = "/root/food-consumer/backend/src/main/resources/static/images/";
 
     public String saveImageToStorage(MultipartFile imageFile) throws IOException {
-        String uploadDirectory = "/root/food-consumer/backend/src/main/resources/static/images";
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
-        Path uploadPath = Paths.get(uploadDirectory);
+        Path uploadPath = Paths.get(IMAGES_DIRECTORY_PATH);
         Path filePath = uploadPath.resolve(uniqueFileName);
 
         if (!Files.exists(uploadPath)) {
