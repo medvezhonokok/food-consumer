@@ -9,16 +9,18 @@ const CustomNavbar = ({user}) => {
             <Container fluid>
                 <Col className="d-flex justify-content-between">
                     {user && (
-                        <div className="rounded-circle overflow-hidden" style={{width: '60px', height: '60px'}}>
-                            <img src="1488228.png" alt="Avatar" className="w-100 h-100"/>
+                        <div className={`${styles.userName}`}>
+                            <h3>{user.name}</h3>
                         </div>
                     )}
-                    <Link className="rounded-circle overflow-hidden" style={{width: '60px', height: '60px'}} to="/">
-                        <img src="311d8218638a96b7c47a6d006346a839.jpeg" alt="Avatar" className="w-100 h-100"/>
+                    <Link className="rounded-circle overflow-hidden" style={{width: '50px', height: '50px'}} to="/">
+                        <img src="1488228.png" alt="Avatar" className="w-100 h-100"/>
                     </Link>
                 </Col>
             </Container>
+
         </Navbar>
+
     );
 };
 

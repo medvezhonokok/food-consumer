@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './Chat.module.css';
 import io from "socket.io-client";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
 const socket = io.connect(process.env.REACT_APP_SOCKET_URL);
 
-const Chat = ({ user }) => {
+const Chat = ({user}) => {
     const [message, setMessage] = useState("");
     const [messageHistory, setMessageHistory] = useState([]);
     const messagesEndRef = useRef(null);
@@ -15,7 +16,7 @@ const Chat = ({ user }) => {
         if (!message.trim()) {
             return;
         }
-        socket.emit("send_message", { text: message.trim(), sender: user });
+        socket.emit("send_message", {text: message.trim(), sender: user});
         setMessage("");
     };
 
@@ -65,7 +66,7 @@ const Chat = ({ user }) => {
     }, []);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
     };
 
     function getTimeByDate(createdAt) {
@@ -76,53 +77,58 @@ const Chat = ({ user }) => {
     }
 
     return (
-        <div className={styles.Chat}>
-            <div className={styles.Chat__messages} style={{ animation: 'scroll 0.5s linear' }}>
-                {messageHistory.map((message, index) => (
-                    <div key={index} className={styles.Chat__message}>
-                        {((message.sender.name && message.sender.name === user.name) || message.sender === user.name) ? (
-                            <>
-                                <div className={`${styles.Chat__myMessage}`}>
-                                    <div style={{ marginBottom: "0.3rem" }}>
+        <>
+            <CustomNavbar user={user}/>
+            <div className={styles.Chat}>
+                <div className={styles.Chat__messages} style={{animation: 'scroll 0.5s linear'}}>
+                    {messageHistory.map((message, index) => (
+                        <div key={index} className={styles.Chat__message}>
+                            {((message.sender.name && message.sender.name === user.name) || message.sender === user.name) ? (
+                                <>
+                                    <div className={`${styles.Chat__myMessage}`}>
+                                        <div style={{marginBottom: "0.3rem"}}>
+                                            {message.text}
+                                        </div>
+                                        <div className={`${styles.time}`}>
+                                            {getTimeByDate(message.createdAt)}
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className={`${styles.Chat__otherMessage}`}>
+                                    <div className={styles.Avatar}>
+                                        <img src={"/avatars/" + message.sender.avatar} alt="Avatar"/>
+                                    </div>
+                                    <div className={`${styles.author}`}>
+                                        {(message.sender.name ? message.sender.name : message.sender)}
+                                    </div>
+                                    <div>
                                         {message.text}
                                     </div>
                                     <div className={`${styles.time}`}>
                                         {getTimeByDate(message.createdAt)}
                                     </div>
                                 </div>
-                            </>
-                        ) : (
-                            <div className={`${styles.Chat__otherMessage}`}>
-                                <div className={styles.Avatar}>
-                                    <img src={"/avatars/" + message.sender.avatar} alt="Avatar" />
-                                </div>
-                                <div className={`${styles.author}`}>
-                                    {(message.sender.name ? message.sender.name : message.sender)}
-                                </div>
-                                <div>
-                                    {message.text}
-                                </div>
-                                <div className={`${styles.time}`}>
-                                    {getTimeByDate(message.createdAt)}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                <div ref={messagesEndRef}/>
-            </div>
-            <div className={styles.Chat__input}>
+                            )}
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef}/>
+                </div>
+                <div className={styles.Chat__input}>
                 <textarea
                     placeholder="Message..."
                     value={message}
                     onChange={(event) => {
                         setMessage(event.target.value);
                     }}
-                    style={{ height: "1.5rem", maxHeight: "3rem" }} // Устанавливаем высоту поля ввода
+                    style={{height: "1.5rem", maxHeight: "3rem"}}
                 />
-                <Button variant="contained" endIcon={<SendIcon/>} onClick={sendMessage} style={{ height: "2.5rem" }}/> {/* Устанавливаем высоту кнопки */}
+                    <Button variant="contained" endIcon={<SendIcon/>} onClick={sendMessage}
+                            style={{height: "2.5rem"}}/>
+                </div>
             </div>
-        </div>
+        </>
+
     );
 }
 

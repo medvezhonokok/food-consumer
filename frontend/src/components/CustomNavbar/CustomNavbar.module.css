@@ -1,7 +1,13 @@
 .CustomNavbar {
     top: 0;
+    background-color: #ffffff;
     position: fixed;
     width: 100%;
-    height: 4rem;
+    height: 3rem;
     align-items: center;
+}
+
+.userName {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.59);
+   margin-top: 0.5rem;
 }

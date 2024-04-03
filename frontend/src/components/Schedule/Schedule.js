@@ -7,9 +7,6 @@ import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import client from '../../utils/client';
 import moment from 'moment/moment';
 import ScheduleBox from '../ScheduleBox/ScheduleBox';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const Schedule = ({ user }) => {
     const [schedule, setSchedule] = useState([]);
@@ -48,7 +45,7 @@ const Schedule = ({ user }) => {
             list = <div className={`${styles.CenteredContent}`}> {role}'s schedule is clear for today</div>;
         }
         return list;
-    }
+    };
 
     const changeDate = (e) => {
         setDateState(e);
@@ -63,19 +60,10 @@ const Schedule = ({ user }) => {
             })
             .map((scheduleElem) => <ScheduleBox key={scheduleElem.workerName} scheduleElem={scheduleElem}/>);
 
-
         return checkOnEmpty(filteredScheduleByRole, role);
-    }
+    };
 
     const allRoles = ['WAITER', 'BARISTA', 'MANAGER'];
-
-    const carouselSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
 
     return (
         <>
@@ -86,7 +74,7 @@ const Schedule = ({ user }) => {
                         <div style={{ marginTop: "5rem" }}>
                             <CustomCalendar value={dateState} onChange={changeDate}/>
                         </div>
-                        <div style={{ marginTop: '2rem' }}>
+                        <div style={{ marginTop: '5rem' }}>
                             {loading ? (
                                 <div className="text-center">
                                     <Spinner animation="border" role="status">
@@ -96,11 +84,9 @@ const Schedule = ({ user }) => {
                             ) : (
                                 <>
                                     {allRoles.map((role) => (
-                                        <div key={role} style={{marginBottom: "5rem"}}>
+                                        <div key={role} style={{marginBottom: "1rem"}}>
                                             <h2>{role}</h2>
-                                            <Slider {...carouselSettings}>
-                                                {renderScheduleByRole(role)}
-                                            </Slider>
+                                            {renderScheduleByRole(role)}
                                         </div>
                                     ))}
                                 </>
