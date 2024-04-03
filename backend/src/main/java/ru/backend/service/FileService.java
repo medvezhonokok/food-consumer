@@ -15,7 +15,7 @@ public class FileService {
     private static final Logger logger = Logger.getLogger(FileService.class);
 
     public String saveImageToStorage(MultipartFile imageFile) throws IOException {
-        String uploadDirectory = "/root/food-consumer/backend/src/main/resources/static/news";
+        String uploadDirectory = "/root/food-consumer/backend/src/main/resources/static/images";
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
         Path uploadPath = Paths.get(uploadDirectory);
