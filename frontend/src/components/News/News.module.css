@@ -4,28 +4,125 @@
     align-items: center;
 }
 
-.newsCard {
-    width: 500px;
-    flex-grow: 1;
+.newsItem {
+    margin-top: 3rem;
+    border: 0.2rem solid black;
+    border-radius: 0.8rem;
     margin-bottom: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 100px);
+}
+
+.commentsContainer {
+    margin-top: 10px;
+}
+
+.comment {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.newsCard {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .newsImage {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: white;
+    height: auto;
+    border-radius: 10px;
 }
 
 .newsDescription {
-    padding: 10px;
+    margin-top: 10px;
     font-size: 16px;
 }
 
 .newsAuthor {
-    padding: 10px;
+    margin-top: 10px;
     font-size: 14px;
+    color: #888;
+}
+
+.addCommentButton {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addCommentButton:hover {
+    background-color: #45a049;
+}
+
+textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+    margin-bottom: 10px;
+}
+
+.modalButton {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modalButton:hover {
+    background-color: #45a049;
 }
 
 .addNewsButton {
@@ -47,46 +144,4 @@
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
-}
-
-.modalBackdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.modal form {
-    display: flex;
-    flex-direction: column;
-}
-
-.modal label {
-    margin-bottom: 5px;
-}
-
-.modalButton {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #3897f0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.modalButton:hover {
-    background-color: #3276b1;
 }
