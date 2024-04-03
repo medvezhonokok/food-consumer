@@ -30,16 +30,15 @@ public class NewsController {
     }
 
     @PostMapping("/api/news/add")
-    public void addNews(@RequestParam("file") MultipartFile file,
+    public synchronized void addNews(@RequestParam("file") MultipartFile file,
                         @RequestParam("description") String description,
                         @RequestParam("userId") Long userId) {
         User author = userService.findById(userId);
+
         if (author != null && author.isAdmin()) {
             News news = new News();
-
             news.setDescription(description);
             news.setAuthor(author);
-
             try {
                 String filePath = FileUtils.saveFileAndGetOriginalName(file);
                 news.setPathToFile(filePath);

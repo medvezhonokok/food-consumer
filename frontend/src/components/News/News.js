@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import client from "../../utils/client";
 import styles from './News.module.css';
+import axios from "axios";
 
 const News = ({user}) => {
     const [showAddForm, setShowAddForm] = useState(false);
@@ -47,21 +48,12 @@ const News = ({user}) => {
         formData.append('userId', user.id);
 
         try {
-            const response = await fetch(client.baseUrl + '/api/news/add', {
-                method: 'POST',
-                body: formData,
+            const response = await axios({
+                method: "POST",
+                url: client.baseUrl + '/api/news/add',
+                data: formData,
+                headers: {"Content-Type": "multipart/form-data"},
             });
-            if (response.ok) {
-                alert("Новость добавлена");
-                setTimeout(() => {
-                    setShowAddForm(false);
-                    setDescription('');
-                    setFile(null);
-                }, 2000);
-            } else {
-                const errorText = await response.text();
-                console.error('Failed to add news: ', errorText);
-            }
         } catch (error) {
             console.error('Error:', error);
         }

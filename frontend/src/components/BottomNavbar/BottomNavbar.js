@@ -12,7 +12,7 @@ const BottomNavbar = ({ user }) => {
                             <Button href={'profile'} className={`btn ${styles.navButton}`}>P</Button>
                             <Button href={'chat'} className={`btn ${styles.navButton}`}>C</Button>
                             <Button href={'users'} className={`btn ${styles.navButton}`}>A</Button>
-                            <Button href={'test'} className={`btn ${styles.navButton}`}>T</Button>
+                            <Button href={'news'} className={`btn ${styles.navButton}`}>N</Button>
                         </div>
                     )}
                 </Col>

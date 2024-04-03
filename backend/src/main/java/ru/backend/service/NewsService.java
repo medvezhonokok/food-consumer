@@ -20,10 +20,6 @@ public class NewsService {
     }
 
     public void addNews(News news) {
-        System.out.println(news.getAuthor());
-        System.out.println(news.getDescription());
-        System.out.println(news.getPathToFile());
-
         newsRepository.save(news);
     }
 }
