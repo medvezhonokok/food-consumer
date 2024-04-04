@@ -8,7 +8,7 @@ const MenuButtons = () => {
             <div className={`${styles.menuContainer}`}>
                 <Stack direction="vertical">
                     <Button href={'orders'} className={`btn ${styles.btn}`}>
-                        <img src="orders.png" alt="Avatar" className="w-50 h-100"/>
+                        <img src="orders.png" alt="Avatar" className="w-90 h-100"/>
                     </Button>
                     <Button href={'schedule'} className={`btn ${styles.btn}`}>
                         <img src="schedule.png" alt="Avatar" className="w-90 h-100"/>

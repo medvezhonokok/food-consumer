@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const http = require("http");
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
 
@@ -54,13 +54,14 @@ connectToDatabase().then(pool => {
             try {
                 const connection = await pool.getConnection();
                 await connection.query(
-                    "INSERT INTO messages (text, sender, createdAt) VALUES (?, ?, NOW())",
-                    [data.text, data.sender.name]
+                    "INSERT INTO messages (text, sender, sender_login, createdAt) VALUES (?, ?, ?, NOW())",
+                    [data.text, data.sender.name, data.sender.login]
                 );
                 connection.release();
                 io.emit("receive_message", {
                     text: data.text,
                     sender: data.sender,
+                    sender_login: data.sender.login,
                     createdAt: new Date()
                 });
 
