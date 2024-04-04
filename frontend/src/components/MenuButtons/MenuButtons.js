@@ -4,7 +4,7 @@ import styles from "../MenuButtons/MenuButtons.module.css";
 
 const MenuButtons = () => {
     return (
-        <div style={{marginTop: '6rem'}}>
+        <div style={{marginTop: '6rem', marginBottom: '8rem'}}>
             <div className={`${styles.menuContainer}`}>
                 <Stack direction="vertical">
                     <Button href={'orders'} className={`btn ${styles.btn}`}>

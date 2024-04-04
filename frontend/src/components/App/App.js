@@ -24,9 +24,9 @@ function App() {
                 {user ?
                     (
                         <div>
-                            <BottomNavbar user={user}/>
                             <CustomNavbar user={user}/>
                             <MenuButtons/>
+                            <BottomNavbar user={user}/>
                         </div>
                     ) :
                     (

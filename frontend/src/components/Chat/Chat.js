@@ -171,10 +171,10 @@ const Chat = ({ user }) => {
                             onChange={(event) => setMessage(event.target.value)}
                             onInput={handleTextareaInput}
                             rows={rows}
-                            style={{ margin: "0.3rem 0.4rem", resize: "none", overflow: "hidden" }}
+                            style={{ margin: "0 0.4rem 2rem 0.4rem", resize: "none", overflow: "hidden" }}
                         />
                         <Button variant="contained" endIcon={<SendIcon />} onClick={sendMessage}
-                                style={{ height: "2.5rem", background: "#524e4e", margin: "auto 0.3rem auto 0" }} />
+                                style={{ height: "2rem", background: "#524e4e", margin: "auto 0.3rem 2.25rem 0" }} />
                     </div>
                 </div>
             </>

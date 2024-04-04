@@ -34,9 +34,8 @@
 .Chat__input textarea {
     color: white;
     background: #3d3c3c;
-    margin: auto 1px;
     flex: 1;
-    min-height: 4.7rem;
+    min-height: 2.7rem;
     max-height: 10rem;
     resize: none;
     border: 1px solid #312f2f;

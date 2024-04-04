@@ -15,7 +15,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
 }
 
 .userCard {
@@ -31,10 +32,6 @@
     cursor: pointer;
 }
 
-.userCard:hover {
-    background-color: rgba(0, 0, 0, 0.76);
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -48,47 +45,44 @@
     backdrop-filter: blur(5px);
 }
 
+.userDetails {
+    padding: 8px;
+    background-color: #787878;
+    border-radius: 0.7rem;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    overflow-y: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.userDetailsHeader {
+    display: flex;
+    align-items: center;
+    border: white 0.1rem solid;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background: #6c6161;
+}
+
+.userDetailsHeader h3 {
+    margin-left: 20px;
+    color: #000000;
+}
+
+.aboutUser {
+    margin-top: 10px;
+    color: #ffffff;
+}
+
 .modal {
     margin-top: 5rem;
     background-color: #d2d2d2;
     border-radius: 12px;
     padding: 20px;
     width: 90%;
-    height: 40%;
-}
-
-.userDetails button {
-    margin-top: 10px;
-    background-color: #555555;
-    border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.userDetails button:hover {
-    background-color: #555555;
-}
-
-.userDetails {
-    display: flex;
-    align-items: center;
-    text-align: left;
-    padding: 20px;
-    background-color: #787878;
-    border-radius: 10px;
-    border: 1px solid #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 60vh;
+    height: auto;
+    max-height: 80vh;
     overflow-y: auto;
-}
-
-.userDetails h3 {
-    margin-left: 2rem;
-    color: #000000;
-}
-
-
-.userDetails .closeButton:hover {
-    background-color: #000000;
 }

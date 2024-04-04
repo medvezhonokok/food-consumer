@@ -4,29 +4,22 @@ import CustomNavbar from '../CustomNavbar/CustomNavbar';
 import client from '../../utils/client';
 
 const UserDetails = ({user}) => {
-    const formatAbout = (aboutText) => {
-        if (!aboutText) {
-            return "";
-        }
-
-        return aboutText.split('\n').map((line, index) => (
-            <span key={index}>
-        {line}
-                <br/>
-      </span>
-        ));
-    };
-
     return (
         <>
             <div className={styles.userDetails}>
-                <div className="rounded-circle overflow-hidden" style={{width: '60px', height: '60px'}}>
-                    <img src={"avatars/" + user.login + ".JPG"} className="w-100 h-100"/>
+                <div className={styles.userDetailsHeader}>
+                    <div className="rounded-circle overflow-hidden"
+                         style={{width: '60px', height: '60px', border: "0.1rem solid black", margin: "0.4rem"}}>
+                        <img src={"avatars/" + user.login + ".JPG"} className="w-100 h-100"/>
+                    </div>
+                    <h3>{user.name}</h3>
                 </div>
-                <h3>{user.name}</h3>
-            </div>
-            <div className={styles.aboutUser}>
-                <p>About: {formatAbout(user.about)}</p>
+                <div className={styles.aboutUser}>
+                    <div style={{color: "black", textAlign: "left", fontWeight: "bold"}}>
+                        About:
+                    </div>
+                    <div style={{fontStyle: "oblique"}}>{user.about}</div>
+                </div>
             </div>
         </>
     );

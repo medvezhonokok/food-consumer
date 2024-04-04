@@ -1,14 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "OCP",
+  "name": "OCP",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "icon512_maskable.png",
+      "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "icon512_rounded.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -17,5 +17,5 @@
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "orientation": "landscape"
+  "orientation": "portrait"
 }
