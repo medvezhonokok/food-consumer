@@ -69,7 +69,7 @@
     padding: 5px;
     max-width: 70%;
     align-self: flex-end;
-    background-color: #2d2d2d;
+    background-color: #534F4FFF;
     color: #fff;
 }
 
@@ -89,26 +89,45 @@
     max-width: 100%;
 }
 
-.Chat__otherMessage .avatar {
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
 .Chat__otherMessage img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
 }
 
-.Chat__otherMessage .author {
-    font-weight: bold;
-    left: 0;
-    margin-bottom: 0.3rem;
-}
-
 .time {
     align-self: flex-end;
     font-size: 0.8rem;
-    color: #666;
+    color: #534f4f;
 }
 
+.Chat__date {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin: 1rem 0;
+}
+
+.flexContainer {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    margin-right: 10px;
+}
+
+.name {
+    flex-grow: 1;
+    font-weight: bold;
+}
+
+.messageText {
+    margin-top: 5px;
+}
+
+.time {
+    font-size: 0.8rem;
+    color: #666;
+}
