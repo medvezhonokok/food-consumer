@@ -2,6 +2,15 @@
     text-align: center;
 }
 
+.userName {
+    margin-bottom: 1rem;
+    color: #ffffff;
+    background-color: #000000;
+    padding-top: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+}
+
 .userList {
     display: flex;
     flex-direction: column;
@@ -10,19 +19,20 @@
 }
 
 .userCard {
-    border: 1px solid #a09e73;
+    color: #000000;
+    border: 1px solid #cccccc;
     border-radius: 12px;
-    margin: 20px auto;
-    padding: 20px;
-    width: 70%;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    width: 90%;
     text-align: center;
-    background-color: #bcba91;
+    background-color: #787878;
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
 .userCard:hover {
-    background-color: #d5d4a6;
+    background-color: rgba(0, 0, 0, 0.76);
 }
 
 .overlay {
@@ -35,51 +45,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(5px);
 }
 
 .modal {
     margin-top: 5rem;
-    background-color: white;
+    background-color: #d2d2d2;
     border-radius: 12px;
     padding: 20px;
-    max-height: 70vh;
-    max-width: 80%;
+    width: 90%;
+    height: 40%;
 }
 
 .userDetails button {
     margin-top: 10px;
-    background-color: #bcba91;
+    background-color: #555555;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
 }
 
 .userDetails button:hover {
-    background-color: #c6c599;
+    background-color: #555555;
 }
 
 .userDetails {
+    display: flex;
+    align-items: center;
     text-align: left;
     padding: 20px;
-    background-color: #fff;
+    background-color: #787878;
     border-radius: 10px;
+    border: 1px solid #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-height: 60vh;
     overflow-y: auto;
 }
 
 .userDetails h3 {
-    margin-top: 0;
-    color: #333;
+    margin-left: 2rem;
+    color: #000000;
 }
 
-.userDetails p {
-    margin: 0 0 10px;
-    color: #666;
-}
 
 .userDetails .closeButton:hover {
-    background-color: #c6c599;
+    background-color: #000000;
 }
