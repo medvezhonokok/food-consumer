@@ -21,7 +21,7 @@ services:
     image: phpmyadmin/phpmyadmin:5.2.1
     restart: always
     ports:
-      - "3081:3081"
+      - "3081:80"
     depends_on:
       - maria-db
     environment:
