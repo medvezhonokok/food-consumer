@@ -9,11 +9,11 @@ const BottomNavbar = ({user}) => {
                 {user && (
                     <div className={`${styles.BottomNavbar}`}>
                         <div className={`${styles.buttons}`}>
-                            <Button href={'news'} className={`btn ${styles.navButton}`}>
-                                <img src="news.png" alt="Avatar" className="w-100 h-100"/>
-                            </Button>
                             <Button href={'users'} className={`btn ${styles.navButton}`}>
                                 <img src="allusers.png" alt="Avatar" className="w-100 h-100"/>
+                            </Button>
+                            <Button href={'news'} className={`btn ${styles.navButton}`}>
+                                <img src="news.png" alt="Avatar" className="w-100 h-100"/>
                             </Button>
                             <Button href={'chat'} className={`btn ${styles.navButton}`}>
                                 <img src="chat.png" alt="Avatar" className="w-100 h-100"/>

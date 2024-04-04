@@ -10,11 +10,12 @@
 }
 
 .ButtonContainer {
-    margin-top: 5.5rem;
+    margin-top: 3rem;
 }
 
 .ShowButton {
-    background: #bcba91;
+    color: #000000;
+    background: #ffffff;
 }
 
 .Drawer {

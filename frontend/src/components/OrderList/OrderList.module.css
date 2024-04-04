@@ -1,50 +1,29 @@
 .Container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 30px;
 }
 
 .Orders {
+    margin-top: 0.1rem;
+    display: flex;
     width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
 }
 
-.Actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-    position: relative;
-}
 
 .Actions button {
+    margin-top: 2rem;
     color: #ffffff;
-    border: 1px solid #a09e73;
-    border-radius: 12px;
-    margin: 20px auto;
+    border: 1px solid #000000;
+    border-radius: 20px;
     padding: 20px;
-    width: 70%;
     text-align: center;
-    background-color: #bcba91;
+    background-color: #000000;
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
     animation: scaleIn 0.3s ease;
 }
- /* maybe
-/*.Actions button:hover {*/
-/*    transform: scale(1.2);*/
-/*    transition: transform 0.3s ease;*/
-/*}*/
-
-/*@keyframes scaleIn {*/
-/*    from {*/
-/*        transform: scale(1);*/
-/*    }*/
-/*    to {*/
-/*        transform: scale(1.2);*/
-/*    }*/
-/*}*/
 
 .NewOrder {
     position: fixed;
@@ -63,6 +42,15 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
+.ordersContainer {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: #787878;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -72,10 +60,6 @@
         opacity: 1;
         transform: scale(1);
     }
-}
-
-.Open {
-    animation: fadeIn 0.3s ease, blurIn 0.3s ease;
 }
 
 @keyframes fadeIn {

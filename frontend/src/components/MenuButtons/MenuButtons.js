@@ -18,23 +18,29 @@ const MenuButtons = () => {
                     </Button>
                 </Stack>
             </div>
-            <div style={{marginTop: '4rem'}}>
-                <h2>TASK</h2>
+            <div className={`${styles.menuContainer}`} style={{marginTop: '2rem'}}>
+                <div style={{color: '#ffffff'}}>
+                    <h2>TASKS</h2>
+                </div>
                 <div className={`${styles.taskContainer}`}>
                     <Stack direction="vertical">
-                        <Button href={'orders'} className={`btn ${styles.btn}`}>
-                            <img src="orders.png" alt="Avatar" className="w-90 h-100"/>
-                        </Button>
+                        <div className={`${styles.box}`}>
+                            <h3>Task Title</h3>
+                            <p>Description: Здесь будет напоминание о ближайшей задачке на сегодня.</p>
+                        </div>
                     </Stack>
                 </div>
             </div>
-            <div style={{marginTop: '4rem'}}>
-                <h2>SCHEDULE</h2>
+            <div className={`${styles.menuContainer}`} style={{marginTop: '2rem'}}>
+                <div style={{color: '#ffffff'}}>
+                    <h4>SCHEDULE</h4>
+                </div>
                 <div className={`${styles.taskContainer}`}>
                     <Stack direction="vertical">
-                        <Button href={'orders'} className={`btn ${styles.btn}`}>
-                            <img src="orders.png" alt="Avatar" className="w-90 h-100"/>
-                        </Button>
+                        <div className={`${styles.box}`}>
+                            <h5>YOUR ROLE</h5>
+                            <p>Description: Здесь будет напоминание о твоей ближайшей смене.</p>
+                        </div>
                     </Stack>
                 </div>
             </div>

@@ -89,31 +89,38 @@ const OrderList = ({}) => {
     return (
         <div className={styles.Container}>
             {(addingNewOrder || editingOrder) ? (
-                <div className={`${styles.NewOrder} ${addingNewOrder ? styles.Open : ''}`} {...swipeHandlers}>
-                    <textarea
-                        ref={textareaRef}
-                        className={styles.TextArea}
-                        value={newOrderText}
-                        onChange={(e) => setNewOrderText(e.target.value)}
-                    />
+                <div className={`${styles.ordersContainer}`}>
+                    <div className={`${styles.NewOrder} ${addingNewOrder ? styles.Open : ''}`} {...swipeHandlers}>
+                        <textarea
+                            ref={textareaRef}
+                            className={styles.TextArea}
+                            value={newOrderText}
+                            onChange={(e) => setNewOrderText(e.target.value)}
+                        />
+                    </div>
                 </div>
             ) : (
                 <>
-                    <div className={styles.Orders} data-testid="OrderList">
-                        {!orders || orders.length === 0 ? (
-                            <div className={`${styles.CenteredContent} `}>No tasks for today</div>
-                        ) : (
-                            <Stack gap={3}>
-                                {Object.values(orders).reverse().map((o, index) => (
-                                    <div key={o.id} onClick={() => handleEditOrder(o.id)}>
-                                        <Order orderId={o.id} textareaRef={ref => textareaRefs.current[index] = ref}/>
-                                    </div>
-                                ))}
-                            </Stack>
-                        )}
+                <div className={`${styles.ordersContainer}`}>
+                    <div className="d-flex justify-content-center align-items-center" style={{color: '#ffffff'}}>
+                        <h1>ORDERS</h1>
                     </div>
+                        <div className={styles.Orders} data-testid="OrderList">
+                            {!orders || orders.length === 0 ? (
+                                <div className={`${styles.CenteredContent} `}>No tasks for today</div>
+                            ) : (
+                                <Stack gap={3}>
+                                    {Object.values(orders).reverse().map((o, index) => (
+                                        <div key={o.id} onClick={() => handleEditOrder(o.id)}>
+                                            <Order orderId={o.id} textareaRef={ref => textareaRefs.current[index] = ref}/>
+                                        </div>
+                                    ))}
+                                </Stack>
+                            )}
+                        </div>
+                </div>
                     <div className={styles.Actions}>
-                        <Button onClick={handleAddNewOrder} style={{width: buttonWidth}}>Add</Button>
+                        <Button onClick={handleAddNewOrder} style={{width: '20rem'}}>Add</Button>
                     </div>
                 </>
             )}

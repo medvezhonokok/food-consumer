@@ -7,7 +7,22 @@
     align-items: center;
 }
 
-.userName {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.59);
-   margin-top: 0.5rem;
+.userNameBox {
+    background-color: #000000;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.59);
 }
+
+.userName {
+    color: #ffffff;
+    margin: 0;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.59);
+}
+
+.homeNavbar {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.59);
+    border-radius: 50%;
+    overflow: hidden;
+}
+

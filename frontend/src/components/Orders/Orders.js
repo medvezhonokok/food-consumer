@@ -29,7 +29,7 @@ const Orders = () => {
                         <CustomNavbar user={user}/>
                         <div className={styles.ButtonContainer}>
                             <Button className={styles.ShowButton} onClick={toggleDrawer}>
-                                <BsChevronDown style={{fontSize: '0.5rem'}}/>
+                                <BsChevronDown/>
                             </Button>
                         </div>
                         <Drawer className={styles.Drawer}
