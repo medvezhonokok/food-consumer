@@ -1,91 +1,99 @@
-.newsContainer {
+.authorInfo {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    color: #000000;
+    width: 100%;
+    background-color: #d2d2d2;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
 }
 
 .newsItem {
     margin-top: 3rem;
-    border: 0.2rem solid black;
-    border-radius: 0.8rem;
-    margin-bottom: 20px;
-    width: calc(100% - 100px);
-}
-
-.commentsContainer {
-    margin-top: 10px;
-}
-
-.comment {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.newsCard {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #d2d2d2;
     border-radius: 10px;
-    width: 300px;
+    margin-bottom: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.newsContainer {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .newsImage {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.newsDescription {
-    margin-top: 10px;
-    font-size: 16px;
+.newsContent {
+    background-color: #d2d2d2;
+    padding: 20px;
+    border-radius: 0 0 9px 9px;
 }
 
 .newsAuthor {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #888;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.addCommentButton {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.authorDescription {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.newsDescription {
+    padding: 0.2rem;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 15px;
+}
+
+.addCommentButton,
+.showCommentsButton,
+.submitCommentButton {
+    background-color: transparent;
+    color: #787878;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(240, 240, 240);
     cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
 }
 
-.addCommentButton:hover {
-    background-color: #45a049;
+.addCommentButton:hover,
+.showCommentsButton:hover,
+.submitCommentButton:hover {
+    text-decoration: underline;
 }
 
-textarea {
-    width: 100%;
-    margin-top: 10px;
+.addCommentButton:focus,
+.showCommentsButton:focus,
+.submitCommentButton:focus {
+    outline: none;
+}
+
+.textarea {
+    width: calc(100% - 40px);
+    margin-bottom: 10px;
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-button[type="submit"] {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #45a049;
 }
 
 .modalBackdrop {
@@ -114,7 +122,7 @@ button[type="submit"]:hover {
 .modalButton {
     margin-top: 10px;
     padding: 8px 16px;
-    background-color: #4CAF50;
+    background-color: #ffffff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -122,26 +130,67 @@ button[type="submit"]:hover {
 }
 
 .modalButton:hover {
-    background-color: #45a049;
+    background-color: #ffffff;
 }
 
 .addNewsButton {
+    width: 60%;
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #3897f0;
+    background-color: #000000;
     color: white;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
     border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    box-shadow: 0 4px 8px rgb(210, 210, 210);
+}
+
+.addNewsButton:hover {
+    background-color: #ffffff;
+}
+
+.textarea {
+    outline: none;
+}
+
+.backButton {
+    width: 50%;
+    margin: 10px;
+    padding: 8px 16px;
+    background-color: #d2d2d2;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgb(210, 210, 210);
+}
+
+.backButton:hover {
+    background-color: #999;
+}
+
+.latestComment {
+    outline: none;
+    margin-top: 20px;
+    padding: 0.2rem;
+    background-color: #f0f0f0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    border-radius: 5px;
+}
+
+.latestComment p {
+    margin: 5px 0;
+}
+
+.comment {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
 }

@@ -9,13 +9,15 @@
     justify-content: center;
 }
 
-.ButtonContainer {
-    margin-top: 3rem;
-}
 
 .ShowButton {
+    border-radius: 0 0 2rem 2rem;
+    height: 3rem;
+    margin-top: 2rem;
+    width: 100%;
     color: #000000;
     background: #ffffff;
+    box-shadow: 0 4px 8px rgb(210, 210, 210);
 }
 
 .Drawer {

@@ -113,7 +113,7 @@ const StopListElements = () => {
                 )}
                 {!addingNewElement &&
                     <Button style={{
-                        width: "4rem",
+                        width: "60%",
                         marginRight: "auto",
                         marginLeft: "auto"
                     }} onClick={handleAddElement}>Add</Button>

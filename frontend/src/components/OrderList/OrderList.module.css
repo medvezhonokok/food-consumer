@@ -71,15 +71,6 @@
     }
 }
 
-@keyframes blurIn {
-    from {
-        backdrop-filter: blur(0);
-    }
-    to {
-        backdrop-filter: blur(100px); /* Максимальное значение размытия */
-    }
-}
-
 
 .TextArea {
     width: calc(100% - -40px);

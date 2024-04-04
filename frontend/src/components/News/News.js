@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import client from "../../utils/client";
-import styles from './News.module.css';
 import axios from "axios";
 import imageCompression from 'browser-image-compression';
-import heic2any from "heic2any";
+import heic2any from 'heic2any';
+import {Button, Drawer} from '@mui/material';
+import styles from './News.module.css';
+import CustomNavbar from "../CustomNavbar/CustomNavbar";
 
 const News = ({user}) => {
     const [comment, setComment] = useState('');
@@ -12,6 +14,8 @@ const News = ({user}) => {
     const [description, setDescription] = useState('');
     const [file, setFile] = useState(null);
     const [newsList, setNewsList] = useState([]);
+    const [selectedNewsId, setSelectedNewsId] = useState(null);
+    const [commentPosted, setCommentPosted] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -49,7 +53,7 @@ const News = ({user}) => {
         try {
             return await imageCompression(file, options);
         } catch (error) {
-            console.error("Ошибка при сжатии изображения:", error);
+            console.error("Error compressing image:", error);
             return file;
         }
     };
@@ -61,7 +65,7 @@ const News = ({user}) => {
     };
 
     const handleAddComment = (newsId) => {
-        setShowCommentForm({[newsId]: true});
+        setShowCommentForm({...showCommentForm, [newsId]: true});
     };
 
     const handleSubmit = async (event) => {
@@ -80,7 +84,7 @@ const News = ({user}) => {
                     new File([blob], file.name.replace(/\.heic$/i, '.png'), {type: 'image/png'})
                 );
             } catch (error) {
-                alert("Новость не добавлена, файл охуеть какой огромный");
+                alert("Failed to add news: image compression error");
                 return;
             }
         }
@@ -142,6 +146,7 @@ const News = ({user}) => {
             if (response.data === "SUCCESS") {
                 alert("Comment added");
                 fetchNewsList();
+                setCommentPosted(true);
             } else {
                 alert("Failed to add comment");
             }
@@ -151,42 +156,82 @@ const News = ({user}) => {
         }
     };
 
+    const handleShowComments = (newsId) => {
+        setSelectedNewsId(newsId);
+    };
+
+    const handleCloseComments = () => {
+        setSelectedNewsId(null);
+    };
+
     return (
         <div>
+            <CustomNavbar user={user}/>
             <div className={styles.newsContainer}>
                 {newsList.map((newsItem) => (
                     <div className={styles.newsItem} key={newsItem.id}>
+                        <div className={styles.authorInfo}>
+                            <div className="rounded-circle overflow-hidden"
+                                 style={{width: '40px', height: '40px', margin: "0.4rem"}}>
+                                <img src={"avatars/" + user.login + ".JPG"} className="w-100 h-100"/>
+                            </div>
+                            <h3>{user.name}</h3>
+                        </div>
                         <img src={client.baseUrl + "/images/" + newsItem.pathToFile} alt="News"
                              className={styles.newsImage}/>
-                        <p className={styles.newsDescription}>{newsItem.description}</p>
-                        <p className={styles.newsAuthor}>Post by: {newsItem.author.name}</p>
-                        <button className={styles.addCommentButton} onClick={() => handleAddComment(newsItem.id)}>Add
-                            Comment
-                        </button>
-                        {showCommentForm[newsItem.id] && (
-                            <form onSubmit={(event) => handleCommentSubmit(event, newsItem.id)}>
-                    <textarea
-                        autoFocus
-                        value={comment[newsItem.id]}
-                        onChange={(event) => handleCommentChange(event, newsItem.id)}
-                        required
-                    />
-                                <button type="submit">Add Comment</button>
-                            </form>
-                        )}
-                        <div className={styles.commentsContainer}>
-                            {newsItem.comments ? (
-                                newsItem.comments.map((comment) => (
-                                    <div key={comment.id} className={styles.comment}>
-                                        <p>{comment.text}</p>
-                                        <p>Comment by: {comment.author.name}</p>
-                                    </div>
-                                ))
-                            ) : null}
+                        <div className={styles.newsContent}>
+                            <p className={styles.newsDescription}>{newsItem.description}</p>
+                            <button className={styles.addCommentButton}
+                                    onClick={() => handleAddComment(newsItem.id)}>Add Comment
+                            </button>
+                            {showCommentForm[newsItem.id] && !commentPosted && (
+                                <form onSubmit={(event) => handleCommentSubmit(event, newsItem.id)}>
+                                    <textarea
+                                        autoFocus
+                                        value={comment[newsItem.id] || ''}
+                                        onChange={(event) => handleCommentChange(event, newsItem.id)}
+                                        required
+                                        placeholder="Add a comment..."
+                                    />
+                                    {comment[newsItem.id] && (
+                                        <button type="submit" className={styles.submitCommentButton}>Post</button>
+                                    )}
+                                </form>
+                            )}
+                            {newsItem.comments.length > 0 && (
+                                <div className={styles.latestComment}>
+                                    <p>Last
+                                        comment: {newsItem.comments[newsItem.comments.length - 1].text.length > 20 ? newsItem.comments[newsItem.comments.length - 1].text.substring(0, 20) + "..." : newsItem.comments[newsItem.comments.length - 1].text}</p>
+                                    <p>By: {newsItem.comments[newsItem.comments.length - 1].author.name}</p>
+                                </div>
+                            )}
+                            <button className={styles.showCommentsButton}
+                                    onClick={() => handleShowComments(newsItem.id)}>
+                                See all comments ({newsItem.comments.length})
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
+            <Drawer
+                anchor="bottom"
+                open={selectedNewsId !== null}
+                onClose={handleCloseComments}
+                sx={{display: 'flex', flexDirection: 'column', padding: '20px', alignItems: 'center'}}
+            >
+                <div>
+                    <button onClick={handleCloseComments} className={styles.backButton}>Back</button>
+                    {newsList.map((newsItem) => (
+                        newsItem.id === selectedNewsId && newsItem.comments.map((comment) => (
+                            <div key={comment.id} className={styles.comment}>
+                                <p>{comment.text}</p>
+                                <p>By: {comment.author.name}</p>
+                            </div>
+                        ))
+                    ))}
+                </div>
+            </Drawer>
+
 
             {user && user.admin && (
                 <button className={styles.addNewsButton} onClick={handleAddNews}>Add News</button>
@@ -198,6 +243,7 @@ const News = ({user}) => {
                         <form onSubmit={handleSubmit}>
                             <label>Description:</label>
                             <textarea
+                                style={{outline: 'none'}}
                                 autoFocus
                                 value={description}
                                 onChange={handleDescriptionChange}

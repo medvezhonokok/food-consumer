@@ -18,7 +18,9 @@ const UserProfile = ({user}) => {
 
     const pathToUserAvatar = `/avatars/` + user.login + ".JPG";
 
-    console.log(pathToUserAvatar);
+    const handleFocus = (e) => {
+        e.target.setSelectionRange(0, 0);
+    };
 
     if (!user) {
         return <div>Nothing there</div>;
@@ -87,54 +89,52 @@ const UserProfile = ({user}) => {
     return (
         <div className={styles.textCenter}>
             <CustomNavbar user={user}/>
-            <div className={styles.container}>
-                <h2 className={styles.heading}>User Profile</h2>
-                <div className={styles.imageContainer}>
-                    <img src={pathToUserAvatar} alt="Profile" className={styles.profileImage}/>
+            <div className={styles.imageContainer}>
+                <img src={pathToUserAvatar} alt="Profile" className={styles.profileImage}/>
+            </div>
+            <div className={styles.infoContainer}>
+                <label className={styles.label}>UserLogin</label>
+                <div>
+                    <h3>{user.login}</h3>
                 </div>
-                <div className={styles.inputContainer}>
-                    <label className={styles.label}>Login</label>
-                    <input
-                        type="text"
-                        value={user.login}
-                        readOnly={true}
-                        className={`${styles.input}`}
-                    />
-                </div>
-                <div className={styles.inputContainer}>
+                <div className={styles.nameContainer}>
                     <label className={styles.label}>Name</label>
                     <input
                         type="text"
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
                         className={`${styles.input} ${nameError ? styles.inputError : ''}`}
+                        onFocus={handleFocus}
                     />
                     {nameError && <div className={styles.error}>{nameError}</div>}
                 </div>
-                <div className={styles.inputContainer}>
+                <div className={styles.phoneContainer}>
                     <label className={styles.label}>Phone Number</label>
                     <PhoneInput
                         defaultCountry="Russia"
                         value={newPhoneNumber}
                         onChange={(value) => setNewPhoneNumber(value)}
+                        inputStyle={{width: "100%"}}
+                        className={`${styles.PhoneInput}`}
+                        onFocus={handleFocus}
                     />
                     {phoneNumberError && <div className={styles.error}>{phoneNumberError}</div>}
                 </div>
-                <div className={styles.inputContainer}>
-                    <label className={styles.label}>About</label>
-                    <textarea
-                        value={newAbout}
-                        onChange={(e) => setNewAbout(e.target.value)}
-                        className={`${styles.textarea} `}
-                    />
-                    {aboutError && <div className={styles.error}>{aboutError}</div>}
-                </div>
-
-                <button onClick={handleSaveChanges} className={`${styles.button} ${styles.saveChangesButton}`}>Save
-                    Changes
-                </button>
-                <Button onClick={handleLogout} className={`${styles.button} ${styles.logoutButton}`}>Log out</Button>
             </div>
+            <div className={styles.aboutContainer}>
+                <label className={styles.label}>About</label>
+                <textarea
+                    value={newAbout}
+                    onChange={(e) => setNewAbout(e.target.value)}
+                    className={`${styles.textarea} `}
+                    onFocus={handleFocus}
+                />
+                {aboutError && <div className={styles.error}>{aboutError}</div>}
+            </div>
+            <button onClick={handleSaveChanges} className={`${styles.button} ${styles.saveChangesButton}`}>Save
+                Changes
+            </button>
+            <Button onClick={handleLogout} className={`${styles.button} ${styles.logoutButton}`}>Log out</Button>
         </div>
     );
 };

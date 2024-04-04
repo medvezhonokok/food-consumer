@@ -27,11 +27,9 @@ const Orders = () => {
                 ? <div className={styles.OrdersContainer}>
                     <div className={styles.Notes} data-testid="Orders">
                         <CustomNavbar user={user}/>
-                        <div className={styles.ButtonContainer}>
                             <Button className={styles.ShowButton} onClick={toggleDrawer}>
                                 <BsChevronDown/>
                             </Button>
-                        </div>
                         <Drawer className={styles.Drawer}
                                 open={isOpen}
                                 onClose={toggleDrawer}
