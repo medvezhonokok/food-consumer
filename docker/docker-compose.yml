@@ -17,18 +17,18 @@ services:
       - ./database/initdb.d:/docker-entrypoint-initdb.d
 
   # phpMyAdmin just to check db connection (remove if needed)
-#  pma:
-#    image: phpmyadmin/phpmyadmin:5.2.1
-#    restart: always
-#    ports:
-#      - "3081:80"
-#    depends_on:
-#      - maria-db
-#    environment:
-#      PMA_HOST: maria-db
-#      PMA_PORT: 3306
-#      PMA_USER: root
-#      PMA_PASSWORD: 67b7f471fa16819e
+  pma:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    restart: always
+    ports:
+      - "3081:3081"
+    depends_on:
+      - maria-db
+    environment:
+      PMA_HOST: maria-db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: 67b7f471fa16819e
 
   # main back application container
   java-backend:
