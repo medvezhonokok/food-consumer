@@ -38,12 +38,9 @@ public class JwtService {
     }
 
     public User findUserByJWT(String jwt) {
-        logger.info("Started searching user by JWT{" + jwt + "}");
         try {
             DecodedJWT decodedJwt = verifier.verify(jwt);
-            User user = userService.findById(decodedJwt.getClaim("userId").asLong());
-            logger.info("User has found successfully");
-            return user;
+            return userService.findById(decodedJwt.getClaim("userId").asLong());
         } catch (JWTVerificationException exception) {
             logger.error("Failed while searching user: " + exception.getMessage());
             return null;

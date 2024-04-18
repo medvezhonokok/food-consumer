@@ -9,7 +9,10 @@ import ru.backend.model.Role;
 import ru.backend.model.ScheduleItem;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ScheduleService {
@@ -17,16 +20,16 @@ public class ScheduleService {
 
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO5:PZ7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO1:NR3";
 
-    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B31:B43";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO31:PZ44";
+    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B30:B41";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO30:NR41";
 
-    private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B16:B20";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO16:PZ20";
+    private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B14:B18";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO14:NR18";
 
-    private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B9:B13";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO9:PZ13";
+    private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B7:B7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO7:NR7";
 
     private final GoogleSheetService googleSheetService;
 
@@ -95,34 +98,35 @@ public class ScheduleService {
         for (int i = 0; i < workers.size(); i++) {
             int scheduleDateIndex = 0;
 
-            for (int j = 0; j < mainSchedule.get(i).size(); j++) {
-                java.time.Month scheduleItemMonth = null;
+            if (mainSchedule.size() > i) {
+                for (int j = 0; j < mainSchedule.get(i).size(); j++) {
+                    java.time.Month scheduleItemMonth = null;
 
-                try {
-                    scheduleItemMonth = getEnglishUpperCaseMonthOrNull(scheduleHeader.get(0).get(scheduleDateIndex));
-                } catch (Exception ignored) {
-                    // No operations.
+                    try {
+                        scheduleItemMonth = getEnglishUpperCaseMonthOrNull(scheduleHeader.get(0).get(scheduleDateIndex));
+                    } catch (Exception ignored) {
+                        // No operations.
+                    }
+
+                    if (scheduleItemMonth != null) {
+                        predMonth = scheduleItemMonth;
+                    } else {
+                        scheduleItemMonth = predMonth;
+                    }
+
+                    if (mainSchedule.get(i).get(j) != null && !mainSchedule.get(i).get(j).isEmpty()) {
+                        int scheduleItemDay = Integer.parseInt(scheduleHeader.get(2).get(scheduleDateIndex));
+                        int scheduleItemYear = 2024;
+
+                        LocalDateTime dateTime = LocalDateTime.of(scheduleItemYear, scheduleItemMonth, scheduleItemDay, 0, 0);
+                        schedule.add(new ScheduleItem(workers.get(i), dateTime, mainSchedule.get(i).get(j), role));
+                    }
+
+                    scheduleDateIndex++;
                 }
-
-                if (scheduleItemMonth != null) {
-                    predMonth = scheduleItemMonth;
-                } else {
-                    scheduleItemMonth = predMonth;
-                }
-
-                if (mainSchedule.get(i).get(j) != null && !mainSchedule.get(i).get(j).isEmpty()) {
-                    int scheduleItemDay = Integer.parseInt(scheduleHeader.get(2).get(scheduleDateIndex));
-                    int scheduleItemYear = 2024;
-
-                    LocalDateTime dateTime = LocalDateTime.of(scheduleItemYear, scheduleItemMonth, scheduleItemDay, 0, 0);
-                    schedule.add(new ScheduleItem(workers.get(i), dateTime, mainSchedule.get(i).get(j), role));
-                }
-
-                scheduleDateIndex++;
             }
         }
     }
-
 
     private java.time.Month getEnglishUpperCaseMonthOrNull(String monthName) {
         if (monthName != null) {

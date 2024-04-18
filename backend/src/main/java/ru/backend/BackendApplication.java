@@ -16,16 +16,13 @@ public class BackendApplication {
     @Value("${frontend.url}")
     private String frontendUrl;
 
-    @Value("${backend.js.url}")
-    private String backendJsUrl;
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(frontendUrl, backendJsUrl)
+                        .allowedOrigins(frontendUrl)
                         .allowedMethods("*")
                         .allowCredentials(true);
             }

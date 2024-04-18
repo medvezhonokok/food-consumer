@@ -42,7 +42,7 @@ connectToDatabase().then(pool => {
         socket.on("get_message_history", async () => {
             try {
                 const connection = await pool.getConnection();
-                const [results] = await connection.query("SELECT * FROM messages ORDER BY createdAt ASC");
+                const [results] = await connection.query("SELECT message.*, sender.login AS sender_login, sender.name AS sender_name FROM message LEFT JOIN user AS sender ON message.user_id = sender.id ORDER BY message.creation_time ASC");
                 connection.release();
                 socket.emit("message_history", results);
             } catch (error) {
@@ -54,20 +54,15 @@ connectToDatabase().then(pool => {
             try {
                 const connection = await pool.getConnection();
                 await connection.query(
-                    "INSERT INTO messages (text, sender, sender_login, createdAt) VALUES (?, ?, ?, NOW())",
-                    [data.text, data.sender.name, data.sender.login]
+                    "INSERT INTO message (text, user_id, creation_time) VALUES (?, ?, NOW())",
+                    [data.text, data.authorId]
                 );
                 connection.release();
                 io.emit("receive_message", {
                     text: data.text,
-                    sender: data.sender,
-                    sender_login: data.sender.login,
-                    createdAt: new Date()
-                });
-
-                io.emit("send_push_notification", {
-                    title: `new by ${data.sender.name}`,
-                    message: `text is ${data.text}`
+                    creation_time: new Date(),
+                    sender_name: data.senderName,
+                    sender_login: data.senderLogin
                 });
             } catch (error) {
                 console.error("Error saving message:", error);

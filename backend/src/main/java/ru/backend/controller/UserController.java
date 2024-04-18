@@ -60,12 +60,19 @@ public class UserController {
 
     @PostMapping("/update/{id}")
     public void updateUserSettings(@PathVariable(name = "id") Long userId,
+                                   @RequestParam String jwt,
                                    @RequestBody UserCredentials userCredentials) {
-        userService.updateUserSettingsById(userId, userCredentials);
+        if (jwtService.findUserByJWT(jwt) != null) {
+            userService.updateUserSettingsById(userId, userCredentials);
+        }
     }
 
     @GetMapping("/all")
-    public List<User> findAll() {
-        return userService.findAll();
+    public List<User> findAll(@RequestParam String jwt) {
+        if (jwtService.findUserByJWT(jwt) != null) {
+            return userService.findAll();
+        }
+
+        return null;
     }
 }

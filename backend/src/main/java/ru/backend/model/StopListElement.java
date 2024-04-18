@@ -4,21 +4,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+@Entity
+@Table(name = "stop_list")
 @Getter
 @Setter
-@Entity
-@Table(name = "perm_task")
-public class PermanentTask {
+public class StopListElement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime creationTime;
+    private String name;
 
-    private String content;
-
-    private Long userId;
+    public StopListElement() {
+    }
 }

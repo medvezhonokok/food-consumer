@@ -58,7 +58,7 @@ public class UserService {
         String name = userCredentials.getName();
         String about = userCredentials.getAbout();
 
-        logger.info("Stated updating user settings with id=" + userId + ", name=\"" + name +"\"");
+        logger.info("Stated updating user settings with id=" + userId + ", name=\"" + name + "\"");
 
         if (phoneNumber != null && !phoneNumber.isBlank()) {
             userRepository.updatePhoneNumber(userId, phoneNumber);

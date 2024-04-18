@@ -7,10 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.backend.model.Comment;
 import ru.backend.model.News;
 import ru.backend.model.User;
-import ru.backend.service.CommentService;
-import ru.backend.service.FileService;
-import ru.backend.service.NewsService;
-import ru.backend.service.UserService;
+import ru.backend.service.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,20 +16,28 @@ import java.util.List;
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
+    private final JwtService jwtService;
     private final FileService fileService;
     private final CommentService commentService;
 
-    public NewsController(NewsService newsService, UserService userService, FileService fileService, CommentService commentService) {
+    public NewsController(NewsService newsService, UserService userService, JwtService jwtService, FileService fileService, CommentService commentService) {
         this.newsService = newsService;
         this.userService = userService;
+        this.jwtService = jwtService;
         this.fileService = fileService;
         this.commentService = commentService;
     }
 
     @GetMapping("/api/news")
-    public ResponseEntity<List<News>> getAll() {
-        List<News> news = newsService.findAll();
-        return ResponseEntity.ok().body(news);
+    public ResponseEntity<List<News>> getAll(@RequestParam String jwt) {
+        User user = jwtService.findUserByJWT(jwt);
+
+        if (user != null) {
+            List<News> news = newsService.findAll();
+            return ResponseEntity.ok().body(news);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/api/news/add")
