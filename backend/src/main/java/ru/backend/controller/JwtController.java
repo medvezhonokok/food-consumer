@@ -25,6 +25,9 @@ public class JwtController {
         this.jwtService = jwtService;
         this.userService = userService;
         this.userCredentialsEnterValidator = userCredentialsEnterValidator;
+
+        // FOR DEBUG USAGE ONLY
+        System.out.println("TOTAL USERS SIZE: " + userService.findAll().size());
     }
 
     @InitBinder("userCredentials")
@@ -39,6 +42,7 @@ public class JwtController {
         }
 
         User user = userService.findByLoginAndPassword(userCredentials.getLogin(), userCredentials.getPassword());
+        System.out.println(user == null ? "User not found" : "User found with login: " + user.getLogin());
         return jwtService.create(user);
     }
 }
