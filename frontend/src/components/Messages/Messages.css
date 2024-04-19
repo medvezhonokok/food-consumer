@@ -1,0 +1,9 @@
+.messagesContainer {
+    margin-bottom: 6.5rem;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.date {
+    text-align: center;
+}

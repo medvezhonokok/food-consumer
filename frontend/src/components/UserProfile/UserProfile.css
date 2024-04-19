@@ -1,0 +1,49 @@
+.profileContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin: 3rem auto 10rem auto;
+}
+
+.profileInfoBox {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.profileInput {
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: var(--medium-border-radius);
+    resize: none;
+    overflow: hidden;
+    width: 90%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.buttonCommon {
+    border: var(--border-color) var(--small-border-size) solid;
+    border-radius: var(--large-border-radius);
+    font-size: 1rem;
+    font-weight: bold;
+    height: 2rem;
+    margin-right: 1rem;
+}
+
+.saveChangesButton {
+    width: 10rem;
+    background: var(--default-background-color);
+    color: var(--default-font-color);
+}
+
+.logoutButton {
+    width: 3rem;
+    color: white;
+    background: var(--error-color);
+}
