@@ -38,7 +38,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(constants.BACKEND_JAVA_URL + '/1/jwt', {
+            const response = await axios.post(constants.BACKEND_JAVA_URL + '/2/jwt', {
                 login,
                 password,
             });
