@@ -21,56 +21,32 @@ const LoginForm = () => {
         }
     };
 
-
-    const handleLoginSuccess = async (jwtToken) => {
+    const authenticateUserByJWT = (jwtToken) => {
         localStorage.setItem('jwtToken', jwtToken);
-        try {
-            const userResponse = await fetch(`http://5.101.51.223:8080/api/1/users/auth?jwt=${jwtToken}`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
 
-            if (!userResponse.ok) {
-                alert("Oops, an error occurred!");
-                return;
-            }
-
-            const user = await userResponse.json();
-            localStorage.setItem('user', JSON.stringify(user));
-            window.location.reload();
-        } catch (error) {
-            console.error('Failed to fetch user information:', error.message);
-        }
+        axios.get(constants.BACKEND_JAVA_URL + `/1/users/auth?jwt=${jwtToken}`)
+            .then((response) => {
+                const user = JSON.stringify(response.data);
+                localStorage.setItem('user', user);
+                window.location.reload();
+            }).catch((err) => {
+            console.error('Failed to fetch user information:', err);
+        });
     };
 
-    const submitLoginForm = async (e) => {
+    const submitLoginForm = (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch('http://5.101.51.223:8080/api/2/jwt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    login: login,
-                    password: password,
-                }),
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
-            const jwtToken = await response.text();
-            await handleLoginSuccess(jwtToken);
-        } catch (error) {
-            console.error('Authentication failed:', error);
-            setErrors({authentication: 'Authentication failed'});
-        }
-    }
-
+        axios.post(constants.BACKEND_JAVA_URL + '/2/jwt', {
+            login,
+            password,
+        }).then((response) => {
+            authenticateUserByJWT(response.data);
+        }).catch((err) => {
+            console.error('Authentication failed:', err);
+            setErrors({authentication: 'Invalid login or password'});
+        });
+    };
 
     return (
         <form className="loginForm" onSubmit={submitLoginForm}>

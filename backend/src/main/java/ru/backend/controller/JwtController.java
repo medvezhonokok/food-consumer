@@ -34,15 +34,11 @@ public class JwtController {
 
     @PostMapping("/jwt")
     public String enter(@RequestBody @Valid UserCredentials userCredentials, BindingResult bindingResult) {
-        // FOR DEBUG USAGE ONLY
-        System.out.println("TOTAL USERS SIZE: " + userService.findAll().size());
-
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult);
         }
 
         User user = userService.findByLoginAndPassword(userCredentials.getLogin(), userCredentials.getPassword());
-        System.out.println(user == null ? "User not found" : "User found with login: " + user.getLogin());
         return jwtService.create(user);
     }
 }

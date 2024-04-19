@@ -25,18 +25,13 @@ public class CheckListController {
         this.jwtService = jwtService;
     }
 
-//    @GetMapping(value = "/all")
-//    public ResponseEntity<List<CheckList>> getCheckList(@RequestParam String jwt) {
-//        if (jwtService.findUserByJWT(jwt) != null) {
-//            return new ResponseEntity<>(checkListService.findAll(), HttpStatus.OK);
-//        }
-//
-//        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-//    }
-
     @GetMapping(value = "/all")
-    public ResponseEntity<List<CheckList>> getCheckList() {
-        return new ResponseEntity<>(checkListService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<CheckList>> getCheckList(@RequestParam String jwt) {
+        if (jwtService.findUserByJWT(jwt) != null) {
+            return new ResponseEntity<>(checkListService.findAll(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/take")
