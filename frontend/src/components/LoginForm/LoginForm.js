@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './LoginForm.css';
+import axios from 'axios';
 import {Button} from "react-bootstrap";
+import * as constants from "./../../constants/constants";
 
 const LoginForm = () => {
     const [login, setLogin] = useState('');
@@ -18,6 +20,7 @@ const LoginForm = () => {
             throw Error('Unexpected error.');
         }
     };
+
 
     const handleLoginSuccess = async (jwtToken) => {
         localStorage.setItem('jwtToken', jwtToken);
@@ -52,8 +55,8 @@ const LoginForm = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    login,
-                    password,
+                    login: login,
+                    password: password,
                 }),
             });
             if (!response.ok) {
@@ -67,6 +70,7 @@ const LoginForm = () => {
             setErrors({authentication: 'Authentication failed'});
         }
     }
+
 
     return (
         <form className="loginForm" onSubmit={submitLoginForm}>
