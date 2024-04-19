@@ -26,4 +26,8 @@ public class StopListService {
     public void removeById(Long id) {
         stopListRepository.deleteById(id);
     }
+
+    public StopListElement findById(Long id) {
+        return stopListRepository.findById(id).orElse(null);
+    }
 }

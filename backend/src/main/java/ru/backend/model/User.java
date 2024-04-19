@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -39,6 +40,9 @@ public class User {
 
     @Size(max = 250)
     private String about;
+
+    @Nullable
+    private String telegramChatId;
 
     private boolean isManager;
 

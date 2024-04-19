@@ -7,8 +7,10 @@ import ru.backend.model.Task;
 import ru.backend.model.User;
 import ru.backend.service.JwtService;
 import ru.backend.service.TaskService;
+import ru.backend.service.TelegramBotNotifierService;
 import ru.backend.service.UserService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +20,13 @@ public class TaskController {
     private final TaskService taskService;
     private final UserService userService;
     private final JwtService jwtService;
+    private final TelegramBotNotifierService notifierService;
 
-    public TaskController(TaskService taskService, UserService userService, JwtService jwtService) {
+    public TaskController(TaskService taskService, UserService userService, JwtService jwtService, TelegramBotNotifierService notifierService) {
         this.taskService = taskService;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.notifierService = notifierService;
     }
 
     @GetMapping(value = "/all")
@@ -77,15 +81,20 @@ public class TaskController {
         User user = jwtService.findUserByJWT(jwt);
         long userId = Long.parseLong(String.valueOf(requestBody.get("userId")));
         String content = String.valueOf(requestBody.get("content"));
+        String time = String.valueOf(requestBody.get("dateTime"));
         User executor = userService.findById(userId);
 
         if (executor != null && user != null && user.isAdmin()) {
             Task task = new Task();
 
             task.setContent(content);
-            task.setPermanent(false);
             task.setDone(false);
             task.setExecutor(executor);
+            task.setCreationTime(LocalDateTime.parse(time));
+
+            if (executor.getTelegramChatId() != null) {
+                notifierService.sentNotificationToUser(executor.getTelegramChatId(), "У тебя новая задача. Проверь `Tasks`.");
+            }
 
             taskService.save(task);
             return new ResponseEntity<>("OK", HttpStatus.OK);

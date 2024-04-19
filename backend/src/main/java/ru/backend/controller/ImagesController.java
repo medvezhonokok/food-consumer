@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 public class ImagesController {
     private static final String IMAGE_DIRECTORY = "/root/food-consumer/backend/src/main/resources/static/images/";
 
-    @GetMapping("/images/{fileName:.+}")
+    @GetMapping("/api/images/{fileName:.+}")
     @ResponseBody
     public synchronized ResponseEntity<Resource> getFile(@PathVariable String fileName) {
         Path filePath = Paths.get(IMAGE_DIRECTORY + fileName);

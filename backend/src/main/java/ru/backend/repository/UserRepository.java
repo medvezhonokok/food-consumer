@@ -37,4 +37,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "UPDATE user SET about=?2 WHERE id=?1", nativeQuery = true)
     void updateAbout(long userId, String about);
+
+    // REMOVE AFTER INIT
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE user SET telegram_chat_id=?1 WHERE id=?2", nativeQuery = true)
+    void setChatIdByUserId(Long chatId, Long userId);
 }

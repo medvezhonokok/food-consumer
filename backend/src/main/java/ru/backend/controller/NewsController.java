@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/news")
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
@@ -20,7 +21,11 @@ public class NewsController {
     private final FileService fileService;
     private final CommentService commentService;
 
-    public NewsController(NewsService newsService, UserService userService, JwtService jwtService, FileService fileService, CommentService commentService) {
+    public NewsController(NewsService newsService,
+                          UserService userService,
+                          JwtService jwtService,
+                          FileService fileService,
+                          CommentService commentService) {
         this.newsService = newsService;
         this.userService = userService;
         this.jwtService = jwtService;
@@ -28,7 +33,7 @@ public class NewsController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/api/news")
+    @GetMapping("/all")
     public ResponseEntity<List<News>> getAll(@RequestParam String jwt) {
         User user = jwtService.findUserByJWT(jwt);
 
@@ -40,7 +45,7 @@ public class NewsController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/api/news/add")
+    @PostMapping("/add")
     public synchronized ResponseEntity<String> addNews(@RequestParam("file") MultipartFile file,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("userId") Long userId) {
@@ -64,7 +69,7 @@ public class NewsController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAILED");
     }
 
-    @PostMapping("/api/news/add_comment_{newsId}")
+    @PostMapping("/add_comment_{newsId}")
     public ResponseEntity<String> addComment(@PathVariable("newsId") Long newsId,
                                              @RequestParam("text") String text,
                                              @RequestParam("userId") Long userId) {

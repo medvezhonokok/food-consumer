@@ -5,21 +5,19 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-import javax.annotation.Nullable;
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "check_list")
+public class CheckList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Nullable
-    private LocalDateTime creationTime;
+    @Column(columnDefinition = "ENUM('MORNING', 'DAY', 'EVENING')")
+    @Enumerated(EnumType.STRING)
+    private CheckListType type;
 
     @NonNull
     private String content;

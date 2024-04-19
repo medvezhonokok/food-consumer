@@ -1,5 +1,6 @@
 package ru.backend.service;
 
+import lombok.NonNull;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.backend.form.UserCredentials;
@@ -79,5 +80,10 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    // REMOVE AFTER INIT
+    public void setChatIdByUserId(@NonNull Long chatId, @NonNull Long userId) {
+        userRepository.setChatIdByUserId(chatId, userId);
     }
 }
