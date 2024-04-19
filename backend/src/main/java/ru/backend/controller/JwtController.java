@@ -25,9 +25,6 @@ public class JwtController {
         this.jwtService = jwtService;
         this.userService = userService;
         this.userCredentialsEnterValidator = userCredentialsEnterValidator;
-
-        // FOR DEBUG USAGE ONLY
-        System.out.println("TOTAL USERS SIZE: " + userService.findAll().size());
     }
 
     @InitBinder("userCredentials")
@@ -37,6 +34,9 @@ public class JwtController {
 
     @PostMapping("/jwt")
     public String enter(@RequestBody @Valid UserCredentials userCredentials, BindingResult bindingResult) {
+        // FOR DEBUG USAGE ONLY
+        System.out.println("TOTAL USERS SIZE: " + userService.findAll().size());
+
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult);
         }
