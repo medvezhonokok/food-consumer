@@ -1,0 +1,26 @@
+.newsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newsItem {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+.newsContent {
+    margin: 2rem auto 0 auto;
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.newsImage {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}

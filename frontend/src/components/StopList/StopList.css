@@ -1,0 +1,61 @@
+.stopList {
+    margin-bottom: 7rem;
+}
+
+.containerHeader {
+    display: flex;
+    flex-direction: row;
+}
+
+.commonStopListButton {
+    height: 3rem;
+    width: 3rem;
+    background: var(--default-background-color);
+    border-radius: 50%;
+    border: var(--border-color) solid var(--small-border-size);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.backButton {
+    color: black;
+    font-size: 2rem;
+    left: 1rem;
+    top: 1rem;
+}
+
+.addButton {
+    font-size: 3rem;
+    right: 1rem;
+    top: 1rem;
+}
+
+.addStopListElementButton {
+    display: flex;
+    width: 70%;
+    border: var(--border-color) var(--small-border-size) solid;
+    border-radius: var(--large-border-radius);
+    justify-content: center;
+    color: var(--default-font-color);
+    background: var(--medium-beige);
+    font-size: 1rem;
+    margin: 0 auto;
+}
+
+.stopListContainer {
+    display: flex;
+}
+
+.removeStopListElementButton {
+    display: flex;
+    margin: 0.3rem auto;
+    font-size: 1rem;
+    border: var(--border-color) var(--small-border-size) solid;
+    border-radius: var(--large-border-radius);
+    color: var(--default-font-color);
+    background: var(--default-background-color);
+}

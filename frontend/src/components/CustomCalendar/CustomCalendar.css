@@ -1,0 +1,100 @@
+.rdp {
+    --rdp-cell-size: 40px;
+    --rdp-caption-font-size: 18px;
+    --rdp-accent-color: var(--medium-beige) !important;
+    --rdp-background-color: var(--light-gray) !important;
+    --rdp-accent-color-dark: var(--light-gray) !important;
+    --rdp-background-color-dark: #180270 !important;
+    --rdp-outline: 2px solid var(--medium-beige) !important;
+    --rdp-outline-selected: 3px solid var(--medium-beige) !important;
+    --rdp-selected-color: #fff;
+    font-size: 1.2rem;
+}
+
+.rdp {
+    width: 90%;
+    margin: 1rem auto 0 auto;
+    border: var(--border-color) var(--small-border-radius) solid;
+    border-radius: var(--large-border-radius);
+    background: var(--default-background-color);
+}
+
+.rdp-button_reset {
+    appearance: none;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    color: inherit;
+    background: none;
+    font: inherit;
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+.rdp-button {
+    border: 2px solid transparent;
+}
+
+.rdp-table {
+    margin: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rdp-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    text-align: left;
+    border-bottom: var(--border-color) var(--small-border-radius) solid;
+}
+
+.rdp-caption_label {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 0.25em;
+    white-space: nowrap;
+    color: currentColor;
+    border: 2px solid transparent;
+    font-family: inherit;
+    font-size: var(--rdp-caption-font-size);
+    font-weight: bold;
+}
+
+.rdp-weeknumber,
+.rdp-day {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: var(--rdp-cell-size);
+    max-width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    margin: 0;
+    border: 2px solid transparent;
+    border-radius: 100%;
+}
+
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+    color: var(--rdp-selected-color);
+    opacity: 1;
+    background-color: var(--medium-beige);
+}
+
+.calendarButton {
+    border: var(--border-color) var(--small-border-radius) solid;
+    border-radius: var(--large-border-radius);
+    display: block;
+    margin: -0.5rem auto;
+    height: 3rem;
+    width: 3rem;
+}
