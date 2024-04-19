@@ -21,34 +21,32 @@ const LoginForm = () => {
         }
     };
 
-    const authenticateUserByJWT = (jwtToken) => {
+    const authenticateUserByJWT = async (jwtToken) => {
         localStorage.setItem('jwtToken', jwtToken);
 
         try {
-            axios.get(constants.BACKEND_JAVA_URL + `/1/users/auth?jwt=${jwtToken}`).then((response) => {
-                const user = JSON.stringify(response.data);
-                localStorage.setItem('user', user);
-                window.location.reload();
-            }).catch((err) => {
-                console.error('Failed to fetch user information:', err);
-            });
+            const response = await axios.get(constants.BACKEND_JAVA_URL + `/1/users/auth?jwt=${jwtToken}`);
+            const user = JSON.stringify(response.data);
+            localStorage.setItem('user', user);
+            window.location.reload();
         } catch (error) {
-            console.error('Failed to fetch user information:', error.message);
+            console.error('Failed to fetch user information:', error);
         }
     };
 
-    const submitLoginForm = (e) => {
+    const submitLoginForm = async (e) => {
         e.preventDefault();
 
-        axios.post(constants.BACKEND_JAVA_URL + '/1/jwt', {
-            login,
-            password,
-        }).then((response) => {
-            authenticateUserByJWT(response.data);
-        }).catch((err) => {
-            console.error('Authentication failed:', err);
+        try {
+            const response = await axios.post(constants.BACKEND_JAVA_URL + '/1/jwt', {
+                login,
+                password,
+            });
+            await authenticateUserByJWT(response.data);
+        } catch (error) {
+            console.error('Authentication failed:', error);
             setErrors({authentication: 'Invalid login or password'});
-        });
+        }
     };
 
     return (
