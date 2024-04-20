@@ -6,19 +6,21 @@
     --medium-gray: #d0d0d4;
 
     --light-beige: #e8e8d6;
-    --medium-beige: #c6c599;
+    --medium-beige: #818181;
 
-    --border-color: #6c6161;
+    --border-color: #1890ff;
     --error-color: #f60e0e;
 
-    --default-background-color: #e8e8df;
-    --default-font-color: #423f3f;
+    --default-background-color: #acacac;
+    --default-font-color: black;
+
     /*
         Custom application font settings & properties
     */
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1rem;
     color: var(--default-font-color);
+
     /*
         Custom application border settings
     */
@@ -56,7 +58,7 @@
 }
 
 .animatedButton:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 body {

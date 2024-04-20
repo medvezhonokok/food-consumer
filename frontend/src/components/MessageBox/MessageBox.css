@@ -10,11 +10,12 @@
 .myMessage {
     margin-left: auto;
     background-color: var(--light-gray);
+    border: var(--border-color) var(--small-border-radius) solid;
 }
 
 .notMyMessage {
     margin-right: auto;
-    background-color: var(--light-beige);
+    background-color: var(--light-gray);
 }
 
 .avatar {

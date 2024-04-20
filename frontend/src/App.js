@@ -1,7 +1,16 @@
 import React from 'react';
 import './App.css';
 import * as index from "./index";
-import {Button} from "react-bootstrap";
+import {
+    EditOutlined,
+    HddOutlined,
+    HomeFilled,
+    InstagramOutlined,
+    ScheduleOutlined,
+    StopOutlined,
+    UnorderedListOutlined
+} from '@ant-design/icons';
+import {Button} from 'antd';
 import LoginForm from "./components/LoginForm/LoginForm";
 import {Link} from "react-router-dom";
 import BottomNavBar from "./components/BottomNavBar/BottomNavBar";
@@ -20,18 +29,22 @@ const App = () => {
                         </Link>
                     </div>
                     <div className="content">
-                        <h2 className="greetingsHeader">Hello, {user.name}</h2>
+                        <h2 className="greetingsHeader"><HomeFilled/> Hello, {user.name}</h2>
                         <div className="mainMenuButtons">
-                            <Button className="animatedButton menuButton" href={"/stop_list"}>Stop list</Button>
-                            <Button className="animatedButton menuButton" href={'/schedule'}>Schedule</Button>
-                            <Button className="animatedButton menuButton" href={'/orders'}>Orders</Button>
+                            <Button className="animatedButton menuButton" href={"/stop_list"} icon={<StopOutlined/>}>Stop
+                                List</Button>
+                            <Button className="animatedButton menuButton" href={'/schedule'}
+                                    icon={<ScheduleOutlined/>}>Schedule</Button>
+                            <Button className="animatedButton menuButton" href={'/orders'}
+                                    icon={<EditOutlined/>}>Orders</Button>
                         </div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio ducimus fuga minima,
-                        molestiae repellat sit. Ab dolore harum libero quibusdam?
                         <div className="mainMenuButtons">
-                            <Button className="animatedButton menuButton" href={"/check_list"}>Check list</Button>
-                            <Button className="animatedButton menuButton" href={"/tasks"}>Tasks</Button>
-                            <Button className="animatedButton menuButton" href={'/news'}>News</Button>
+                            <Button className="animatedButton menuButton" href={"/check_list"}
+                                    icon={<UnorderedListOutlined/>}>Check List</Button>
+                            <Button className="animatedButton menuButton" href={"/tasks"}
+                                    icon={<HddOutlined/>}>Tasks</Button>
+                            <Button className="animatedButton menuButton" href={'/news'}
+                                    icon={<InstagramOutlined/>}>News</Button>
                         </div>
                     </div>
                     <BottomNavBar user={user}/>

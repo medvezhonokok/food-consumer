@@ -19,12 +19,12 @@
 .loginForm input[type="text"]:focus,
 .loginForm input[type="password"]:focus {
     outline: none;
-    border-color: var(--light-beige);
+    border-color: white;
 }
 
 .loginForm button {
     font-weight: bolder;
-    background-color: var(--light-beige);
+    background-color: white;
     border: var(--border-color) var(--small-border-size) solid;
     border-radius: var(--large-border-radius);
     display: flex;

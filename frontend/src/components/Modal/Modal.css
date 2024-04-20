@@ -27,7 +27,7 @@
 }
 
 .modal-content textarea {
-    margin-top: 1rem;
+    margin: 1rem auto;
     height: 200px;
     font-size: 1rem;
     width: 100%;

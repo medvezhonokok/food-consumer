@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import './UserProfile.css';
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import {IoAddOutline, IoArrowBackSharp, IoLogOutOutline} from "react-icons/io5";
+import {IoArrowBackSharp, IoLogOutOutline} from "react-icons/io5";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css';
-import BottomNavBar from "../BottomNavBar/BottomNavBar";
 import {Button} from "react-bootstrap";
 import {updateUserSettings} from "../../data/updater";
 

@@ -12,7 +12,6 @@
     text-align: left;
     margin-left: 1rem;
     margin-bottom: 1.5rem;
-    text-decoration: underline;
 }
 
 .mainMenuButtons {
@@ -32,7 +31,7 @@
     font-size: 2rem;
     text-decoration: none;
     text-align: center;
-    line-height: 3rem;
+    line-height: 2rem;
 }
 
 .content {

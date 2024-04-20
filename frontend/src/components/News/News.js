@@ -91,10 +91,10 @@ const News = ({user}) => {
                         <IoArrowBackSharp/>
                     </Button>
                     {user.admin &&
-                        <Button className="commonStopListButton animatedButton addButton"
-                                onClick={() => setShowModal(true)}>
-                            <IoAddOutline/>
-                        </Button>
+                    <Button className="commonStopListButton animatedButton addButton"
+                            onClick={() => setShowModal(true)}>
+                        <IoAddOutline/>
+                    </Button>
                     }
                 </div>
                 <div className="newsContainer">

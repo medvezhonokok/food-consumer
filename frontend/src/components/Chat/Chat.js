@@ -7,11 +7,9 @@ import Messages from "../Messages/Messages";
 const Chat = ({user}) => {
     return (
         user ?
-            <div>
-                <div className="chat">
-                    <Messages user={user}/>
-                    <ChatInput user={user}/>
-                </div>
+            <div className="chat">
+                <Messages user={user}/>
+                <ChatInput user={user}/>
             </div>
             : <NotFoundPage/>
     )
