@@ -42,18 +42,6 @@ export const takeTask = (data) => {
         });
 }
 
-
-export const takeCheckListTask = (data) => {
-    return axios.post(constants.BACKEND_JAVA_URL + `/check_list/take?jwt=` + jwtToken, data)
-        .then((ignored) => {
-            // No operations.
-        }).catch((err) => {
-            console.log("Failed to take checklist task", err);
-            return [];
-        });
-}
-
-
 export const markTaskAsDone = (data) => {
     return axios.post(constants.BACKEND_JAVA_URL + `/tasks/mark_as_done?jwt=` + jwtToken, data)
         .then((ignored) => {
@@ -70,27 +58,6 @@ export const addNews = (data) => {
         headers: {"Content-Type": "multipart/form-data"},
     });
 }
-
-export const addComment = (newsId, data) => {
-    return axios.post(constants.BACKEND_JAVA_URL + `/news/add_comment_${newsId}`, data)
-        .then((reposonse) => {
-            alert("Comment added");
-        }).catch((error) => {
-            console.error('Error:', error);
-            alert("Failed to add comment");
-        });
-}
-
-export const markCheckListTaskAsDone = (data) => {
-    return axios.post(constants.BACKEND_JAVA_URL + `/check_list/mark_as_done?jwt=` + jwtToken, data)
-        .then((ignored) => {
-            // No operations.
-        }).catch((err) => {
-            console.log("Failed to mark as done checklist task", err);
-            return [];
-        });
-}
-
 
 export const assignTask = (data) => {
     return axios.post(constants.BACKEND_JAVA_URL + `/tasks/add_and_assign_to_user?jwt=` + jwtToken, data)

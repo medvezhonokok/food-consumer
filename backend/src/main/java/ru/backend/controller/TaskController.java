@@ -22,7 +22,8 @@ public class TaskController {
     private final JwtService jwtService;
     private final TelegramBotNotifierService notifierService;
 
-    public TaskController(TaskService taskService, UserService userService, JwtService jwtService, TelegramBotNotifierService notifierService) {
+    public TaskController(TaskService taskService, UserService userService,
+                          JwtService jwtService, TelegramBotNotifierService notifierService) {
         this.taskService = taskService;
         this.userService = userService;
         this.jwtService = jwtService;
@@ -30,47 +31,37 @@ public class TaskController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Task>> getTasks(@RequestParam String jwt) {
-        if (jwtService.findUserByJWT(jwt) != null) {
-            return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<Task>> getTasks() {
+        return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/take")
-    public synchronized ResponseEntity<String> getTasks(@RequestParam String jwt, @RequestBody Map<String, Object> requestBody) {
-        if (jwtService.findUserByJWT(jwt) != null) {
-            Long userId = Long.parseLong(String.valueOf(requestBody.get("userId")));
-            Long taskId = Long.parseLong(String.valueOf(requestBody.get("taskId")));
+    public synchronized ResponseEntity<String> getTasks(@RequestBody Map<String, Object> requestBody) {
+        Long userId = Long.parseLong(String.valueOf(requestBody.get("userId")));
+        Long taskId = Long.parseLong(String.valueOf(requestBody.get("taskId")));
 
-            Task task = taskService.findById(taskId);
-            User user = userService.findById(userId);
+        Task task = taskService.findById(taskId);
+        User user = userService.findById(userId);
 
-            if (task != null && task.getExecutor() == null && user != null) {
-                taskService.setUserId(taskId, userId);
-                return new ResponseEntity<>("OK", HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("ALREADY_TAKEN", HttpStatus.OK);
-            }
+        if (task != null && task.getExecutor() == null && user != null) {
+            taskService.setUserId(taskId, userId);
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("ALREADY_TAKEN", HttpStatus.OK);
         }
-
-        return new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/mark_as_done")
-    public ResponseEntity<String> markTaskAsDone(@RequestParam String jwt, @RequestBody Map<String, Object> requestBody) {
-        if (jwtService.findUserByJWT(jwt) != null) {
-            long userId = Long.parseLong(String.valueOf(requestBody.get("userId")));
-            Long taskId = Long.parseLong(String.valueOf(requestBody.get("taskId")));
+    public ResponseEntity<String> markTaskAsDone(@RequestBody Map<String, Object> requestBody) {
+        long userId = Long.parseLong(String.valueOf(requestBody.get("userId")));
+        Long taskId = Long.parseLong(String.valueOf(requestBody.get("taskId")));
 
-            Task task = taskService.findById(taskId);
-            User user = userService.findById(userId);
+        Task task = taskService.findById(taskId);
+        User user = userService.findById(userId);
 
-            if (task != null && task.getExecutor() != null && task.getExecutor().getId() == userId && user != null) {
-                taskService.markAsDone(taskId);
-                return new ResponseEntity<>("OK", HttpStatus.OK);
-            }
+        if (task != null && task.getExecutor() != null && task.getExecutor().getId() == userId && user != null) {
+            taskService.markAsDone(taskId);
+            return new ResponseEntity<>("OK", HttpStatus.OK);
         }
 
         return new ResponseEntity<>("BAD_REQUEST", HttpStatus.BAD_REQUEST);
@@ -88,12 +79,12 @@ public class TaskController {
             Task task = new Task();
 
             task.setContent(content);
-            task.setDone(false);
             task.setExecutor(executor);
             task.setCreationTime(LocalDateTime.parse(time));
 
             if (executor.getTelegramChatId() != null) {
-                notifierService.sentNotificationToUser(executor.getTelegramChatId(), "У тебя новая задача. Проверь `Tasks`.");
+                notifierService.sentNotificationToUser(executor.getTelegramChatId(),
+                        "У тебя новая задача. Проверь `Tasks`.");
             }
 
             taskService.save(task);

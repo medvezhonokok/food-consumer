@@ -2,6 +2,8 @@ package ru.backend.bot;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,19 +14,23 @@ import ru.backend.service.UserService;
 
 @Component
 @AllArgsConstructor
+@PropertySource("classpath:application.properties")
 public class TelegramBot extends TelegramLongPollingBot {
+
+    private final Environment environment;
 
     @Autowired
     private UserService userService;
 
     @Override
     public String getBotUsername() {
-        return "by_cake_x_osp_bot";
+        return environment.getProperty("telegram.bot.username");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getBotToken() {
-        return "7012613586:AAEI0AnpVHv16lxxu_dkqITZ3VA1bF6HNYg";
+        return environment.getProperty("telegram.bot.token");
     }
 
     @Override

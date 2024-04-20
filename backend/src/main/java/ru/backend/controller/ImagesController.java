@@ -1,5 +1,6 @@
 package ru.backend.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.backend.annotation.SkipJwt;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,12 +19,15 @@ import java.nio.file.Paths;
 
 @RestController
 public class ImagesController {
-    private static final String IMAGE_DIRECTORY = "/root/food-consumer/backend/src/main/resources/static/images/";
+
+    @Value("${image.directory}")
+    private String imageDirectory;
 
     @GetMapping("/api/images/{fileName:.+}")
+    @SkipJwt
     @ResponseBody
     public synchronized ResponseEntity<Resource> getFile(@PathVariable String fileName) {
-        Path filePath = Paths.get(IMAGE_DIRECTORY + fileName);
+        Path filePath = Paths.get(imageDirectory + fileName);
         Resource resource;
         try {
             resource = new UrlResource(filePath.toUri());

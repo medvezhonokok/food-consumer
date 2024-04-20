@@ -58,23 +58,8 @@ export const getTasks = () => {
                 creationTime: task.creationTime,
                 executor: task.executor,
                 done: task.done,
-            }));
-        }).catch(err => {
-            console.error("Failed to get tasks", err);
-            return [];
-        });
-};
-
-export const getCheckList = () => {
-    return axios.get(constants.BACKEND_JAVA_URL + '/check_list/all?jwt=' + jwtToken)
-        .then(response => {
-            return response.data.map((task) => ({
-                id: task.id,
-                userId: task.userId,
-                content: task.content,
                 type: task.type,
-                executor: task.executor,
-                done: task.done,
+                isPermanent: task.permanent,
             }));
         }).catch(err => {
             console.error("Failed to get tasks", err);

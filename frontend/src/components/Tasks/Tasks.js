@@ -7,9 +7,9 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import * as storage from "../../data/storage";
 import {getUsers} from "../../data/storage";
 import AbstractBox from "../AbstractBox/AbstractBox";
-import {assignTask, markTaskAsDone, takeTask} from "../../data/updater";
 import Modal from "../Modal/Modal";
 import CustomCalendar from "../CustomCalendar/CustomCalendar";
+import {assignToUser, getTaskFooter} from "../../utils/taskHelper";
 
 const Tasks = ({user}) => {
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -28,71 +28,19 @@ const Tasks = ({user}) => {
     useEffect(() => {
         storage.getTasks().then(
             tasksJson => {
-                setTasks(tasksJson)
+                setTasks(tasksJson.filter((task) => task.isPermanent === false))
             }
         );
     }, []);
 
-    const takeTaskById = (taskId) => {
-        takeTask({
-            userId: user.id,
-            taskId: taskId
-        }).then((ignored) => {
-            window.location.reload();
-        });
-    }
-
-    const markTaskAsDoneById = (taskId) => {
-        markTaskAsDone({
-            userId: user.id,
-            taskId: taskId
-        }).then((ignored) => {
-            window.location.reload();
-        });
-    }
-
-    const getTaskFooter = (task) => {
-        if (task.executor === null) {
-            return <Button onClick={() => takeTaskById(task.id)}>Взять на себя выполнение</Button>
-        } else {
-            if (task.executor.id === user.id) {
-                if (task.done) {
-                    return <p>Выполнено</p>
-                } else {
-                    return <Button onClick={() => markTaskAsDoneById(task.id)}>Пометить как выполненное</Button>
-                }
-            } else {
-                return <p>Выполняет {task.executor.name}</p>
-            }
-        }
-    }
-
-    const assignToUser = (event) => {
-        event.preventDefault();
-        const selectedUserId = event.target.querySelector('select').value;
-        const taskContent = newTaskContent.trim()
-
-        if (taskContent && selectedUserId) {
-            assignTask({
-                dateTime: dateTime,
-                content: newTaskContent.trim(),
-                userId: event.target.querySelector('select').value
-            }).then((ignored) => {
-                window.location.reload();
-            })
-        } else {
-            alert("Пожалуйста, заполните все поля.");
-        }
-    }
-
     let mappedTasks = tasks
-        .filter((task) => isSameDay(new Date(task.creationTime), date) && task.executor.id === user.id)
+        .filter((task) => isSameDay(new Date(task.creationTime), date) && (!task.executor || task.executor.id === user.id))
         .map((task) => (
             <AbstractBox
                 key={task.id}
                 title={task.content}
                 body={task.creationTime.split('T')[1]}
-                footer={getTaskFooter(task)}
+                footer={getTaskFooter(task, user)}
             />
         ));
 
@@ -125,7 +73,7 @@ const Tasks = ({user}) => {
                 <Modal
                     isOpen={isFormOpen}
                     onClose={() => setIsFormOpen(false)}>
-                    <form onSubmit={assignToUser}>
+                    <form onSubmit={(event) => assignToUser(event, newTaskContent, dateTime)}>
                         <textarea
                             required={true}
                             autoFocus={true}

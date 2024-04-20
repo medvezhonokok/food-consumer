@@ -5,63 +5,35 @@ import {IoArrowBackSharp} from "react-icons/io5";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import AbstractBox from "../AbstractBox/AbstractBox";
 import * as storage from "../../data/storage";
-import {markCheckListTaskAsDone, takeCheckListTask} from "../../data/updater";
+import {getTaskFooter} from "../../utils/taskHelper";
 
 const CheckList = ({user}) => {
-    const [checkList, setCheckList] = useState([]);
+    const [permanentTasks, setPermanentTasks] = useState([]);
 
     useEffect(() => {
-        storage.getCheckList().then(
-            checkListJson => {
-                setCheckList(checkListJson)
+        storage.getTasks().then(
+            (tasksJson) => {
+                setPermanentTasks(tasksJson.filter(task => task.isPermanent === true));
             }
         );
     }, []);
 
-    const takeCheckListTaskById = (taskId) => {
-        takeCheckListTask({
-            userId: user.id,
-            checkListId: taskId
-        }).then((ignored) => {
-            window.location.reload();
-        });
-    }
-
-    const markCheckListTaskAsDoneById = (taskId) => {
-        markCheckListTaskAsDone({
-            userId: user.id,
-            checkListId: taskId
-        }).then((ignored) => {
-            window.location.reload();
-        });
-    }
-    const getCheckListTaskFooter = (checkListTask) => {
-        if (checkListTask.executor === null) {
-            return <Button onClick={() => takeCheckListTaskById(checkListTask.id)}>Взять на себя выполнение</Button>
-        } else {
-            if (checkListTask.executor.id === user.id) {
-                return <Button onClick={() => markCheckListTaskAsDoneById(checkListTask.id)}>Пометить как
-                    выполненное</Button>
-            } else {
-                return <p>Выполняет {checkListTask.executor.name}</p>
-            }
-        }
-    }
-    const getCheckListTasksByType = (type) => {
-        return checkList.filter((checkListElement) => !checkListElement.done && checkListElement.type === type)
-            .map((checkListElement) => (
+    const getPermanentTasksByType = (type) => {
+        return permanentTasks
+            .filter((permanentTask) => permanentTask.done === false && permanentTask.type === type)
+            .map((permanentTask) => (
                 <AbstractBox
-                    key={checkListElement.id}
-                    title={checkListElement.type}
-                    body={checkListElement.content}
-                    footer={getCheckListTaskFooter(checkListElement)}
+                    key={permanentTask.id}
+                    title={permanentTask.type}
+                    body={permanentTask.content}
+                    footer={getTaskFooter(permanentTask, user)}
                 />
             ));
     }
 
-    const morningCheckListTasks = getCheckListTasksByType("MORNING");
-    const dailyCheckListTasks = getCheckListTasksByType("DAY");
-    const eveningCheckListTasks = getCheckListTasksByType("EVENING");
+    const morningPermanentTasks = getPermanentTasksByType("MORNING");
+    const dailyPermanentTasks = getPermanentTasksByType("DAY");
+    const eveningPermanentTasks = getPermanentTasksByType("EVENING");
 
     return (
         user ?
@@ -77,15 +49,15 @@ const CheckList = ({user}) => {
                     <ul style={{marginTop: "3rem"}}>
                         <li>
                             с 8:00 до 12:00
-                            {morningCheckListTasks}
+                            {morningPermanentTasks}
                         </li>
                         <li>
                             с 14:00 до 18:00
-                            {dailyCheckListTasks}
+                            {dailyPermanentTasks}
                         </li>
                         <li>
                             с 20:00 до 00:00
-                            {eveningCheckListTasks}
+                            {eveningPermanentTasks}
                         </li>
                     </ul>
                 </div>

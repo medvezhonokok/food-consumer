@@ -1,6 +1,7 @@
 package ru.backend.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,12 +14,14 @@ import java.util.UUID;
 @Service
 public class FileService {
     private static final Logger logger = Logger.getLogger(FileService.class);
-    private static final String IMAGES_DIRECTORY_PATH = "/root/food-consumer/backend/src/main/resources/static/images/";
+
+    @Value("${image.directory}")
+    private String imageDirectory;
 
     public String saveImageToStorage(MultipartFile imageFile) throws IOException {
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
-        Path uploadPath = Paths.get(IMAGES_DIRECTORY_PATH);
+        Path uploadPath = Paths.get(imageDirectory);
         Path filePath = uploadPath.resolve(uniqueFileName);
 
         if (!Files.exists(uploadPath)) {

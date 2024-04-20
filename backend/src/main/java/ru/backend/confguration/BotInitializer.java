@@ -1,5 +1,6 @@
 package ru.backend.confguration;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import ru.backend.bot.TelegramBot;
 
 @Component
 public class BotInitializer {
+    private static final Logger logger = Logger.getLogger(BotInitializer.class);
     private final TelegramBot telegramBot;
 
     public BotInitializer(TelegramBot telegramBot) {
@@ -22,7 +24,8 @@ public class BotInitializer {
         try {
             telegramBotsApi.registerBot(telegramBot);
         } catch (TelegramApiException e) {
-            System.out.println("Here " + e.getMessage());
+            logger.error("Can't registered bot: " + e.getMessage());
+            throw new RuntimeException("Telegram bot registration failed: " + e.getLocalizedMessage());
         }
     }
 }

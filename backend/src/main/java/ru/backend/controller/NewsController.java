@@ -4,10 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.backend.model.Comment;
+import ru.backend.annotation.SkipJwt;
 import ru.backend.model.News;
 import ru.backend.model.User;
-import ru.backend.service.*;
+import ru.backend.service.FileService;
+import ru.backend.service.NewsService;
+import ru.backend.service.UserService;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,35 +19,25 @@ import java.util.List;
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
-    private final JwtService jwtService;
     private final FileService fileService;
-    private final CommentService commentService;
 
     public NewsController(NewsService newsService,
                           UserService userService,
-                          JwtService jwtService,
-                          FileService fileService,
-                          CommentService commentService) {
+                          FileService fileService) {
         this.newsService = newsService;
         this.userService = userService;
-        this.jwtService = jwtService;
         this.fileService = fileService;
-        this.commentService = commentService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<News>> getAll(@RequestParam String jwt) {
-        User user = jwtService.findUserByJWT(jwt);
-
-        if (user != null) {
-            List<News> news = newsService.findAll();
-            return ResponseEntity.ok().body(news);
-        }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @SkipJwt
+    public ResponseEntity<List<News>> getAll() {
+        List<News> news = newsService.findAll();
+        return ResponseEntity.ok().body(news);
     }
 
     @PostMapping("/add")
+    @SkipJwt
     public synchronized ResponseEntity<String> addNews(@RequestParam("file") MultipartFile file,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("userId") Long userId) {
@@ -67,27 +59,5 @@ public class NewsController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAILED");
-    }
-
-    @PostMapping("/add_comment_{newsId}")
-    public ResponseEntity<String> addComment(@PathVariable("newsId") Long newsId,
-                                             @RequestParam("text") String text,
-                                             @RequestParam("userId") Long userId) {
-        News news = newsService.findById(newsId);
-        User commentAuthor = userService.findById(userId);
-
-        if (news != null && commentAuthor != null) {
-            Comment comment = new Comment();
-
-            comment.setAuthor(commentAuthor);
-            comment.setText(text);
-            comment.setNews(news);
-            news.getComments().add(comment);
-
-            commentService.save(comment);
-            return ResponseEntity.ok().body("SUCCESS");
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment");
     }
 }

@@ -1,5 +1,5 @@
 package ru.backend.model;
 
-public enum CheckListType {
+public enum PermanentTaskType {
     MORNING, DAY, EVENING
 }
