@@ -23,6 +23,7 @@
 }
 
 .loginForm button {
+    color: black;
     font-weight: bolder;
     background-color: white;
     border: var(--border-color) var(--small-border-size) solid;
