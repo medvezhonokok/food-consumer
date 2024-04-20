@@ -34,7 +34,9 @@ const Tasks = ({user}) => {
     }, []);
 
     let mappedTasks = tasks
-        .filter((task) => isSameDay(new Date(task.creationTime), date) && (!task.executor || task.executor.id === user.id))
+        .filter((task) => date
+            ? isSameDay(new Date(task.creationTime), date) && (!task.executor || task.executor.id === user.id)
+            : false)
         .map((task) => (
             <AbstractBox
                 key={task.id}
@@ -45,7 +47,7 @@ const Tasks = ({user}) => {
         ));
 
     if (!mappedTasks || mappedTasks.length === 0) {
-        mappedTasks = (
+        mappedTasks = (date &&
             <div className="centeredContent" style={{marginTop: "2rem"}}>
                 На {format(date, 'PP')} у тебя задач нет.
             </div>);
@@ -67,9 +69,7 @@ const Tasks = ({user}) => {
                         </Button>
                     }
                 </div>
-                <div className="usersBox">
-                    {mappedTasks}
-                </div>
+                {mappedTasks}
                 <Modal
                     isOpen={isFormOpen}
                     onClose={() => setIsFormOpen(false)}>

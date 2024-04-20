@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './UserProfile.css';
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import {IoLogOutOutline} from "react-icons/io5";
+import {IoAddOutline, IoArrowBackSharp, IoLogOutOutline} from "react-icons/io5";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css';
 import BottomNavBar from "../BottomNavBar/BottomNavBar";
@@ -67,6 +67,11 @@ const UserProfile = ({user}) => {
     return (user
             ? <div className="centeredContent">
                 <h3 className="pageHeader">Profile</h3>
+                <div className="containerHeader">
+                    <Button className="commonStopListButton animatedButton backButton" href={'/'}>
+                        <IoArrowBackSharp/>
+                    </Button>
+                </div>
                 <div className="profileContainer">
                     <div className="profileInfoBox">
                         <label>Name</label>
@@ -106,7 +111,6 @@ const UserProfile = ({user}) => {
                         <Button className="animatedButton buttonCommon logoutButton" onClick={logout}><IoLogOutOutline/></Button>
                     </div>
                 </div>
-                <BottomNavBar user={user}/>
             </div>
             : <NotFoundPage/>
     );

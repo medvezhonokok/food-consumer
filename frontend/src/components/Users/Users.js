@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import AbstractBox from "../AbstractBox/AbstractBox";
-import BottomNavBar from "../BottomNavBar/BottomNavBar";
 import {getUsers} from "../../data/storage";
 import './Users.css';
+import {Button} from "react-bootstrap";
+import {IoArrowBackSharp} from "react-icons/io5";
 
 const Users = ({user}) => {
     const [users, setUsers] = useState([]);
@@ -22,10 +23,12 @@ const Users = ({user}) => {
         user ?
             <div>
                 <h3 className="pageHeader">Users</h3>
-                <div className="usersBox">
-                    {mappedUsers}
+                <div className="containerHeader">
+                    <Button className="commonStopListButton animatedButton backButton" href={'/'}>
+                        <IoArrowBackSharp/>
+                    </Button>
                 </div>
-                <BottomNavBar user={user}/>
+                {mappedUsers}
             </div>
             : <NotFoundPage/>
     )

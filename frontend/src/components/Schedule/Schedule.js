@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 
 import './Schedule.css';
-import BottomNavBar from "../BottomNavBar/BottomNavBar";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import CustomCalendar from "../CustomCalendar/CustomCalendar";
 import * as storage from "./../../data/storage";
 import AbstractBox from "../AbstractBox/AbstractBox";
+import {Button} from "react-bootstrap";
+import {IoArrowBackSharp} from "react-icons/io5";
 
 const Schedule = ({user}) => {
     const [date, setDate] = useState(new Date());
@@ -32,8 +33,9 @@ const Schedule = ({user}) => {
                      title={<h4 className="userRoleHeader">{role}</h4>}
                      body={groupedSchedule[role]
                          .filter(scheduleElem => (
-                             scheduleElem.creationTime.getMonth() === date.getMonth()
-                             && scheduleElem.creationTime.getDate() === date.getDate()
+                             date ?
+                                 scheduleElem.creationTime.getMonth() === date.getMonth()
+                                 && scheduleElem.creationTime.getDate() === date.getDate() : false
                          ))
                          .map((scheduleElem, idx) => (
                              <AbstractBox
@@ -50,11 +52,13 @@ const Schedule = ({user}) => {
         user ?
             <div>
                 <h3 className="pageHeader">Schedule</h3>
-                <CustomCalendar selected={date} onSelect={setDate}/>
-                <div className="usersBox">
-                    {mappedSchedule}
+                <div className="containerHeader">
+                    <Button className="commonStopListButton animatedButton backButton" href={'/'}>
+                        <IoArrowBackSharp/>
+                    </Button>
                 </div>
-                <BottomNavBar user={user}/>
+                <CustomCalendar selected={date} onSelect={setDate}/>
+                {mappedSchedule}
             </div>
             : <NotFoundPage/>
     );
