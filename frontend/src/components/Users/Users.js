@@ -15,7 +15,7 @@ const Users = ({user}) => {
     }, []);
 
     const mappedUsers = users.map(user =>
-        <AbstractBox key={user.id} title={user.name} body={user.about} footer={user.phoneNumber}/>
+        <AbstractBox key={user.id} title={user.name} body={user.about} footer={"Позвони мне:" + user.phoneNumber}/>
     );
 
     return (

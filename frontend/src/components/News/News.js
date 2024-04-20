@@ -23,7 +23,7 @@ const News = ({user}) => {
     useEffect(() => {
         storage.getNews().then(
             newsJson => {
-                setNews(newsJson)
+                setNews(newsJson.reverse())
             }
         );
     }, []);
