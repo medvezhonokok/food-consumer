@@ -58,6 +58,7 @@ const Orders = ({user}) => {
                     <Button className="commonStopListButton animatedButton addButton"
                             onClick={() => {
                                 setShowModal(true)
+                                setNewOrder('')
                                 setSelectedOrder(null);
                             }}>
                         <IoAddOutline/>

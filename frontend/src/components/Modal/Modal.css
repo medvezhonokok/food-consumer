@@ -28,9 +28,11 @@
 
 .modal-content textarea {
     margin: 1rem auto;
-    height: 200px;
+    height: 300px;
     font-size: 1rem;
     width: 100%;
+    resize: none;
+    position: relative;
 }
 
 .closeModalButton {
