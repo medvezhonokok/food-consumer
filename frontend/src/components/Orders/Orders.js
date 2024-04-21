@@ -47,6 +47,15 @@ const Orders = ({user}) => {
         setShowModal(true);
     };
 
+    const getOrderTextContent = (text) =>{
+        const split = text.split('\n');
+        if (split.length > 2) {
+            return split[0] + '\n' + split[1] + '\n' + split[2] + ' ...'
+        } else {
+            return text;
+        }
+    }
+
     return (
         user ? (
             <div>
@@ -77,8 +86,8 @@ const Orders = ({user}) => {
                                     }}><IoCloseSharp/></Button>
                             </div>
                         } body={
-                            <div key={index} onClick={() => handleOrderClick(order)}>
-                                {order.text}
+                            <div className="orderText" key={index} onClick={() => handleOrderClick(order)}>
+                                {getOrderTextContent(order.text)}
                             </div>
                         }/>
                     ))}
