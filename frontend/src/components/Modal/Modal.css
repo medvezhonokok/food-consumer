@@ -33,6 +33,7 @@
     width: 100%;
     resize: none;
     border: none;
+    outline: none;
     position: relative;
 }
 

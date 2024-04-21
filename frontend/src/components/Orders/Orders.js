@@ -99,6 +99,7 @@ const Orders = ({user}) => {
                         <textarea
                             ref={textareaRef}
                             required={true}
+                            placeholder="Вводи заказ.."
                             autoFocus={true}
                             value={newOrder}
                             onChange={(event) => setNewOrder(event.target.value)}
