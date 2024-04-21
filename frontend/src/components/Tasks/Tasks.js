@@ -65,7 +65,7 @@ const Tasks = ({user}) => {
                     {user.admin &&
                         <Button className="commonStopListButton animatedButton addButton"
                                 onClick={() => setIsFormOpen(true)}>
-                            <IoAddOutline/>
+                            Add
                         </Button>
                     }
                 </div>
@@ -85,7 +85,6 @@ const Tasks = ({user}) => {
                             className="profileInput"
                             style={{margin: "1rem 0"}}
                             required={true}
-                            autoFocus={true}
                             defaultValue={user.id}>
                             <option value="" disabled hidden>Выберите пользователя</option>
                             {users.map(user => (
@@ -99,7 +98,6 @@ const Tasks = ({user}) => {
                             className="profileInput"
                             type="datetime-local"
                             required={true}
-                            autoFocus={true}
                             value={dateTime}
                             onChange={(event) => (setDateTime(event.target.value))}
                         />

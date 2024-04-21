@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.backend.annotation.SkipJwt;
+import ru.backend.annotation.NotRequireJwtParam;
 import ru.backend.model.News;
 import ru.backend.model.User;
 import ru.backend.service.FileService;
@@ -30,14 +30,14 @@ public class NewsController {
     }
 
     @GetMapping("/all")
-    @SkipJwt
+    @NotRequireJwtParam
     public ResponseEntity<List<News>> getAll() {
         List<News> news = newsService.findAll();
         return ResponseEntity.ok().body(news);
     }
 
     @PostMapping("/add")
-    @SkipJwt
+    @NotRequireJwtParam
     public synchronized ResponseEntity<String> addNews(@RequestParam("file") MultipartFile file,
                                                        @RequestParam("description") String description,
                                                        @RequestParam("userId") Long userId) {

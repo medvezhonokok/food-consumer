@@ -7,7 +7,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import ru.backend.annotation.SkipJwt;
+import ru.backend.annotation.NotRequireJwtParam;
 import ru.backend.service.JwtService;
 
 @Component
@@ -30,8 +30,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            SkipJwt skipJwtAnnotation = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), SkipJwt.class);
-            if (skipJwtAnnotation != null) {
+            NotRequireJwtParam notRequireJwtParamAnnotation = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), NotRequireJwtParam.class);
+            if (notRequireJwtParamAnnotation != null) {
                 return true;
             }
         }

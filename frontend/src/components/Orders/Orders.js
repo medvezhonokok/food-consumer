@@ -61,7 +61,7 @@ const Orders = ({user}) => {
                                 setNewOrder('')
                                 setSelectedOrder(null);
                             }}>
-                        <IoAddOutline/>
+                        Add
                     </Button>
                 </div>
                 <div className="orderList">

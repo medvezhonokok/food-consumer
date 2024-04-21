@@ -49,11 +49,9 @@ const StopList = ({user}) => {
             addStopListElement({
                 name: newStopName
             }).then((ignored) => {
-                // no operations.
+                window.location.reload();
+                alert("Блюдо поставлено на стоп");
             });
-
-            window.location.reload();
-            alert("Блюдо поставлено на стоп");
         }
     };
 
@@ -67,7 +65,7 @@ const StopList = ({user}) => {
                     </Button>
                     <Button className="commonStopListButton animatedButton addButton"
                             onClick={() => setIsFormOpen(true)}>
-                        <IoAddOutline/>
+                        Add
                     </Button>
                 </div>
                 <div className="stopList">

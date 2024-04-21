@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EntityScan("ru.backend.model")
 public class BackendApplication {
 
-    @Value("${frontend.url}")
-    private String frontendUrl;
+    @Value("${client.url}")
+    private String clientUrl;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -22,7 +22,7 @@ public class BackendApplication {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(frontendUrl)
+                        .allowedOrigins(clientUrl)
                         .allowedMethods("*")
                         .allowCredentials(true);
             }

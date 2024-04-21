@@ -29,9 +29,11 @@
 }
 
 .addButton {
-    font-size: 3rem;
+    font-size: 1.5rem;
     right: 1rem;
     top: 1rem;
+    border-radius: var(--large-border-radius);
+    color: var(--default-font-color);
 }
 
 .addStopListElementButton {

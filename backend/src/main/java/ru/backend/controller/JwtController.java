@@ -3,7 +3,7 @@ package ru.backend.controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import ru.backend.annotation.SkipJwt;
+import ru.backend.annotation.NotRequireJwtParam;
 import ru.backend.exception.ValidationException;
 import ru.backend.form.UserCredentials;
 import ru.backend.form.validator.UserCredentialsEnterValidator;
@@ -34,7 +34,7 @@ public class JwtController {
     }
 
     @PostMapping("/jwt")
-    @SkipJwt
+    @NotRequireJwtParam
     public String enter(@RequestBody @Valid UserCredentials userCredentials, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException(bindingResult);

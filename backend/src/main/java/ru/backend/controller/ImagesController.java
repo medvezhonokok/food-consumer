@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.backend.annotation.SkipJwt;
+import ru.backend.annotation.NotRequireJwtParam;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -24,7 +24,7 @@ public class ImagesController {
     private String imageDirectory;
 
     @GetMapping("/api/images/{fileName:.+}")
-    @SkipJwt
+    @NotRequireJwtParam
     @ResponseBody
     public synchronized ResponseEntity<Resource> getFile(@PathVariable String fileName) {
         Path filePath = Paths.get(imageDirectory + fileName);
