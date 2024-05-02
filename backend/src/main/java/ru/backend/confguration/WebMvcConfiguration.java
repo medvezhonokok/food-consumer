@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.backend.interceptor.JwtInterceptor;
+import ru.backend.controller.interceptor.JwtInterceptor;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfiguration implements WebMvcConfigurer {
 
     private final JwtInterceptor jwtInterceptor;
 
     @Autowired
-    public WebMvcConfig(JwtInterceptor jwtInterceptor) {
+    public WebMvcConfiguration(JwtInterceptor jwtInterceptor) {
         this.jwtInterceptor = jwtInterceptor;
     }
 

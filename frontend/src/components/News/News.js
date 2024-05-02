@@ -18,7 +18,6 @@ const News = ({user}) => {
     const [showModal, setShowModal] = useState(false);
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState('');
-    const avatarPath = `/avatars/${user.login}.JPG`;
 
     useEffect(() => {
         storage.getNews().then(
@@ -33,9 +32,9 @@ const News = ({user}) => {
             <AbstractBox
                 title={
                     <div className="messageBoxHeader">
-                        <img src={avatarPath} alt="Avatar" className="avatar"/>
+                        <img src={`/avatars/${newsItem.author.login}.JPG`} alt="Avatar" className="avatar"/>
                         <div className="authorName">
-                            By: {user.name}
+                            By: {newsItem.author.name}
                         </div>
                     </div>
                 }

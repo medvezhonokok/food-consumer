@@ -20,16 +20,16 @@ public class ScheduleService {
 
     // Link to 'tasks' google spreadsheet: https://docs.google.com/spreadsheets/d/17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY
     private static final String SPREADSHEET_ID = "17bOXz5NI-1QTsRJNjKb-7F67jbjswHqC0zEtBkjjrfY";
-    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO1:NR3";
+    private static final String SPREADSHEET_SCHEDULE_DATE_HEADER_RANGE = "MO1:OW3";
 
-    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B30:B41";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO30:NR41";
+    private static final String SPREADSHEET_WORKER_WAITER_RANGE = "B29:B40";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_WAITER_RANGE = "MO29:OW40";
 
     private static final String SPREADSHEET_WORKER_BARISTA_RANGE = "B14:B18";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO14:NR18";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_BARISTA_RANGE = "MO14:OW18";
 
     private static final String SPREADSHEET_WORKER_MANAGER_RANGE = "B7:B7";
-    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO7:NR7";
+    private static final String SPREADSHEET_SCHEDULE_DATE_BODY_MANAGER_RANGE = "MO7:OW7";
 
     private final GoogleSheetService googleSheetService;
 

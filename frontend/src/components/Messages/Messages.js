@@ -43,6 +43,7 @@ const Messages = ({user}) => {
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
     };
+
     const isSameDay = (date1, date2) => {
         return (
             date1.getFullYear() === date2.getFullYear() &&
@@ -91,4 +92,5 @@ const Messages = ({user}) => {
         </div>
     )
 };
+
 export default Messages;
